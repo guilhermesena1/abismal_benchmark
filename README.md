@@ -44,11 +44,15 @@ grepenc -a 2 00110010 /path/to/genome.fa
 ### compare-sam
 
 This program compares the result of a mapping algorithm with the true
-status of reads. It takes two inputs: `<truth-sam>` and `<inpu-sam>`.
+status of reads. It takes two inputs: `<truth-sam>` and `<input-sam>`.
 If `<truth-sam>` has ambiguously mapped reads, with the ambiguous flag
 (0x100) set to 1, the program is capable of reporting false uniques in
 the dataset, defined as reads on truth that are ambiguous and at least
 as good as the one on input.
+
+```
+compare-sam <ground_truth_dataset.sam> <input_dataset.sam>
+```
 
 ### fix-bismark-sam
 
@@ -58,41 +62,6 @@ edit distance the bases that were counted as mismatches due to bisulfite
 conversion. It also formats the read name adding the .1 and .2 to read
 names as it was standardized for other mappers. 
 
-## Possible accuracy issues
-1. [low sensitivity paradox] Mappers may report a higher number of
-   uniquely mapped reads when they have lower sensitivity because
-   among reads for which they find mapping locations, they are unable
-   to detect the other locations where the read maps equally well. In
-   order to identify and quantify this problem, we need a way to map a
-   data set with as high sensitivity as possible, which will generally
-   take a long time. We can do this because we have the resources.
-   - *abismal* Doing this for abismal means not making any changes in
-     the index (it will already be the full size), but does mean
-     dramatically increasing the `max_candidates` variable and the
-     number of seed shifts. We cannot guarantee full sensitivity to
-     any number of mismatches, and we would not be able to as in real
-     data this can climp to 10% and still be reasonable. Setting
-     `max_candidates` to something like 100k, and using up to 8-10
-     shifts should be sufficient. We already allow enough total
-     indels.
-   - *bsmap* The parameter for `index_interval` must be set to 1 for
-     full sensitivity. The cost is a large index data structure. The
-     parameter for `-k` which sets `max_kmer_ratio` must be set to 0.
-2. [discrepancy in scoring] Some mappers may have more precise scoring
-   schemes that better discriminate reads as uniquely mapping. This
-   should only affect false reporting of unique mapping reads when
-   they are outside of deadzones.
-3. [Polypuring/pyrimidine tracts] These will be problematic for
-   abismal. The question is how problematic. Most tracts like this are
-   deadzones, but some are not. We need a quantification for this.
-4. [paired-end] The way paired-ends are scored and reported may
-   differ. If the pairs are scored using their distance, we have more
-   criteria on which to identify uniquely mapping reads. For each
-   mapper, we need to determine how it handles reporting each end of
-   an ambiguous mapping paired-end read, or discordant mappings for
-   ends.
-5. [skipping doing alignment] If the mismatches are few enough, it
-   makes sense to skip doing the local alignment. There is a question
-   about how few this should be. It seems like 2-3 might be
-   reasonable, but otherwise we risk missing a mapping or falsely
-   reporting a unique mapping by not doing the alignment step.
+```
+fix-bismark-sam -o bismark_fixed.sam bismark_original.sam
+```
