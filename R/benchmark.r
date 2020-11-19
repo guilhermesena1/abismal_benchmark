@@ -8,7 +8,6 @@ plot <- T
 
 datasets <- read.table("metadata/tests.txt",
                        header = 1,row.names = NULL,stringsAsFactors = F)
-datasets <- datasets[as.character(datasets$primary_test) == "yes",]
 mappers <- c("bismark", "bsmap", "walt")
 
 ##########################
@@ -342,7 +341,7 @@ make.table <- function(datasets) {
     row$total.reads <- total.reads
     row <- c(row, get.row(srr, species))
     stats <- rbind(stats, row)
-    all.names <- c(all.names, paste0(id,"(",species, ")"))
+    all.names <- c(all.names, paste0(id," (",species, ")"))
   }
   rownames(stats) <- all.names
   data.frame(stats)
@@ -595,17 +594,16 @@ get.data <- function(tbl, what, erase.prefix = F) {
 # MAKE FIGURES
 ##################################
 make.accuracy.figure <- function(tbl) {
-  pdf("results/figures/accuracy.pdf", width = 13, height = 6)
-  par(mfrow = c(1, 4), family = "Times")
+  pdf("results/figures/accuracy.pdf", width = 13, height = 6.5)
+  par(mfrow = c(1, 3), family = "Times")
 
-  plot.map(tbl, "wgbs_paired", "Traditional (PE)", "accuracy", "accuracy", F,
+  plot.map(tbl, "wgbs_single", "Traditional (SE)", "accuracy", "accuracy", F,
            "A")
-  plot.map(tbl, "wgbs_rpbat", "RPBAT (PE)", "accuracy", "accuracy", F, "B")
   plot.map(tbl, "wgbs_paired", "Traditional (PE)", "map.total",
-           "% concordant pairs mapped", F, "C")
+           "% concordant pairs mapped", F, "B")
 
   plot.map(tbl, "wgbs_rpbat", "RPBAT (PE)", "map.total",
-           "% concordant pairs mapped", T, "D")
+           "% concordant pairs mapped", T, "C")
   dev.off()
 }
 
@@ -619,8 +617,21 @@ time.to.reads.per.sec <- function(times) {
   times
 }
 
+get.top.times <- function(times, top.n) {
+  # paired datasets have twice as many reads
+  protocols <- unlist(times[,"protocol"])
+  paired <- which(protocols %in% c("wgbs_paired", "wgbs_rpbat"))
+  for (i in paired)
+    times[i, "total.reads"][[1]] <- 2*times[i, "total.reads"][[1]]
+
+  times[order(-unlist(times[,"total.reads"]))[1:top.n],]
+}
+
 make.resources.figure <- function(times, mems) {
   times <- time.to.reads.per.sec(times)
+  
+  # get the top 10 largest datasets
+  times <- get.top.times(times, 10)
 
   # we'll use this for mem distribution
   paired.datasets <- which(unlist(times[,"protocol"]=="wgbs_paired"))
@@ -646,12 +657,18 @@ make.resources.figure <- function(times, mems) {
   pdf("results/figures/resources.pdf", width = 12, height = 6)
   layout(matrix(c(1,2,3,4,5,11,11,6,7,8,9,10,11,11), nrow = 2, byrow = T))
   par(family = "Times")
-  for (i in 1:ncol(times))
+  for (i in 1:ncol(times)) {
     barplot(times[,i], beside = T, horiz = F, col = cols, names.arg = NA,
             main = cn[i], ylab = "reads per hour (M)", cex.lab = 1.5, cex.axis = 1.5)
 
+    if (i == 1) fig_label("A", cex = 2)
+    if (i == 6) fig_label("B", cex = 2)
+  }
+
   boxplot(mems[paired.datasets,], col = cols, horizontal = F, las = 2,
           ylab = "Memory (GB)", cex.axis = 1.5, cex.lab = 1.5)
+
+  fig_label("C", cex = 2)
   dev.off()
 }
 
@@ -691,12 +708,13 @@ if (plot) {
   times <- times[primary,]
   mems <- mems[primary,]
 
+  # for the main figure we filter only the primary tests
+  datasets <- datasets[as.character(datasets$primary_test) == "yes",]
+
   # accuracy
   make.accuracy.figure(tbl)
 
   # resources
   make.resources.figure(times, mems)
-
-
 }
 
