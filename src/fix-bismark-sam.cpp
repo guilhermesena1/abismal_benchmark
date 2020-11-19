@@ -113,6 +113,12 @@ report_mates(const sam_rec &a, const sam_rec &b,
   return valid_edit_distance(ea + eb, readlen(a) + readlen(b));
 }
 
+static bool
+report_se_read(const sam_rec &a, const int e) {
+  return valid_edit_distance(e, readlen(a));
+}
+
+
 static void
 fix_mate_name(sam_rec &mate) {
   assert(mate.qname.back() == '1');
@@ -122,7 +128,7 @@ fix_mate_name(sam_rec &mate) {
 int
 main(int argc, const char **argv) {
   bool verbose = false;
-  bool name_only = false;
+  bool single_end = false;
   string outfile = "";
   OptionParser opt_parse(strip_path(argv[0]),
                          "finds better matches between sam files sorted by name",
@@ -130,7 +136,7 @@ main(int argc, const char **argv) {
   vector<string> leftover_args;
 
   opt_parse.add_opt("verbose", 'v', "print more run info", false, verbose);
-  opt_parse.add_opt("name-only", 'n', "only fix read name", false, name_only);
+  opt_parse.add_opt("single-end", 's', "filter reads in SE mode", false, single_end);
   opt_parse.add_opt("output", 'o', "output file", false, outfile);
   opt_parse.parse(argc, argv, leftover_args);
   if (leftover_args.size() != 1) {
@@ -144,32 +150,41 @@ main(int argc, const char **argv) {
   std::ostream out(outfile.empty() ? std::cout.rdbuf() : of.rdbuf());
 
   out << in.get_header();
-  while (in >> aln) {
-    const int d_aln = (name_only ? 0 : fix_aln(aln));
-    if (has_mate(aln)) {
-      if (in >> mate) {
-        fix_mate_name(mate);
-        if (!are_mates(aln, mate)) {
-          cerr << "reads below are not mates\n";
-          cerr << aln << '\n';
-          cerr << mate << '\n';
-          throw runtime_error("");
-        }
-      }  
-      const int d_mate = (name_only ? 0 : fix_aln(mate));
-      if (report_mates(aln, mate, d_aln, d_mate)) {
-        out << aln << '\n';
-        out << mate << '\n';
-      } else {
-        if (report_aln(aln, d_aln))
+  if (!single_end) {
+    while (in >> aln) {
+      const int d_aln = fix_aln(aln);
+      if (has_mate(aln)) {
+        if (in >> mate) {
+          fix_mate_name(mate);
+          if (!are_mates(aln, mate)) {
+            cerr << "reads below are not mates\n";
+            cerr << aln << '\n';
+            cerr << mate << '\n';
+            throw runtime_error("");
+          }
+        }  
+        const int d_mate = fix_aln(aln);
+        if (report_mates(aln, mate, d_aln, d_mate)) {
           out << aln << '\n';
-        if (report_aln(mate, d_mate))
           out << mate << '\n';
+        } else {
+          if (report_aln(aln, d_aln))
+            out << aln << '\n';
+          if (report_aln(mate, d_mate))
+            out << mate << '\n';
+        }
+      } else {
+        cerr << "found unpaired mate, which bismark does not do by default.\n";
+        cerr << "Did you mean to run it on SE mode? (-s)\n";
+        cerr << aln << endl;
+        throw runtime_error("");
       }
-    } else {
-      cerr << "found unpaired mate, which bismark does not do by default\n";
-      cerr << aln << endl;
-      throw runtime_error("");
+    }
+  } else {
+    while (in >> aln) {
+      const int d_aln = fix_aln(aln);
+      if (report_se_read(aln, d_aln))
+        out << aln << '\n';
     }
   }
 

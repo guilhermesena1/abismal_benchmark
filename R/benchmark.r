@@ -598,7 +598,8 @@ make.accuracy.figure <- function(tbl) {
   pdf("results/figures/accuracy.pdf", width = 13, height = 6)
   par(mfrow = c(1, 4), family = "Times")
 
-  plot.map(tbl, "wgbs_paired", "Traditional (PE)", "accuracy", "accuracy", F, "A")
+  plot.map(tbl, "wgbs_paired", "Traditional (PE)", "accuracy", "accuracy", F,
+           "A")
   plot.map(tbl, "wgbs_rpbat", "RPBAT (PE)", "accuracy", "accuracy", F, "B")
   plot.map(tbl, "wgbs_paired", "Traditional (PE)", "map.total",
            "% concordant pairs mapped", F, "C")
@@ -666,12 +667,6 @@ tbl <- make.table(datasets)
 times <- make.times(tbl)
 mems <- make.mems(tbl$srr, tbl$species)
 if (plot) {
-  # accuracy
-  make.accuracy.figure(tbl)
-
-  # resources
-  make.resources.figure(times, mems)
-
   # Supp table 1 is metadata/tests.txt
   
   # Supp table 2 is accuracy
@@ -690,5 +685,18 @@ if (plot) {
   # Supp table 5 is CpG coverage
   coverage <- get.data(tbl, "coverage.cpg")
   wt(coverage, "results/tables/supp_table_5_coverage.tsv")
+
+  primary <- unlist(datasets$primary) == "yes"
+  tbl <- tbl[primary,]
+  times <- times[primary,]
+  mems <- mems[primary,]
+
+  # accuracy
+  make.accuracy.figure(tbl)
+
+  # resources
+  make.resources.figure(times, mems)
+
+
 }
 
