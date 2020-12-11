@@ -22,8 +22,13 @@ using std::istringstream;
 
 void
 erase_frag_from_name(sam_rec &aln) {
-  if (aln.qname.find("FRAG:") == 0)
+  if (aln.qname.find("FRAG:") == 0) {
     aln.qname.erase(0, 5);
+    if(aln.qname.size() >= 2 && aln.qname[aln.qname.size() - 2] == '.') {
+      aln.qname.pop_back();
+      aln.qname.pop_back();
+    }
+  }
 }
 
 int
