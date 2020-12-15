@@ -49,12 +49,27 @@ parse.walt <- function(path) {
     stop(paste0(c("bad file: " , path)))
   lines <- readLines(path)
   ans <- list()
-  tot <- strsplit(lines[1], " ")[[1]][6]
-  tot <- gsub("]", "", tot)
-  ans$total.reads <- as.integer(tot)
-  ans$mapped.unique <- as.integer(strsplit(lines[2], " ")[[1]][5])
-  ambig <- as.integer(strsplit(lines[3], " ")[[1]][5])
-  ans$mapped.total <- ans$mapped.unique + ambig 
+
+  tot <- strsplit(lines[1], " ")[[1]]
+  if (length(tot) == 6) { # PE
+    tot <- tot[6]
+    tot <- gsub("]", "", tot)
+    ans$total.reads <- as.integer(tot)
+    ans$mapped.unique <- as.integer(strsplit(lines[2], " ")[[1]][5])
+    ambig <- as.integer(strsplit(lines[3], " ")[[1]][5])
+    ans$mapped.total <- ans$mapped.unique + ambig 
+  }
+  else if (length(tot) == 5) { # SE
+    tot <- tot[5]
+    tot <- gsub("]", "", tot)
+    ans$total.reads <- as.integer(tot)
+    ans$mapped.unique <- as.integer(strsplit(lines[2], " ")[[1]][4])
+    ambig <- as.integer(strsplit(lines[3], " ")[[1]][4])
+    ans$mapped.total <- ans$mapped.unique + ambig 
+  }
+  else {
+    stop("bad walt file")
+  }
   ans <- get.pct(ans)
   ans
 }
@@ -120,18 +135,17 @@ parse.truth <- function(path) {
     stop(paste0(c("bad file: " , path)))
   data <- yaml::yaml.load_file(path)
 
-  tot.input <- data$total$input_only + data$total$both
-  tot.truth <- data$total$truth_only + data$total$both
+  tot <- data$total$input_only + data$total$both + data$single$missed_uniq
 
   ans <- list()
   ans$accuracy <- data$total$accuracy
-  ans$truth.superoptimal <- data$single$superoptimal_uniq / tot.input
-  ans$truth.optimal <- data$single$optimal_uniq / tot.input
-  ans$truth.unknown <- data$single$unknown_uniq / tot.input
-  ans$truth.suboptimal <- data$single$suboptimal_uniq / tot.input
-  ans$truth.false <- data$single$false_uniq / tot.input
-  ans$truth.missed <- data$single$missed_uniq / tot.truth
-  ans$truth.dangling <- data$single$dangling_uniq / tot.input
+  ans$truth.superoptimal <- data$single$superoptimal_uniq / tot
+  ans$truth.optimal <- data$single$optimal_uniq / tot
+  ans$truth.unknown <- data$single$unknown_uniq / tot
+  ans$truth.suboptimal <- data$single$suboptimal_uniq / tot
+  ans$truth.false <- data$single$false_uniq / tot
+  ans$truth.missed <- data$single$missed_uniq / tot
+  ans$truth.dangling <- data$single$dangling_uniq / tot
   ans
 }
 
@@ -158,6 +172,9 @@ parse.levels <- function(levels.path) {
   })
 
   ans <- list()
+  ans$meth.cytosine <- lev$cytosines$mean_meth
+  ans$meth.cpg <- lev$cpg$mean_meth
+
   ans$coverage.cytosine <- lev$cytosines$sites_covered_fraction
   ans$coverage.cpg <- lev$cpg$sites_covered_fraction
 
@@ -179,7 +196,7 @@ parse.sym.cpg <- function(sym.cpg.path) {
 ########################################
 
 get.row.for.mapper <- function(srr, mapper, mapstats.suffix, f,
-                               species) {
+                               species, protocol) {
   ans <- data.frame(
     total.reads = NA,
     map.unique = NA,
@@ -227,7 +244,10 @@ get.row.for.mapper <- function(srr, mapper, mapstats.suffix, f,
   })
 
   # accuracy statistics
-  path <- paste0(base.path, srr, "_", species, ".truth_stats")
+  path <- paste0(base.path, srr, "_", species,
+                 ifelse( #protocol != "wgbs_single" & mapper == "bismark",
+                          protocol == "wgbs_paired" & mapper != "walt",
+                        ".paired_stats", ".single_stats"))
   tryCatch({
     acc <- parse.truth(path)
     ans$map.accuracy = acc$accuracy
@@ -246,6 +266,8 @@ get.row.for.mapper <- function(srr, mapper, mapstats.suffix, f,
   path <- paste0(base.path, srr, "_", species, ".levels")
   tryCatch({
     levelsdata <- parse.levels(path)
+    ans$meth.cytosine <- levelsdata$meth.cytosine
+    ans$meth.cpg <- levelsdata$meth.cpg
     ans$coverage.cytosine = levelsdata$coverage.cpg
     ans$cpg.depth.total = levelsdata$cpg.depth
     ans$cpg.depth.cov = levelsdata$cpg.depth.cov
@@ -261,18 +283,18 @@ get.row.for.mapper <- function(srr, mapper, mapstats.suffix, f,
 }
 
 # get all data for a particular sample
-get.row <- function(srr, species) {
+get.row <- function(srr, species, protocol) {
   ans <- list()
 
   ################# ABISMAL #######################
   a.data <- get.row.for.mapper(srr, "abismal", ".sam.mapstats",
-                               parse.abismal, species)
+                               parse.abismal, species, protocol)
   tot.reads <- a.data$total.reads
   a.data$total.reads.abismal <- NULL
   ################# WALT #######################
   if ("walt" %in% mappers) {
     w.data <- get.row.for.mapper(srr, "walt", ".mr.mapstats",
-                                 parse.walt, species)
+                                 parse.walt, species, protocol)
 
     if (is.na(tot.reads))
       tot.reads <- w.data$total.reads
@@ -287,7 +309,7 @@ get.row <- function(srr, species) {
   if ("bismark" %in% mappers) {
     k.data <- get.row.for.mapper(srr, "bismark",
                                  ".mapstats",
-                                 parse.bismark, species)
+                                 parse.bismark, species, protocol)
 
     if (is.na(tot.reads))
       tot.reads <- k.data$total.reads
@@ -301,7 +323,7 @@ get.row <- function(srr, species) {
   ################# BSMAP #######################
   if ("bsmap" %in% mappers) {
     p.data <- get.row.for.mapper(srr, "bsmap", ".out",
-                               parse.bsmap, species)
+                               parse.bsmap, species, protocol)
 
     if (is.na(tot.reads))
       tot.reads <- p.data$total.reads
@@ -339,7 +361,7 @@ make.table <- function(datasets) {
     row$id <- id
     row$read.length <- readlen
     row$total.reads <- total.reads
-    row <- c(row, get.row(srr, species))
+    row <- c(row, get.row(srr, species, protocol))
     stats <- rbind(stats, row)
     all.names <- c(all.names, paste0(id," (",species, ")"))
   }
@@ -405,12 +427,13 @@ add.abismal.index.time <- function(times) {
   # get indexing times for all species
   ref.path <- "~/panasas/ref_genomes"
   for (i in unique(species)) {
-    line <- readLines(paste0(ref.path, "/", i, "_usr_bin_time.txt"))[6]
+    line <- readLines(paste0(ref.path, "/", i, "_usr_bin_time.txt"))[5]
     line <- gsub("^.* ", "", line)
     minutes <- as.numeric(gsub(":.*$","",line))
     seconds <- as.numeric(gsub("^.*:","",line))
     index.times[[i]] <- 60*minutes + seconds
   }
+  wt(unlist(index.times), "results/tables/supp_table_4_index_times.tsv")
 
   # add read indexing times
   for (i in 1:length(cur.abismal.times))
@@ -432,21 +455,24 @@ make.times <- function(tbl) {
   # add the "num reads" column from tbl which will be the x axis
   ans <- cbind(ans, tbl$total.reads)
   ans <- cbind(ans, tbl$protocol)
-  rownames(ans) <- paste0(ids, "_",species)
+  rownames(ans) <- paste0(ids, "_", species)
   colnames(ans) <- c("abismal", mappers, "total.reads", "protocol")
 
   ans <- add.abismal.index.time(ans)
   ans
 }
 
-make.mems <- function(srrs, species) {
+make.mems <- function(tbl) {
   ans <- NULL
+  srrs <- tbl$srr
+  ids <- tbl$id
+  species <- tbl$species
   if(length(srrs) != length(species))
     stop("unequal number of srrs and species")
   for (i in 1:length(srrs))
     ans <- rbind(ans, get.mems.for.srr(srrs[i], species[i]))
 
-  rownames(ans) <- srrs
+  rownames(ans) <- paste0(ids, "_", species)
   ans
 }
 
@@ -543,23 +569,24 @@ readable.by.barplot <- function(x) {
   x
 }
 
-plot.map <- function(tbl, protocol, main, what, ylab, show.legend, fig.label) {
-  tbl <- tbl[unlist(tbl$protocol) == protocol,]
+plot.map <- function(tbl, protocols, main, what, ylab, fig.label) {
+  tbl <- tbl[unlist(tbl$protocol) %in% protocols,]
   tbl <- get.data(tbl, what)
   tbl[is.na(tbl)] <- 0
 
   tbl <- t(readable.by.barplot(tbl))
+  # remove species name
+  colnames(tbl) <- gsub(" .*$", "", colnames(tbl))
+  # put a space instead of underscore for style purposes
+  colnames(tbl) <- gsub("_", " ", colnames(tbl))
 
   palette(plot.good.colors)
   num.mappers <- 1 + length(mappers)
   cols <- seq(1, num.mappers)
   barplot(tbl, beside = T, horiz = T, xlab = ylab,
-          col = cols, main = main, xlim = c(0,1), cex.axis = 1.5, cex.lab = 1.5)
+          col = cols, main = main, xlim = c(0,1),
+          cex.axis = 1.5, cex.lab = 1.5, cex.names = 1.5, cex.main = 1.5)
 
-  if (show.legend) {
-    legend("topright", legend = c("abismal", mappers), cex = 1.5, pch = 22,
-           pt.bg = cols, col = rep("black", num.mappers))
-  }
   fig_label(fig.label, cex=2)
 }
 
@@ -594,16 +621,28 @@ get.data <- function(tbl, what, erase.prefix = F) {
 # MAKE FIGURES
 ##################################
 make.accuracy.figure <- function(tbl) {
-  pdf("results/figures/accuracy.pdf", width = 13, height = 6.5)
-  par(mfrow = c(1, 3), family = "Times")
+  pdf("results/figures/accuracy.pdf", width = 12, height = 5)
+  layout(mat = matrix(c(1,2,3,4,5,6,6,6,6,6), nrow = 2, byrow = T),
+         heights = c(.9, .1))
 
-  plot.map(tbl, "wgbs_single", "Traditional (SE)", "accuracy", "accuracy", F,
-           "A")
-  plot.map(tbl, "wgbs_paired", "Traditional (PE)", "map.total",
-           "% concordant pairs mapped", F, "B")
+  par(mar = c(1.5, 1.5, 1.5, 1.5), family = "Times")
+  plot.map(tbl, "wgbs_single", "Traditional (SE)",
+           "accuracy", "accuracy", "A")
+  plot.map(tbl, "wgbs_paired", "Traditional (PE)",
+           "accuracy", "accuracy", "B")
+  plot.map(tbl, "wgbs_rpbat", "RPBAT (PE)",
+           "accuracy", "accuracy", "C")
+  plot.map(tbl, "wgbs_paired", "Traditional (PE)",
+           "map.total", "% concordant pairs mapped", "D")
+  plot.map(tbl, "wgbs_rpbat", "RPBAT (PE)",
+           "map.total", "% concordant pairs mapped", "E")
 
-  plot.map(tbl, "wgbs_rpbat", "RPBAT (PE)", "map.total",
-           "% concordant pairs mapped", T, "C")
+  # common legend to all plots
+  num.mappers <- 1 + length(mappers)
+  cols <- seq(1, num.mappers)
+  plot(1, type = "n", axes=FALSE, xlab="", ylab="")
+  legend("top", legend = c("abismal", mappers), cex = 1.5, pt.cex = 3, pch = 22,
+         pt.bg = cols, col = rep("black", num.mappers), horiz = T, bty = "n")
   dev.off()
 }
 
@@ -631,7 +670,7 @@ make.resources.figure <- function(times, mems) {
   times <- time.to.reads.per.sec(times)
   
   # get the top 10 largest datasets
-  times <- get.top.times(times, 10)
+  # times <- get.top.times(times, 15)
 
   # we'll use this for mem distribution
   paired.datasets <- which(unlist(times[,"protocol"]=="wgbs_paired"))
@@ -643,32 +682,36 @@ make.resources.figure <- function(times, mems) {
   mems <- mems / (1024)
 
   # for plotting purposes, cap memory values to 32GB
+  max.mem.to.report <- 16
   for (i in 1:nrow(mems))
     for (j in 1:ncol(mems))
-      mems[i,j] = min(mems[i,j], 24)
+      mems[i,j] = min(mems[i,j], max.mem.to.report)
 
   cn <- colnames(times)
-  cn <- gsub("_"," (",cn)
-  cn <- paste0(cn, ")")
+  cn <- gsub("_[^_]+$","",cn)
+  cn <- gsub("_", " ", cn)
 
   palette(plot.good.colors)
   cols <- seq(1, 1 + length(mappers))
 
-  pdf("results/figures/resources.pdf", width = 12, height = 6)
-  layout(matrix(c(1,2,3,4,5,11,11,6,7,8,9,10,11,11), nrow = 2, byrow = T))
+  pdf("results/figures/resources.pdf", width = 12, height = 4)
+  layout(matrix(c(1,2,3,4,5,16,16,
+                  6,7,8,9,10,16,16,
+                  11,12,13,14,15,16,16), nrow = 3, byrow = T))
   par(family = "Times")
+  par(mar = c(1.5, 3, 1.5, 3))
   for (i in 1:ncol(times)) {
     barplot(times[,i], beside = T, horiz = F, col = cols, names.arg = NA,
-            main = cn[i], ylab = "reads per hour (M)", cex.lab = 1.5, cex.axis = 1.5)
+            main = cn[i], ylab = "reads per hour (M)", cex.lab = 1.5,
+            font.main = 1, cex.axis = 1.5)
 
     if (i == 1) fig_label("A", cex = 2)
-    if (i == 6) fig_label("B", cex = 2)
   }
 
   boxplot(mems[paired.datasets,], col = cols, horizontal = F, las = 2,
           ylab = "Memory (GB)", cex.axis = 1.5, cex.lab = 1.5)
 
-  fig_label("C", cex = 2)
+  fig_label("B", cex = 2)
   dev.off()
 }
 
@@ -682,27 +725,33 @@ tbl <- make.table(datasets)
 
 # resources
 times <- make.times(tbl)
-mems <- make.mems(tbl$srr, tbl$species)
+mems <- make.mems(tbl)
 if (plot) {
-  # Supp table 1 is metadata/tests.txt
-  
-  # Supp table 2 is accuracy
+  # Supp table 1 is accuracy
   accuracy <- get.data(tbl, "accuracy")
   conc.pairs <- get.data(tbl, "map.total")
-  wt(cbind(accuracy, conc.pairs), "results/tables/supp_table_2_accuracy.tsv")
-
-  # Supp table 3 is full details of accuracy
   truth.table <- get.data(tbl, "truth", F)
-  wt(truth.table, "results/tables/supp_table_3_full_accuracy.tsv")
+  wt(cbind(accuracy, conc.pairs, truth.table),
+     "results/tables/supp_table_1_accuracy.tsv")
 
-  # Supp table 4 is bsrate
+  # Supp table 3 is bsrate and coverage
   bsrate <- get.data(tbl, "bs.err")
-  wt(bsrate, "results/tables/supp_table_4_bsrate.tsv")
-
-  # Supp table 5 is CpG coverage
   coverage <- get.data(tbl, "coverage.cpg")
-  wt(coverage, "results/tables/supp_table_5_coverage.tsv")
+  depth <- get.data(tbl, "cpg.depth.total")
+  meth.cytosine <- get.data(tbl, "meth.cytosine")
+  meth.cpg <- get.data(tbl, "meth.cpg")
+  wt(cbind(bsrate, coverage, depth, meth.cytosine, meth.cpg),
+     "results/tables/supp_table_2_bsrate.tsv")
 
+  # Supp table 4 are the times
+  mm <- c("abismal", mappers)
+  a <- times[,mm]
+  b <- mems[,mm]
+  colnames(a) <- paste0("time_", colnames(a))
+  colnames(b) <- paste0("mem_", colnames(b))
+  wt(cbind(a,b), "results/tables/supp_table_3_resources.tsv")
+
+  ########### FIGURES ###########
   primary <- unlist(datasets$primary) == "yes"
   tbl <- tbl[primary,]
   times <- times[primary,]

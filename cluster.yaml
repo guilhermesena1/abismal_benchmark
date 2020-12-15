@@ -9,7 +9,7 @@ bismark_map_paired:
   threads: 16
 
 bismark_map_single:
-  mem: 32GB
+  mem: 64GB
   threads: 16
 
 bismark_map_pbat:
@@ -97,5 +97,9 @@ get_repeat_c_bases:
   threads: 1
 
 sort_for_truth_comp:
+  mem: 32GB
+  threads: 8
+
+sort_for_truth_comp_formatted:
   mem: 32GB
   threads: 8

@@ -186,7 +186,6 @@ mapstats::update(const sam_rec &input, const sam_rec &truth) {
       // somehow calculated differently
       superoptimal_uniq += !same_pos;
       optimal_uniq += same_pos;
-
       /*
       if (!same_pos) {
         print_debug(input, truth);

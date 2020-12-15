@@ -8,6 +8,9 @@ DIR_OUTPUT_MAP = \
 # everything else (that does not depend on speed and heavy IO) to cmb-06
 DIR_OUTPUT_REST = "/home/cmb-06/as/desenabr/abismal_devel/tests"
 
+# scratch space for heavy temp files
+DIR_DUMP = "/scratch2/desenabr/snakemake_dump"
+
 # root directory for reference genome files
 genome_dir = "/panfs/qcb-panasas/desenabr/ref_genomes/{species}/"
 genome_dir_bismark = \
@@ -36,7 +39,7 @@ fa_single_r1 = fa_dir + "/single/{sample}_{species}.fq"
 
 # SE truth
 sam_truth = fa_dir + "/truth_sam/{sample}.sam"
-sam_truth_walt = fa_dir + "/truth_sam/{sample}.samf"
+sam_truth_formatted = fa_dir + "/truth_sam/{sample}.samft"
 
 ############ INDEX PATHS ###############
 # directory where Bisulfite_Genome lies for bismark
@@ -76,7 +79,7 @@ for x in open(input_dataset_tsv):
 MAPPERS = ["abismal", "bismark", "bsmap", "walt"]
 
 # output files
-OUT_FILES = ["truth_stats", "bsrate", "levels"]
+OUT_FILES = ["single_stats", "paired_stats"]
 
 
 ################### END REPEAT CONFIG ####################
@@ -122,7 +125,7 @@ rule bsmap_map_single:
     DIR_OUTPUT_MAP + "/bsmap/snakemake_time_{sample}_{species}.txt"
   shell:
     """
-    bsmap -v 0.1 -f 0 -r 0 -p 16 -V 2 -a {input.r} \
+    bsmap -v 0.1 -r 0 -p 16 -V 2 -a {input.r} \
     -d {input.fa} -o {output.sam} 2>{output.out}
     """
 
@@ -138,7 +141,7 @@ rule bsmap_map_paired:
     DIR_OUTPUT_MAP + "/bsmap/snakemake_time_{sample}_{species}.txt"
   shell:
     """
-    bsmap -v 0.1 -m 32 -x 3000 -f 0 -r 0 -p 16 -V 2 -a {input.r1} \
+    bsmap -v 0.1 -m 32 -x 3000 -r 0 -p 16 -V 2 -a {input.r1} \
     -b {input.r2} -d {input.fa} -o {output.sam} 2>{output.out}
     """
 
@@ -154,7 +157,7 @@ rule bsmap_map_pbat:
     DIR_OUTPUT_MAP + "/bsmap/snakemake_time_{sample}_{species}.txt"
   shell:
     """
-    bsmap -v 0.1 -m 32 -x 3000 -f 0 -r 0 -n 1 -p 16 -V 2 \
+    bsmap -v 0.1 -m 32 -x 3000 -r 0 -n 1 -p 16 -V 2 \
     -a {input.r1} -b {input.r2} -d {input.fa} -o {output.sam} \
     2>{output.out}
     """
@@ -352,34 +355,43 @@ rule sort_for_truth_comp:
   input:
     DIR_OUTPUT_MAP + "/{mapper}/{sample}_{species}.sam"
   output:
-    temp(DIR_OUTPUT_MAP + "/{mapper}/{sample}_{species}.samt")
+    DIR_DUMP + "/{mapper}/{sample}_{species}.samt"
   shell:
     """
     source ~/.samsort && samsort {input} {output}
     """
 
-rule compare_with_truth:
+rule sort_for_truth_comp_formatted:
   input:
-    truth = sam_truth,
-    inp = DIR_OUTPUT_MAP + "/{mapper}/{sample}_{species}.samt"
+    DIR_DUMP + "/{mapper}/{sample}_{species}.samf"
   output:
-    DIR_OUTPUT_MAP + "/{mapper}/{sample}_{species}.truth_stats"
+    DIR_DUMP + "/{mapper}/{sample}_{species}.samft"
+  shell:
+    """
+    source ~/.samsort && samsort {input} {output}
+    """
+
+rule compare_with_truth_single:
+  input:
+    truth = sam_truth_formatted,
+    inp = DIR_DUMP + "/{mapper}/{sample}_{species}.samft"
+  output:
+    DIR_OUTPUT_MAP + "/{mapper}/{sample}_{species}.single_stats"
   shell:
     """
     compare-sam {input.truth} {input.inp} >{output}
     """
 
-rule compare_with_truth_walt:
+rule compare_with_truth_paired:
   input:
-    truth = sam_truth_walt,
-    inp = DIR_OUTPUT_MAP + "/walt/{sample}_{species}.samt"
+    truth = sam_truth,
+    inp = DIR_DUMP + "/{mapper}/{sample}_{species}.samt"
   output:
-    DIR_OUTPUT_MAP + "/walt/{sample}_{species}.truth_stats"
+    DIR_OUTPUT_MAP + "/{mapper}/{sample}_{species}.paired_stats"
   shell:
     """
-    compare-sam {input.truth} {input.inp} >{output}
+    compare-sam-paired {input.truth} {input.inp} >{output}
     """
-ruleorder: compare_with_truth_walt > compare_with_truth
 
 ############## OUTPUT FORMATTING ################
 # this perform the multiple formatting tasks to obtain
@@ -389,7 +401,7 @@ rule format_sam:
   input:
     DIR_OUTPUT_MAP + "/{mapper}/{sample}_{species}.sam"
   output:
-    temp(DIR_OUTPUT_MAP + "/{mapper}/{sample}_{species}.samf")
+    temp(DIR_DUMP + "/{mapper}/{sample}_{species}.samf")
   shell:
     """
     format_reads -f {wildcards.mapper} -s 2 -o {output} {input}
@@ -397,9 +409,9 @@ rule format_sam:
 
 rule sort_formatted_sam:
   input:
-    DIR_OUTPUT_MAP + "/{mapper}/{sample}_{species}.samf"
+    DIR_DUMP + "/{mapper}/{sample}_{species}.samf"
   output:
-    temp(DIR_OUTPUT_MAP + "/{mapper}/{sample}_{species}.samfs")
+    temp(DIR_DUMP + "/{mapper}/{sample}_{species}.samfs")
   shell:
     """
     samtools sort -O sam -o {output} {input}
@@ -407,7 +419,7 @@ rule sort_formatted_sam:
 
 rule duplicate_remove:
   input:
-    DIR_OUTPUT_MAP + "/{mapper}/{sample}_{species}.samfs"
+    DIR_DUMP + "/{mapper}/{sample}_{species}.samfs"
   output:
     o = temp(DIR_OUTPUT_MAP + "/{mapper}/{sample}_{species}.samd"),
     s = DIR_OUTPUT_MAP + "/{mapper}/{sample}_{species}.drstats"

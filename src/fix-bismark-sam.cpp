@@ -125,6 +125,13 @@ fix_mate_name(sam_rec &mate) {
   mate.qname.back() = '2';
 }
 
+static void
+convert_to_se_aln(sam_rec &aln) {
+  aln.rnext = "*";
+  aln.pnext = 0;
+  aln.tlen = 0;
+}
+
 int
 main(int argc, const char **argv) {
   bool verbose = false;
@@ -163,15 +170,19 @@ main(int argc, const char **argv) {
             throw runtime_error("");
           }
         }  
-        const int d_mate = fix_aln(aln);
+        const int d_mate = fix_aln(mate);
         if (report_mates(aln, mate, d_aln, d_mate)) {
           out << aln << '\n';
           out << mate << '\n';
         } else {
-          if (report_aln(aln, d_aln))
+          if (report_aln(aln, d_aln)) {
+            convert_to_se_aln(aln);
             out << aln << '\n';
-          if (report_aln(mate, d_mate))
+          }
+          if (report_aln(mate, d_mate)) {
+            convert_to_se_aln(mate);
             out << mate << '\n';
+          }
         }
       } else {
         cerr << "found unpaired mate, which bismark does not do by default.\n";
