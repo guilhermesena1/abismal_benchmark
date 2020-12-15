@@ -1,0 +1,42 @@
+Bismark report for: /scratch2/desenabr/paired_q0/SRR5756263_danre11_1.fq and /scratch2/desenabr/paired_q0/SRR5756263_danre11_2.fq (version: v0.22.3)
+Bismark was run with Bowtie 2 against the bisulfite genome of /panfs/qcb-panasas/desenabr/ref_genomes/danre11/index/ with the specified options: -q --score-min L,0,-0.2 --ignore-quals --no-mixed --dovetail --minins 32 --maxins 3000
+Option '--directional' specified (default mode): alignments to complementary strands (CTOT, CTOB) were ignored (i.e. not performed)
+
+Final Alignment report
+======================
+Sequence pairs analysed in total:	121700074
+Number of paired-end alignments with a unique best hit:	65822694
+Mapping efficiency:	54.1% 
+Sequence pairs with no alignments under any condition:	40193610
+Sequence pairs did not map uniquely:	15683770
+Sequence pairs which were discarded because genomic sequence could not be extracted:	403
+
+Number of sequence pairs with unique best (first) alignment came from the bowtie output:
+CT/GA/CT:	32757891	((converted) top strand)
+GA/CT/CT:	0	(complementary to (converted) top strand)
+GA/CT/GA:	0	(complementary to (converted) bottom strand)
+CT/GA/GA:	33064400	((converted) bottom strand)
+
+Number of alignments to (merely theoretical) complementary strands being rejected in total:	0
+
+Final Cytosine Methylation Report
+=================================
+Total number of C's analysed:	3228557047
+
+Total methylated C's in CpG context:	238224474
+Total methylated C's in CHG context:	2258789
+Total methylated C's in CHH context:	7085247
+Total methylated C's in Unknown context:	35451
+
+Total unmethylated C's in CpG context:	57496830
+Total unmethylated C's in CHG context:	680627233
+Total unmethylated C's in CHH context:	2242864474
+Total unmethylated C's in Unknown context:	1345273
+
+C methylated in CpG context:	80.6%
+C methylated in CHG context:	0.3%
+C methylated in CHH context:	0.3%
+C methylated in unknown context (CN or CHN):	2.6%
+
+
+Bismark completed in 0d 10h 41m 19s

@@ -1,0 +1,18 @@
+total:
+    both: 60907483
+    input_only: 122321
+    truth_only: 11269392
+    accuracy: 0.919811
+single:
+    superoptimal_uniq: 113103
+    optimal_uniq: 60464312
+    unknown_uniq: 14225
+    suboptimal_uniq: 74459
+    false_uniq: 241384
+    missed_uniq: 4977161
+    dangling_uniq: 122321
+pairs:
+    paired_truth_ambig: 0
+    paired_unknown: 0
+    unpaired: 0
+

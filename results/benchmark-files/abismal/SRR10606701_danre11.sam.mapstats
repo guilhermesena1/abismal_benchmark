@@ -1,0 +1,9 @@
+total_reads: 168367763
+mapped: 
+    num_mapped: 149790265
+    percent_mapped: 88.9661
+    num_unique: 108245234
+    percent_unique: 64.2909
+    ambiguous: 41545031
+unmapped: 18577498
+skipped: 965

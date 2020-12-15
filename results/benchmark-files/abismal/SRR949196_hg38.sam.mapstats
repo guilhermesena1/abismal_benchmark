@@ -1,0 +1,29 @@
+pairs:
+    total_read_pairs: 217713418
+    mapped:
+        num_mapped: 180809930
+        percent_mapped: 83.0495
+        num_unique: 171590869
+        percent_unique: 78.815
+        ambiguous: 9219061
+    unmapped: 171590869
+mate1:
+    total_reads: 46122549
+    mapped: 
+        num_mapped: 28183098
+        percent_mapped: 61.1048
+        num_unique: 15624430
+        percent_unique: 33.8759
+        ambiguous: 12558668
+    unmapped: 17939451
+    skipped: 111772
+mate2:
+    total_reads: 46122549
+    mapped: 
+        num_mapped: 25244551
+        percent_mapped: 54.7336
+        num_unique: 12917365
+        percent_unique: 28.0066
+        ambiguous: 12327186
+    unmapped: 20877998
+    skipped: 455664
