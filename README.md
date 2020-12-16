@@ -15,7 +15,7 @@ from the genome) and in the developed i.i.d. theory. For instance, to
 summarize the hit ratios for 26 bits, run
 
 ```
-hash_counter -b 26 -o stats.tsv /path/to/hg38.fa
+$ hash_counter -b 26 -o stats.tsv /path/to/hg38.fa
 ```
 
 ### mr-to-sam
@@ -25,7 +25,7 @@ Converts walt output from mr to sam. This is equivalent to
 single-ended.
 
 ```
-mr-to-sam -o <sam-output> <mr-input>
+$ mr-to-sam -o <sam-output> <mr-input>
 ```
 ### grepenc
 
@@ -38,7 +38,7 @@ are 1s and C/Ts are 2s.  For instance, find the number of occurrences of the
 two-letter encoding `00110010` on the genome `genome.fa`:
 
 ```
-grepenc -a 2 00110010 /path/to/genome.fa
+$ grepenc -a 2 00110010 /path/to/genome.fa
 ```
 
 ### compare-sam
@@ -51,7 +51,7 @@ the dataset, defined as reads on truth that are ambiguous and at least
 as good as the one on input.
 
 ```
-compare-sam <ground_truth_dataset.sam> <input_dataset.sam>
+$ compare-sam <ground_truth_dataset.sam> <input_dataset.sam>
 ```
 
 ### fix-bismark-sam
@@ -65,3 +65,23 @@ names as it was standardized for other mappers.
 ```
 fix-bismark-sam -o bismark_fixed.sam bismark_original.sam
 ```
+
+# R script to parse output files
+
+To generate the figures and tables from the manuscript, run the following
+command:
+
+```
+$ Rscript R/benchmark.r
+```
+
+Or alternatively, in an R environment
+```
+> source('R/benchmark.r')
+```
+
+This will generate a `tbl` object, with rows as the tests provided in the
+`metadata/tests.txt` file, and columns are the features displayed in the
+supplementary tables. The script will also generate a `times` table and a
+`mems` table that parses the snakemake outputs showing the total wall time and
+maximum resident set size used to run the job.
