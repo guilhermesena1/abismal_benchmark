@@ -5,15 +5,10 @@ SRR10606701 danre11 wgbs_single Mendoza 96  168367763 Illumina_HiSeq_1500 yes
 SRR5015166  galgal6 wgbs_single Zhang 125 139994176 Illumina_HiSeq_4000 yes
 SRR12075121 tair10  wgbs_single Shahryary  151  76256688   Illumina_NextSeq_500 yes
 SRR1067551	hg38	wgbs_paired	Bernstein	100	168557498	Illumina_HiSeq_2000 yes
-SRR8659903	hg38	wgbs_paired Encode	151 99159158	Illumina_HiSeq_X_Ten	no
 SRR3897178	mm10	wgbs_paired	Decato	90	124995278	Illumina_HiSeq_2000 yes
-SRR1170764	mm10	wgbs_paired	Molaro	101	103397077	Illumina_HiSeq_2000 no
-SRR5721973	mm10	wgbs_paired Wade	151 22594720 Illumina_NextSeq_500 no
 SRR5756263	danre11	wgbs_paired	Kamstra	150	121650843	Illumina_HiSeq_4000 yes
 SRR5644125	galgal6	wgbs_paired	Lee	125	59768935	Illumina_HiSeq_2500 yes
 SRR2296821	tair10	wgbs_paired	Yong	90	21543631	Illumina_HiSeq_2000 yes
-SRR948779 mm10	wgbs_paired Low 101 220832792 Illumina_HiSeq_2000 no
-SRR949196 hg38	wgbs_paired Meissner	99	217713418 Illumina_HiSeq_2000 no
 DRR019425	hg38	wgbs_rpbat	Miura_1	100	69919315	Illumina_HiSeq_2500 yes
 SRR7461526	hg38	wgbs_rpbat	Bian	150 19986722 Illumina_HiSeq_X_Ten yes
 SRR7757863	hg38	wgbs_rpbat	Miura_2	151 99575506 Illumina_HiSeq_X_Ten yes

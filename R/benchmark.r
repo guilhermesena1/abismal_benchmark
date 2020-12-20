@@ -1,7 +1,7 @@
 source("R/fig_label.r")
 
 BENCHMARK_PATH =
-"/panfs/qcb-panasas/desenabr/ab/results/benchmark-files"
+"results/benchmark-files"
 
 # whether to redo plots
 plot <- T
@@ -425,7 +425,7 @@ add.abismal.index.time <- function(times) {
   index.times <- list()
 
   # get indexing times for all species
-  ref.path <- "~/panasas/ref_genomes"
+  ref.path <- "results/indexing_times"
   for (i in unique(species)) {
     line <- readLines(paste0(ref.path, "/", i, "_usr_bin_time.txt"))[5]
     line <- gsub("^.* ", "", line)
