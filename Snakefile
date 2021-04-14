@@ -6,7 +6,7 @@ DIR_OUTPUT_MAP = \
   "/panfs/qcb-panasas/desenabr/ab/results/benchmark-files"
 
 # everything else (that does not depend on speed and heavy IO) to cmb-06
-DIR_OUTPUT_REST = "/home/cmb-06/as/desenabr/abismal_devel/tests"
+DIR_OUTPUT_REST = "/project/andrewds_103/desenabr/abismal_devel/tests"
 
 # scratch space for heavy temp files
 DIR_DUMP = "/scratch2/desenabr/snakemake_dump"
@@ -25,6 +25,7 @@ fai = genome_dir + "genome.fa.fai"
 fa_dir = "/scratch2/desenabr"
 
 fa_single = fa_dir + "/single/{sample}_{species}.fq"
+fa_single_minimap2 = fa_dir + "/single/{sample}_{species}_C_to_T.fq"
 
 # pattern of r1 and r2 filenames
 fa_paired_r1 = fa_dir + "/paired/{sample}_{species}_1.fq"
@@ -50,7 +51,10 @@ index_bismark= genome_dir_bismark + "index"
 index_walt = index + "/walt.dbindex"
 
 # abismal index file
-index_abismal = index + "/abismal_compressed.idx"
+index_abismal = index + "/abismal_min.idx"
+
+# minimap2 index file
+index_minimap2 = index + "/minimap2.idx"
 ########### END INDEX PATHS #############
 
 # samples to map
@@ -76,10 +80,10 @@ for x in open(input_dataset_tsv):
       ARABIDOPSIS_SAMPLES.append(y[0])
 
 # mappers used in benchmarking
-MAPPERS = ["abismal", "bismark", "bsmap", "walt"]
+MAPPERS = ["bismark", "abismal", "bsmap", "walt"]
 
 # output files
-OUT_FILES = ["single_stats", "paired_stats"]
+OUT_FILES = ["samstats", "bsrate", "levels"]
 
 
 ################### END REPEAT CONFIG ####################
@@ -87,31 +91,36 @@ OUT_FILES = ["single_stats", "paired_stats"]
 rule all:
   input:
    # what to keep from methpipe
-   expand("{dirr}/{mapper}/{sample}_hg38.{methpipeout}",
+   expand("{dirr}/{mapper}/{sample}_hg38.{outfile}",
            dirr = DIR_OUTPUT_MAP,
            mapper = MAPPERS,
            sample = HUMAN_SAMPLES,
-           methpipeout = OUT_FILES),
-   expand("{dirr}/{mapper}/{sample}_mm10.{methpipeout}",
+           outfile = OUT_FILES),
+   expand("{dirr}/{mapper}/{sample}_mm10.{outfile}",
            dirr = DIR_OUTPUT_MAP,
            mapper = MAPPERS,
            sample = MOUSE_SAMPLES,
-           methpipeout = OUT_FILES),
-   expand("{dirr}/{mapper}/{sample}_danre11.{methpipeout}",
+           outfile = OUT_FILES),
+   expand("{dirr}/{mapper}/{sample}_danre11.{outfile}",
            dirr = DIR_OUTPUT_MAP,
            mapper = MAPPERS,
            sample = ZEBRAFISH_SAMPLES,
-           methpipeout = OUT_FILES),
-   expand("{dirr}/{mapper}/{sample}_galgal6.{methpipeout}",
+           outfile = OUT_FILES),
+   expand("{dirr}/{mapper}/{sample}_galgal6.{outfile}",
            dirr = DIR_OUTPUT_MAP,
            mapper = MAPPERS,
            sample = CHICKEN_SAMPLES,
-           methpipeout = OUT_FILES),
-   expand("{dirr}/{mapper}/{sample}_tair10.{methpipeout}",
+           outfile = OUT_FILES),
+   expand("{dirr}/{mapper}/{sample}_tair10.{outfile}",
            dirr = DIR_OUTPUT_MAP,
            mapper = MAPPERS,
            sample = ARABIDOPSIS_SAMPLES,
-           methpipeout = OUT_FILES)
+           outfile = OUT_FILES),
+   DIR_OUTPUT_MAP + "/minimap2/SRR3498383_hg38.samstats",
+   DIR_OUTPUT_MAP + "/minimap2/SRR2096734_mm10.samstats",
+   DIR_OUTPUT_MAP + "/minimap2/SRR10606701_danre11.samstats",
+   DIR_OUTPUT_MAP + "/minimap2/SRR5015166_galgal6.samstats",
+   DIR_OUTPUT_MAP + "/minimap2/SRR12075121_tair10.samstats"
 
 ############### BSMAP #####################
 rule bsmap_map_single:
@@ -160,6 +169,20 @@ rule bsmap_map_pbat:
     bsmap -v 0.1 -m 32 -x 3000 -r 0 -n 1 -p 16 -V 2 \
     -a {input.r1} -b {input.r2} -d {input.fa} -o {output.sam} \
     2>{output.out}
+    """
+
+############### MINIMAP2 ################
+rule minimap2_map_single:
+  input:
+    fa = fa_single_minimap2,
+    ref = index_minimap2
+  output:
+    DIR_OUTPUT_MAP + "/minimap2/{sample}_{species}.sam"
+  benchmark:
+    DIR_OUTPUT_MAP + "/minimap2/snakemake_time_{sample}_{species}.txt"
+  shell:
+    """
+    minimap2 -t 16 -x sr -a {input.ref} {input.fa} >{output}
     """
 
 ############### WALT #####################
@@ -231,7 +254,7 @@ rule abismal_map_single:
     DIR_OUTPUT_MAP + "/abismal/snakemake_time_{sample}_{species}.txt"
   shell:
     """
-    abismal -v -t 16 -i {input.index} -o {output.sam} {input.r}
+    abismal -v -t 16 -i {input.index} -o {output.sam} -m {output.mapstats} {input.r}
     """
 
 rule abismal_map_paired:
@@ -246,7 +269,7 @@ rule abismal_map_paired:
     DIR_OUTPUT_MAP + "/abismal/snakemake_time_{sample}_{species}.txt"
   shell:
     """
-    abismal -v -t 16 -i {input.index} -o {output.sam} {input.r1} {input.r2}
+    abismal -v -t 16 -i {input.index} -o {output.sam} -m {output.mapstats} {input.r1} {input.r2}
     """
 
 rule abismal_map_pbat:
@@ -261,13 +284,13 @@ rule abismal_map_pbat:
     DIR_OUTPUT_MAP + "/abismal/snakemake_time_{sample}_{species}.txt"
   shell:
     """
-    abismal -v -t 16 -R -i {input.index} -o {output.sam} {input.r1} {input.r2}
+    abismal -v -t 16 -R -i {input.index} -o {output.sam} -m {output.mapstats} {input.r1} {input.r2}
     """
 
 ############### BISMARK #################
 rule bismark_map_single:
   input:
-    r = fa_single,
+    r = fa_single
   output:
     bam = DIR_OUTPUT_MAP + \
       "/bismark/{sample}_{species}_bismark_bt2.bam",
@@ -278,32 +301,32 @@ rule bismark_map_single:
   shell:
     """
     bismark --temp_dir /scratch2/desenabr/bismark_dump --parallel 8 \
-    -o %s/bismark --bowtie2 --icpc %s {input.r}
+    -o %s/bismark --local --bowtie2 --icpc %s {input.r}
     """ % (DIR_OUTPUT_MAP, index_bismark)
 
 
 rule bismark_map_paired:
   input:
     r1 = fa_paired_r1,
-    r2 = fa_paired_r2,
+    r2 = fa_paired_r2
   output:
     bam = DIR_OUTPUT_MAP + \
       "/bismark/{sample}_{species}_1_bismark_bt2_pe.bam",
     rep = temp(DIR_OUTPUT_MAP + \
-      "/bismark/{sample}_{species}a_1_bismark_bt2_PE_report.txt")
+      "/bismark/{sample}_{species}_1_bismark_bt2_PE_report.txt")
   benchmark:
     DIR_OUTPUT_MAP + "/bismark/snakemake_time_{sample}_{species}.txt"
   shell:
     """
     bismark --temp_dir /scratch2/desenabr/bismark_dump --parallel 8  \
-    -o %s/bismark --bowtie2 --icpc -I 32 -X 3000 \
+    -o %s/bismark --local --bowtie2 --icpc -I 32 -X 3000 \
     -1 {input.r1} -2 {input.r2} %s
     """ % (DIR_OUTPUT_MAP, index_bismark)
 
 rule bismark_map_pbat:
   input:
     r1 = fa_rpbat_r1,
-    r2 = fa_rpbat_r2,
+    r2 = fa_rpbat_r2
   output:
     bam = DIR_OUTPUT_MAP + \
       "/bismark/{sample}_{species}_1_bismark_bt2_pe.bam",
@@ -315,38 +338,36 @@ rule bismark_map_pbat:
     """
     bismark --temp_dir /scratch2/desenabr/bismark_dump --bowtie2 \
             --non_directional --parallel 8 \
-            -o %s/bismark --icpc -I 32 -X 3000 -1 {input.r1} -2 {input.r2} %s
+            -o %s/bismark --local --icpc -I 32 -X 3000 -1 {input.r1} -2 {input.r2} %s
     """ % (DIR_OUTPUT_MAP, index_bismark)
 
 rule bismark_to_sam_se:
   input:
-    bam = DIR_OUTPUT_MAP + \
-      "/bismark/{sample}_{species}_bismark_bt2.bam",
+    bam = DIR_OUTPUT_MAP + "/bismark/{sample}_{species}_bismark_bt2.bam",
     rep = DIR_OUTPUT_MAP + "/bismark/{sample}_{species}_bismark_bt2_SE_report.txt"
   output:
     sam = DIR_OUTPUT_MAP + "/bismark/{sample}_{species}.sam",
-    rep = DIR_OUTPUT_MAP + "/bismark/{sample}_{species}.mapstats",
+    rep = DIR_OUTPUT_MAP + "/bismark/{sample}_{species}.mapstats"
   shell:
     """
-    samtools view -h {input.bam} -o {output.sam}temp &&
-    fix-bismark-sam -s -o {output.sam} {output.sam}temp &&
-    cp {input.rep} {output.rep} &&
+    samtools view -h {input.bam} -o {output.sam}temp && \
+    fix-bismark-sam -s -o {output.sam} {output.sam}temp && \
+    cp {input.rep} {output.rep} && \
     rm {output.sam}temp
     """
 
 rule bismark_to_sam_pe:
   input:
-    bam = DIR_OUTPUT_MAP + \
-      "/bismark/{sample}_{species}_1_bismark_bt2_pe.bam",
+    bam = DIR_OUTPUT_MAP + "/bismark/{sample}_{species}_1_bismark_bt2_pe.bam",
     rep = DIR_OUTPUT_MAP + "/bismark/{sample}_{species}_1_bismark_bt2_PE_report.txt"
   output:
     sam = DIR_OUTPUT_MAP + "/bismark/{sample}_{species}.sam",
-    rep = DIR_OUTPUT_MAP + "/bismark/{sample}_{species}.mapstats",
+    rep = DIR_OUTPUT_MAP + "/bismark/{sample}_{species}.mapstats"
   shell:
     """
-    samtools view -h {input.bam} -o {output.sam}temp &&
-    fix-bismark-sam -o {output.sam} {output.sam}temp &&
-    cp {input.rep} {output.rep} &&
+    samtools view -h {input.bam} -o {output.sam}temp && \
+    fix-bismark-sam -o {output.sam} {output.sam}temp && \
+    cp {input.rep} {output.rep} && \
     rm {output.sam}temp
     """
 
@@ -425,12 +446,23 @@ rule duplicate_remove:
     s = DIR_OUTPUT_MAP + "/{mapper}/{sample}_{species}.drstats"
   shell:
     """
-    duplicate-remover_sam -D -S {output.s} {input} {output.o}
+    duplicate-remover -D -S {output.s} {input} {output.o}
     """
 
 ############## METHPIPE ANALYSIS ################
 # we will use cmb-06 to keep .meth files and symmetric .meth
 # files because it is not heavy IO but take a lot of space
+
+rule samtools_stats:
+  input:
+    sam = DIR_OUTPUT_MAP + "/{mapper}/{sample}_{species}.sam",
+    fa = fa
+  output:
+    DIR_OUTPUT_MAP + "/{mapper}/{sample}_{species}.samstats",
+  shell:
+    """
+    samtools stats -r {input.fa} -i 3000 {input.sam} >{output}
+    """
 
 rule bsrate:
   input:
@@ -439,7 +471,7 @@ rule bsrate:
   output:
     DIR_OUTPUT_MAP + "/{mapper}/{sample}_{species}.bsrate"
   shell:
-    "bsrate_sam -c {input.fa} -o {output} {input.mr}"
+    "bsrate -c {input.fa} -o {output} {input.mr}"
 
 rule methcounts:
   input:
@@ -448,7 +480,7 @@ rule methcounts:
   output:
     DIR_OUTPUT_REST + "/{mapper}/{sample}_{species}.meth"
   shell:
-    "methcounts_sam -c {input.fa} -o {output} {input.mr}"
+    "methcounts -c {input.fa} -o {output} {input.mr}"
 
 rule sym_cpg:
   input:
