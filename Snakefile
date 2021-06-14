@@ -18,6 +18,7 @@ genome_dir_bismark = \
 
 # reference genome fasta files
 fa = genome_dir + "genome.fa"
+fa_minimap2 = genome_dir + "genome_bisulfite.fa"
 fai = genome_dir + "genome.fa.fai"
 
 ############### FASTQ FILES #################
@@ -80,7 +81,7 @@ for x in open(input_dataset_tsv):
       ARABIDOPSIS_SAMPLES.append(y[0])
 
 # mappers used in benchmarking
-MAPPERS = ["bismark", "abismal", "bsmap", "walt"]
+MAPPERS = ["abismal", "bismark", "bsmap", "walt"]
 
 # output files
 OUT_FILES = ["samstats", "bsrate", "levels"]
@@ -134,7 +135,7 @@ rule bsmap_map_single:
     DIR_OUTPUT_MAP + "/bsmap/snakemake_time_{sample}_{species}.txt"
   shell:
     """
-    bsmap -v 0.1 -r 0 -p 16 -V 2 -a {input.r} \
+    bsmap -g 3 -v 0.1 -r 0 -p 16 -V 2 -a {input.r} \
     -d {input.fa} -o {output.sam} 2>{output.out}
     """
 
@@ -150,7 +151,7 @@ rule bsmap_map_paired:
     DIR_OUTPUT_MAP + "/bsmap/snakemake_time_{sample}_{species}.txt"
   shell:
     """
-    bsmap -v 0.1 -m 32 -x 3000 -r 0 -p 16 -V 2 -a {input.r1} \
+    bsmap -g 3 -v 0.1 -m 32 -x 3000 -r 0 -p 16 -V 2 -a {input.r1} \
     -b {input.r2} -d {input.fa} -o {output.sam} 2>{output.out}
     """
 
@@ -166,7 +167,7 @@ rule bsmap_map_pbat:
     DIR_OUTPUT_MAP + "/bsmap/snakemake_time_{sample}_{species}.txt"
   shell:
     """
-    bsmap -v 0.1 -m 32 -x 3000 -r 0 -n 1 -p 16 -V 2 \
+    bsmap -g 3 -v 0.1 -m 32 -x 3000 -r 0 -n 1 -p 16 -V 2 \
     -a {input.r1} -b {input.r2} -d {input.fa} -o {output.sam} \
     2>{output.out}
     """
@@ -182,7 +183,51 @@ rule minimap2_map_single:
     DIR_OUTPUT_MAP + "/minimap2/snakemake_time_{sample}_{species}.txt"
   shell:
     """
-    minimap2 -t 16 -x sr -a {input.ref} {input.fa} >{output}
+    minimap2 -x sr -N 1 -p 0.99 -t 16 -a {input.ref} {input.fa} >{output}
+    """
+
+############### BWA-METH################
+rule bwa_map_single:
+  input:
+    r = fa_single,
+    ref = fa
+  output:
+    DIR_OUTPUT_MAP + "/bwa/{sample}_{species}.sam"
+  benchmark:
+    DIR_OUTPUT_MAP + "/bwa/snakemake_time_{sample}_{species}.txt"
+  shell:
+    """
+    python /panfs/qcb-panasas/desenabr/software/bwa-meth/bwameth.py --threads 16 --reference \
+    {input.ref} {input.r} >{output}
+    """
+
+rule bwa_map_paired:
+  input:
+    r1 = fa_paired_r1,
+    r2 = fa_paired_r2,
+    ref = fa
+  output:
+    DIR_OUTPUT_MAP + "/bwa/{sample}_{species}.sam"
+  benchmark:
+    DIR_OUTPUT_MAP + "/bwa/snakemake_time_{sample}_{species}.txt"
+  shell:
+    """
+    python /panfs/qcb-panasas/desenabr/software/bwa-meth/bwameth.py --threads 16 --reference \
+    {input.ref} {input.r1} {input.r2} >{output}
+    """
+rule bwa_map_pbat:
+  input:
+    r1 = fa_rpbat_r1,
+    r2 = fa_rpbat_r2,
+    ref = fa
+  output:
+    DIR_OUTPUT_MAP + "/bwa/{sample}_{species}.sam"
+  benchmark:
+    DIR_OUTPUT_MAP + "/bwa/snakemake_time_{sample}_{species}.txt"
+  shell:
+    """
+    python /panfs/qcb-panasas/desenabr/software/bwa-meth/bwameth.py --threads 16 --reference \
+    {input.ref} {input.r1} {input.r2} >{output}
     """
 
 ############### WALT #####################
@@ -197,7 +242,7 @@ rule walt_map_single:
     DIR_OUTPUT_MAP + "/walt/snakemake_time_{sample}_{species}.txt"
   shell:
     """
-    walt -m 15 -t 16 -i {input.index} -r {input.r} -o {output.mr}
+    walt -b 50000 -m 15 -t 16 -i {input.index} -r {input.r} -o {output.mr}
     """
 
 rule walt_map_paired:
@@ -212,7 +257,7 @@ rule walt_map_paired:
     DIR_OUTPUT_MAP + "/walt/snakemake_time_{sample}_{species}.txt"
   shell:
     """
-    walt -m 15 -L 3000 -t 16 -i {input.index} -1 {input.r1} \
+    walt -b 50000 -k 100 -m 15 -L 3000 -t 16 -i {input.index} -1 {input.r1} \
     -2 {input.r2} -o {output.mr}
     """
 
@@ -228,7 +273,7 @@ rule walt_map_pbat:
     DIR_OUTPUT_MAP + "/walt/snakemake_time_{sample}_{species}.txt"
   shell:
     """
-    walt -P -m 15 -L 3000 -t 16 -i {input.index} -1 {input.r1} \
+    walt -k 100 -b 50000 -P -m 15 -L 3000 -t 16 -i {input.index} -1 {input.r1} \
     -2 {input.r2} -o {output.mr}
     """
 
@@ -246,7 +291,7 @@ rule walt_to_sam:
 rule abismal_map_single:
   input:
     r = fa_single,
-    index = index_abismal
+    fa = fa
   output:
     sam = DIR_OUTPUT_MAP + "/abismal/{sample}_{species}.sam",
     mapstats = DIR_OUTPUT_MAP + "/abismal/{sample}_{species}.sam.mapstats",
@@ -254,14 +299,14 @@ rule abismal_map_single:
     DIR_OUTPUT_MAP + "/abismal/snakemake_time_{sample}_{species}.txt"
   shell:
     """
-    abismal -v -t 16 -i {input.index} -o {output.sam} -m {output.mapstats} {input.r}
+    abismal -v -t 16 -g {input.fa} -o {output.sam} -s {output.mapstats} {input.r}
     """
 
 rule abismal_map_paired:
   input:
     r1 = fa_paired_r1,
     r2 = fa_paired_r2,
-    index = index_abismal
+    fa = fa
   output:
     sam = DIR_OUTPUT_MAP + "/abismal/{sample}_{species}.sam",
     mapstats = DIR_OUTPUT_MAP + "/abismal/{sample}_{species}.sam.mapstats",
@@ -269,14 +314,14 @@ rule abismal_map_paired:
     DIR_OUTPUT_MAP + "/abismal/snakemake_time_{sample}_{species}.txt"
   shell:
     """
-    abismal -v -t 16 -i {input.index} -o {output.sam} -m {output.mapstats} {input.r1} {input.r2}
+    abismal -v -t 16 -g {input.fa} -o {output.sam} -s {output.mapstats} {input.r1} {input.r2}
     """
 
 rule abismal_map_pbat:
   input:
     r1 = fa_rpbat_r1,
     r2 = fa_rpbat_r2,
-    index = index_abismal
+    fa = fa
   output:
     sam = DIR_OUTPUT_MAP + "/abismal/{sample}_{species}.sam",
     mapstats = DIR_OUTPUT_MAP + "/abismal/{sample}_{species}.sam.mapstats",
@@ -284,7 +329,7 @@ rule abismal_map_pbat:
     DIR_OUTPUT_MAP + "/abismal/snakemake_time_{sample}_{species}.txt"
   shell:
     """
-    abismal -v -t 16 -R -i {input.index} -o {output.sam} -m {output.mapstats} {input.r1} {input.r2}
+    abismal -v -t 16 -R -g {input.fa} -o {output.sam} -s {output.mapstats} {input.r1} {input.r2}
     """
 
 ############### BISMARK #################
@@ -337,7 +382,7 @@ rule bismark_map_pbat:
   shell:
     """
     bismark --temp_dir /scratch2/desenabr/bismark_dump --bowtie2 \
-            --non_directional --parallel 8 \
+            --non_directional --parallel 4 \
             -o %s/bismark --local --icpc -I 32 -X 3000 -1 {input.r1} -2 {input.r2} %s
     """ % (DIR_OUTPUT_MAP, index_bismark)
 
@@ -463,6 +508,18 @@ rule samtools_stats:
     """
     samtools stats -r {input.fa} -i 3000 {input.sam} >{output}
     """
+
+rule samtools_stats_minimap2:
+  input:
+    sam = DIR_OUTPUT_MAP + "/minimap2/{sample}_{species}.sam",
+    fa = fa_minimap2
+  output:
+    DIR_OUTPUT_MAP + "/minimap2/{sample}_{species}.samstats",
+  shell:
+    """
+    samtools stats -r {input.fa} -i 3000 {input.sam} >{output}
+    """
+ruleorder: samtools_stats_minimap2 > samtools_stats
 
 rule bsrate:
   input:
