@@ -148,28 +148,33 @@ parse.samstats <- function(samstats.path) {
 }
 
 parse.samstats.minimap2 <- function(samstats.path) {
+  if (!file.exists(samstats.path))
+    return (list(sam.err.rate = NA, map.total = NA, map.unique = NA))
   dat <- readLines(samstats.path)
 
   ans <- NULL
   tot.reads <- NULL
-  uniq.reads <- NULL
-  ambig.reads <- NULL
+  mapped.reads <- NULL
+  unmapped.reads <- NULL
+  supp.reads <- NULL
   for (i in 1:length(dat)) {
     if (grepl("^SN", dat[i])) {
       explode <- strsplit(dat[i], "[ \t]")[[1]]
       if (grepl("error rate:", dat[i]))
         ans$sam.err.rate <- as.numeric(explode[4])
+      else if (grepl("reads unmapped:", dat[i]))
+        unmapped.reads <- as.numeric(explode[4])
+      else if (grepl("reads mapped:", dat[i]))
+        mapped.reads <- as.numeric(explode[4])
+      else if (grepl("supplementary alignments:", dat[i]))
+        supp.reads <- as.numeric(explode[4])
       else if (grepl("raw total sequences:", dat[i]))
         tot.reads <- as.numeric(explode[5])
-      else if (grepl("reads mapped:", dat[i]))
-        uniq.reads <- as.numeric(explode[4])
-      else if (grepl("supplementary alignments:", dat[i]))
-        ambig.reads <- as.numeric(explode[4])
     }
   }
-  ans$map.total <- (uniq.reads + ambig.reads)/tot.reads
-  ans$map.unique <- uniq.reads/tot.reads
-  ans
+  ans$map.total <- (mapped.reads)/tot.reads
+  ans$map.unique <- (mapped.reads - supp.reads)/tot.reads
+  return(ans)
 }
 
 
@@ -183,7 +188,9 @@ parse.bsrate <- function(bsrate.path) {
   ans$bs.conv.tot <- as.numeric(strsplit(bs.data[1], " ")[[1]][5])
 
   # 34 = 30th base
-  ans$bs.conv.rand <- as.numeric(strsplit(bs.data[34], "[ \t]")[[1]][10])
+  the.line <- strsplit(bs.data[34], "[ \t]")[[1]]
+  ans$bs.conv.rand <- (as.numeric(the.line[3]) + as.numeric(the.line[6]))/
+                      (as.numeric(the.line[2]) + as.numeric(the.line[5]))
   ans$bs.pos <- as.numeric(strsplit(bs.data[2], "[ \t]")[[1]][5])
   ans$bs.neg <- as.numeric(strsplit(bs.data[3], "[ \t]")[[1]][5])
 
@@ -211,20 +218,33 @@ parse.levels <- function(levels.path) {
   })
 
   ans <- list()
-  ans$meth.cytosine      <- lev$cytosines$mean_meth_weighted
-  ans$meth.cpg           <- lev$cpg_symmetric$mean_meth_weighted
+  ans$mean.cytosine <- lev$cytosines$mean_meth
+  ans$weigh.cytosine <- lev$cytosines$mean_meth_weighted
+  ans$frac.cytosine <- lev$cytosines$fractional_meth
+
+  ans$mean.cpg<- lev$cpg$mean_meth
+  ans$weigh.cpg<- lev$cpg$mean_meth_weighted
+  ans$frac.cpg<- lev$cpg$fractional_meth
+
+  ans$mean.cpg.sym <- lev$cpg_symmetric$mean_meth
+  ans$weigh.cpg.sym <- lev$cpg_symmetric$mean_meth_weighted
+  ans$frac.cpg.sym <- lev$cpg_symmetric$fractional_meth
 
   ans$mut.cytosine       <- lev$cytosines$mutations
-  ans$mut.cpg            <- lev$cpg_symmetric$mutations
+  ans$mut.cpg            <- lev$cpg$mutations
+  ans$mut.cpg.sym        <- lev$cpg_symmetric$mutations
 
   ans$frac.cytosine      <- lev$cytosines$fractional_meth
-  ans$frac.cpg           <- lev$cpg_symmetric$fractional_meth
+  ans$frac.cpg           <- lev$cpg$fractional_meth
+  ans$frac.cpg.sym       <- lev$cpg_symmetric$fractional_meth
 
   ans$coverage.cytosine  <- lev$cytosines$sites_covered_fraction
-  ans$coverage.cpg       <- lev$cpg_symmetric$sites_covered_fraction
+  ans$coverage.cpg       <- lev$cpg$sites_covered_fraction
+  ans$coverage.cpg.sym   <- lev$cpg_symmetric$sites_covered_fraction
 
   ans$depth.cytosine     <- lev$cytosines$mean_depth
-  ans$depth.cpg          <- lev$cpg_symmetric$mean_depth
+  ans$depth.cpg          <- lev$cpg$mean_depth
+  ans$depth.cpg.sym      <- lev$cpg_symmetric$mean_depth
   ans
 }
 
@@ -255,17 +275,32 @@ get.row.for.mapper <- function(srr, mapper, mapstats.suffix, f,
     bs.neg = NA,
     bs.err.rate = NA,
 
-    c.meth = NA,
+    c.meth.mean = NA,
+    c.meth.weigh = NA,
+    c.meth.frac = NA,
+
     c.frac = NA,
     c.mut = NA,
     c.cov = NA,
     c.depth = NA,
 
-    cpg.meth = NA,
+    cpg.meth.mean = NA,
+    cpg.meth.weigh = NA,
+    cpg.meth.frac = NA,
+
     cpg.frac = NA,
     cpg.mut = NA,
     cpg.cov = NA,
     cpg.depth = NA,
+    
+    cpg.sym.meth.mean = NA,
+    cpg.sym.meth.weigh = NA,
+    cpg.sym.meth.frac = NA,
+
+    cpg.sym.frac = NA,
+    cpg.sym.mut = NA,
+    cpg.sym.cov = NA,
+    cpg.sym.depth = NA,
     
     row.names = paste0(srr,"_",species)
   )
@@ -310,17 +345,32 @@ get.row.for.mapper <- function(srr, mapper, mapstats.suffix, f,
   path <- paste0(base.path, srr, "_", species, ".levels")
   tryCatch({
     levelsdata <- parse.levels(path)
-    ans$c.meth <- levelsdata$meth.cytosine
+    ans$c.meth.mean <- levelsdata$mean.cytosine
+    ans$c.meth.weigh <- levelsdata$weigh.cytosine
+    ans$c.meth.frac <- levelsdata$frac.cytosine
+
     ans$c.frac <- levelsdata$frac.cytosine
     ans$c.mut <- levelsdata$mut.cytosine
     ans$c.cov <- levelsdata$coverage.cytosine
     ans$c.depth <- levelsdata$depth.cytosine
 
-    ans$cpg.meth <- levelsdata$meth.cpg
+    ans$cpg.meth.mean <- levelsdata$mean.cpg
+    ans$cpg.meth.weigh <- levelsdata$weigh.cpg
+    ans$cpg.meth.frac <- levelsdata$frac.cpg
+
     ans$cpg.frac <- levelsdata$frac.cpg
     ans$cpg.mut <- levelsdata$mut.cpg
     ans$cpg.cov <- levelsdata$coverage.cpg
     ans$cpg.depth <- levelsdata$depth.cpg
+
+    ans$cpg.sym.meth.mean <- levelsdata$mean.cpg.sym
+    ans$cpg.sym.meth.weigh <- levelsdata$weigh.cpg.sym
+    ans$cpg.sym.meth.frac <- levelsdata$frac.cpg.sym
+
+    ans$cpg.sym.frac <- levelsdata$frac.cpg.sym
+    ans$cpg.sym.mut <- levelsdata$mut.cpg.sym
+    ans$cpg.sym.cov <- levelsdata$coverage.cpg.sym
+    ans$cpg.sym.depth <- levelsdata$depth.cpg.sym
 
   }, error = function(e) {
     write(paste0("failure opening file: ", path), stderr());
@@ -443,7 +493,8 @@ get.times.for.srr <- function(srr, species) {
     file <- paste0(BENCHMARK_PATH, "/", i, "/snakemake_time_",
                    srr, "_", species, ".txt")
     if (!file.exists(file)) {
-      write(paste0("failure opening file: ", file), stderr())
+      if (i != "minimap2")
+        write(paste0("failure opening file: ", file), stderr())
       times <- c(times, NA)
     }
     else {
@@ -495,6 +546,7 @@ add.abismal.index.time <- function(times) {
 
 make.times <- function(tbl) {
   ans <- NULL
+  ans.two <- NULL
   srrs <- tbl$srr
   ids <- tbl$id
   species <- tbl$species
@@ -503,14 +555,18 @@ make.times <- function(tbl) {
     ans <- rbind(ans, get.times.for.srr(srrs[i], species[i]))
 
   # add the "num reads" column from tbl which will be the x axis
-  ans <- cbind(ans, tbl$total.reads)
-  ans <- cbind(ans, tbl$protocol)
-  rownames(ans) <- paste0(ids, "_", species)
-  colnames(ans) <- c("abismal", mappers, "minimap2", "total.reads", "protocol")
-
-  ans <- add.abismal.index.time(ans)
-  ans
+  ans.two <- tbl$total.reads
+  ans.two <- cbind(ans.two, tbl$protocol)
+  
+  # convert to a format that can be manipulated
+   
+  rownames(ans) <- rownames(ans.two) <- paste0(ids, "_", species)
+  colnames(ans) <- c("abismal", mappers, "minimap2")
+  colnames(ans.two) <- c("total.reads", "protocol")
+  list(times = ans, meta = ans.two)
 }
+
+
 
 make.mems <- function(tbl) {
   ans <- NULL
@@ -619,12 +675,15 @@ readable.by.barplot <- function(x) {
   x
 }
 
-plot.map <- function(tbl, protocols, main, what, ylab, fig.label, scale.x = T) {
+plot.map <- function(tbl, protocols, main, what, ylab, fig.label, scale.x = T, pct = T) {
   tbl <- tbl[unlist(tbl$protocol) %in% protocols,]
   tbl <- get.data(tbl, what)
   num.mappers <- ncol(tbl)
   tbl[is.na(tbl)] <- 0
   tbl <- t(readable.by.barplot(tbl))
+
+  if (pct)
+    tbl <- tbl*100;
 
   # remove species name
   colnames(tbl) <- gsub(" .*$", "", colnames(tbl))
@@ -634,11 +693,17 @@ plot.map <- function(tbl, protocols, main, what, ylab, fig.label, scale.x = T) {
 
   palette(plot.good.colors)
   cols <- seq(1, num.mappers)
+
+  # set the x-axis scale
+  max.val <- ifelse(pct, 100, 1)
+  if (!scale.x)
+    max.val <- max(as.vector(tbl))
+
   barplot(tbl, beside = T, horiz = T, xlab = ylab,
-          col = cols, main = main, xlim = c(0, ifelse(scale.x, 1, max(as.vector(tbl)))),
+          col = cols, main = main, xlim = c(0, max.val),
           cex.axis = 1.5, cex.lab = 1.5, cex.names = 1.5, cex.main = 1.5)
 
-  fig_label(fig.label, cex=2)
+  fig_label(fig.label, cex = 2)
 }
 
 plot.mems <- function(mems) {
@@ -693,15 +758,15 @@ make.accuracy.figure <- function(tbl, minimap2) {
   plot.map(tbl.w.min2, "wgbs_single", "Traditional (SE)",
            "map.total", "% pairs mapped", "A")
   plot.map(tbl, "wgbs_paired", "Traditional (PE)",
-           "map.total", "% concordant pairs mapped", "B")
+           "map.total", "% concordant pairs mapped", "")
   plot.map(tbl, "wgbs_rpbat", "RPBAT (PE)",
-           "map.total", "% concordant pairs mapped", "C")
+           "map.total", "% concordant pairs mapped", "")
   plot.map(tbl.w.min2, "wgbs_single", "Traditional (SE)",
-             "sam.err.rate", "error rate (%)", "D", F)
+           "sam.err.rate", "error rate (%)", "B", scale.x = F)
   plot.map(tbl, "wgbs_paired", "Traditional (PE)",
-             "sam.err.rate", "error rate (%)", "E", F)
+           "sam.err.rate", "error rate (%)", "", scale.x = F)
   plot.map(tbl, "wgbs_rpbat", "RPBAT (PE)",
-           "sam.err.rate", "error rate (%)", "F", F)
+           "sam.err.rate", "error rate (%)", "", scale.x = F)
 
   # common legend to all plots
   num.mappers <- 5
@@ -714,10 +779,11 @@ make.accuracy.figure <- function(tbl, minimap2) {
 
 # aux function to turn times to reads per sec
 time.to.reads.per.sec <- function(times) {
-  tot.reads <- unlist(times[, "total.reads"])
+  tot.reads <- as.numeric(unlist(times$meta[, "total.reads"]))
+  #for(i in c("abismal", mappers, "minimap2")) {
   for(i in c("abismal", mappers, "minimap2")) {
-    col <- unlist(times[,i])
-    times[,i] <- (tot.reads / col) * (3600 / 1000000)
+    col <- unlist(times$times[,i])
+    times$times[,i] <- (tot.reads / col) * (3600 / 1000000)
   }
   times
 }
@@ -736,10 +802,10 @@ make.resources.figure <- function(times, mems, minimap2) {
   times <- time.to.reads.per.sec(times)
   
   # we'll use this for mem distribution
-  single.datasets <- which(unlist(times[,"protocol"]=="wgbs_single"))
+  single.datasets <- which(unlist(times$meta[,"protocol"]=="wgbs_single"))
 
   # convert to readable form for barplot
-  times <- t(readable.by.barplot(times[,1:(length(mappers) + 2)]))
+  times$times <- t(readable.by.barplot(times$times[,1:(length(mappers) + 2)]))
 
   # convert mems to GB
   mems <- mems / (1024)
@@ -764,11 +830,11 @@ make.resources.figure <- function(times, mems, minimap2) {
                   11,12,13,14,15,16,16), nrow = 3, byrow = T))
   par(family = "Times")
   par(mar = c(1.5, 3, 1.5, 3))
-  for (i in 1:ncol(times)) {
+  for (i in 1:ncol(times$times)) {
     cols.to.plot <- cols.paired
     if (i %in% single.datasets)
       cols.to.plot <- cols.single
-    barplot(times[,i], beside = T, horiz = F,
+    barplot(times$times[,i], beside = T, horiz = F,
             col = cols.to.plot, names.arg = NA,
             main = cn[i], ylab = "reads per hour (M)", cex.lab = 1.5,
             font.main = 1, cex.axis = 1.5)
@@ -779,11 +845,13 @@ make.resources.figure <- function(times, mems, minimap2) {
   mems.to.plot <-mems[single.datasets,]
   # transforms mems so that only the species shows up
   rownames(mems.to.plot) <- gsub("^.*_", "", rownames(mems.to.plot))
-
   mems.to.plot <- t(mems.to.plot)
-  print(mems.to.plot)
 
-  dotchart(mems.to.plot, las = 2, xlab = "Memory (GB)", pch = 19)
+  # hack to make abismal appear on top
+  mems.to.plot <- mems.to.plot[seq(nrow(mems.to.plot), 1, -1),]
+
+  dotchart(mems.to.plot, las = 2, xlab = "Memory (GB)", pch = 21, col = "black",
+           bg = rev(cols.single))
 
   fig_label("B", cex = 2)
   dev.off()
@@ -823,33 +891,44 @@ mems <- make.mems(tbl)
 
 if (plot) {
   # Supp table 1 is accuracy
-  conc.pairs <- get.data(tbl, "map.total")
-  sam.err.rate <- get.data(tbl, "sam.err.rate", F)
-  bs.err.rate <- get.data(tbl, "bs.err.rate", F)
-  wt(cbind(conc.pairs, sam.err.rate, bs.err.rate),
+  conc.pairs <- round(100*get.data(tbl, "map.total"), 3)
+  sam.err.rate <- round(100*get.data(tbl, "sam.err.rate", F), 3)
+  bs.err.rate <- round(100*get.data(tbl, "bs.err.rate", F), 3)
+  supp.tab.1 <- cbind(conc.pairs, sam.err.rate, bs.err.rate)
+
+  wt(supp.tab.1,
      "results/tables/supp_table_1_accuracy.tsv")
 
   # Supp table 2 is bsrate and coverage
-  bsrate <- get.data(tbl, "bs.err")
-  coverage <- get.data(tbl, "cpg.cov")
-  depth <- get.data(tbl, "cpg.depth")
-  meth.cytosine <- get.data(tbl, "c.meth")
-  meth.cpg <- get.data(tbl, "cpg.meth")
-  wt(cbind(bsrate, coverage, depth, meth.cytosine, meth.cpg),
-     "results/tables/supp_table_2_bsrate.tsv")
+  c.cov <- round(100*get.data(tbl, "c.cov"), 3)
+  c.depth <- get.data(tbl, "c.depth")
+  c.meth.mean <- round(100*get.data(tbl, "c.meth.mean"), 3)
+  c.meth.weigh <- round(100*get.data(tbl, "c.meth.weigh"), 3)
+  c.meth.frac <- round(100*get.data(tbl, "c.meth.frac"), 3)
+  cpg.cov <- round(100*get.data(tbl, "cpg.cov"), 3)
+  cpg.depth <- get.data(tbl, "cpg.depth")
+  cpg.meth.mean <- round(100*get.data(tbl, "cpg.meth.mean"), 3)
+  cpg.meth.weigh <- round(100*get.data(tbl, "cpg.meth.weigh"), 3)
+  cpg.meth.frac <- round(100*get.data(tbl, "cpg.meth.frac"), 3)
+  supp.tab.2 <- cbind(c.cov, c.depth, c.meth.mean, c.meth.weigh, c.meth.frac,
+           cpg.cov, cpg.depth, cpg.meth.mean, cpg.meth.weigh, cpg.meth.frac)
+  wt(supp.tab.2,
+     "results/tables/supp_table_2_downstream.tsv")
 
   # Supp table 3 are the times
-  mm <- c("abismal", mappers)
-  a <- times[,mm]
+  mm <- c("abismal", mappers, "minimap2")
+  a <- times$times[,mm]
   b <- mems[,mm]
   colnames(a) <- paste0("time_", colnames(a))
   colnames(b) <- paste0("mem_", colnames(b))
-  wt(cbind(a,b), "results/tables/supp_table_3_resources.tsv")
+  supp.tab.3 <- cbind(a, b)
+  wt(supp.tab.3, "results/tables/supp_table_3_resources.tsv")
 
   ########### FIGURES ###########
   primary <- unlist(datasets$primary) == "yes"
   tbl <- tbl[primary,]
-  times <- times[primary,]
+  times$times <- times$times[primary,]
+  times$meta <- times$meta[primary,]
   mems <- mems[primary,]
 
   # for the main figure we filter only the primary tests
