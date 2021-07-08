@@ -3,9 +3,6 @@ source("R/fig_label.r")
 BENCHMARK_PATH =
 "results/benchmark-files"
 
-# whether to redo plots
-plot <- T
-
 datasets <- read.table("metadata/tests.txt",
                        header = 1,row.names = NULL,stringsAsFactors = F)
 mappers <- c("bismark", "bsmap", "walt")
@@ -13,6 +10,11 @@ mappers <- c("bismark", "bsmap", "walt")
 ##########################
 # Aux functions
 ##########################
+
+# Write a nice log
+write.log <- function(...) {
+  write(paste0("[", Sys.time(), "] ", ...), stderr())
+}
 
 # turns absolute number of mapped reads into percentage
 get.pct <- function(ans) {
@@ -242,9 +244,9 @@ parse.levels <- function(levels.path) {
   ans$coverage.cpg       <- lev$cpg$sites_covered_fraction
   ans$coverage.cpg.sym   <- lev$cpg_symmetric$sites_covered_fraction
 
-  ans$depth.cytosine     <- lev$cytosines$mean_depth
-  ans$depth.cpg          <- lev$cpg$mean_depth
-  ans$depth.cpg.sym      <- lev$cpg_symmetric$mean_depth
+  ans$depth.cytosine     <- lev$cytosines$mean_depth_covered
+  ans$depth.cpg          <- lev$cpg$mean_depth_covered
+  ans$depth.cpg.sym      <- lev$cpg_symmetric$mean_depth_covered
   ans
 }
 
@@ -447,7 +449,7 @@ make.table <- function(datasets) {
   stats <- NULL
   all.names <- c()
   for(i in 1:nrow(datasets)) {
-    write(paste0("reading row ", datasets[i,1]))
+    write.log("...reading row ", datasets[i,1])
     srr <- datasets[i,1]
     species <- datasets[i,2]
     protocol <- datasets[i,3]
@@ -520,7 +522,7 @@ get.mems.for.srr <- function(srr, species) {
   mems
 }
 
-add.abismal.index.time <- function(times) {
+make.index.times <- function(times) {
   cur.abismal.times <- unlist(times[,"abismal"])
   species <- gsub("^.*_","",names(cur.abismal.times))
   index.times <- list()
@@ -534,14 +536,7 @@ add.abismal.index.time <- function(times) {
     seconds <- as.numeric(gsub("^.*:","",line))
     index.times[[i]] <- 60*minutes + seconds
   }
-  wt(unlist(index.times), "results/tables/supp_table_4_index_times.tsv")
-
-  # add read indexing times
-  for (i in 1:length(cur.abismal.times))
-    cur.abismal.times[i] <- cur.abismal.times[i] + index.times[[species[i]]]
-  
-  times[,"abismal"] <- cur.abismal.times
-  times
+  return(do.call(c, index.times))
 }
 
 make.times <- function(tbl) {
@@ -746,23 +741,25 @@ get.data <- function(tbl, what, erase.prefix = F) {
 ##################################
 # MAKE FIGURES
 ##################################
-make.accuracy.figure <- function(tbl, minimap2) {
+make.accuracy.figure <- function(sim.tbl, tbl, minimap2) {
   pdf("results/figures/accuracy.pdf", width = 15, height = 6)
-  layout(mat = matrix(c(1,2,3,4,5,6,7,7,7,7,7,7), nrow = 2, byrow = T),
-         heights = c(.85, .15))
+  layout(mat = matrix(c(8,8,8,1,2,3,4,5,6,
+                        9,9,9,1,2,3,4,5,6,
+                        7,7,7,7,7,7,7,7,7), nrow = 3, byrow = T),
+         heights = c(.425, .425, .15))
 
   tbl.w.min2 <- cbind(tbl, minimap2)
   tbl.w.min2 <- tbl.w.min2[tbl$protocol == "wgbs_single",]
 
-  par(mar = rep(1.5, 4), family = "Times")
+  par(mar = rep(2, 4), family = "Times")
   plot.map(tbl.w.min2, "wgbs_single", "Traditional (SE)",
-           "map.total", "% pairs mapped", "A")
+           "map.total", "% reads mapped", "B")
   plot.map(tbl, "wgbs_paired", "Traditional (PE)",
-           "map.total", "% concordant pairs mapped", "")
+           "map.total", "% pairs mapped", "")
   plot.map(tbl, "wgbs_rpbat", "RPBAT (PE)",
-           "map.total", "% concordant pairs mapped", "")
+           "map.total", "% pairs mapped", "")
   plot.map(tbl.w.min2, "wgbs_single", "Traditional (SE)",
-           "sam.err.rate", "error rate (%)", "B", scale.x = F)
+           "sam.err.rate", "error rate (%)", "C", scale.x = F)
   plot.map(tbl, "wgbs_paired", "Traditional (PE)",
            "sam.err.rate", "error rate (%)", "", scale.x = F)
   plot.map(tbl, "wgbs_rpbat", "RPBAT (PE)",
@@ -774,6 +771,89 @@ make.accuracy.figure <- function(tbl, minimap2) {
   plot(1, type = "n", axes=FALSE, xlab="", ylab="")
   legend("top", legend = c("abismal", mappers, "minimap2"), cex = 1.5, pt.cex = 3, pch = 22,
          pt.bg = cols, col = rep("black", num.mappers + 1), horiz = T, bty = "n")
+
+  ############### simulation figure #############
+  the.lengths <- sim.tbl$lengths
+
+  # accuracy
+  sens <- sim.tbl$err_3$sensitivity
+  # hack to put abismal up front
+  sens <- sens[, seq(ncol(sens), 1, -1)]
+
+  the.xlim <- c(min(the.lengths), max(the.lengths))
+  the.ylim <- c(min(sens, na.rm=T), max(sens, na.rm = T))
+  plot(1, type = 'n', xlim = the.xlim, ylim = the.ylim,
+       xlab = "read length", ylab = "correct reads / total reads", main = "sensitivity",
+       cex.lab = 1.5, cex.main = 1.5, cex.axis = 1.5)
+  for (i in 1:ncol(sens))
+    points(the.lengths, sens[,i], type = 'o', pch = 22, cex = 2, bg = ncol(sens) - i + 1)
+  fig_label("A", cex = 2)
+
+  # specificity
+  spec <- sim.tbl$err_3$specificity
+
+  # hack to put abismal up front
+  spec <- spec[, seq(ncol(spec), 1, -1)]
+
+  the.ylim <- c(min(spec, na.rm=T), max(spec, na.rm = T))
+  plot(1, type = 'n', xlim = the.xlim, ylim = the.ylim,
+       xlab = "read length", ylab = "correct reads / reported reads", main = "specificity",
+       cex.lab = 1.5, cex.main = 1.5, cex.axis = 1.5)
+  for (i in 1:ncol(spec))
+    points(the.lengths, spec[,i], type = 'o', pch = 22, cex = 2, bg = ncol(spec) - i + 1)
+
+  ########### FINISHED PLOTTING FIGURE ###########
+  dev.off()
+}
+
+make.sim.comparison.figure <- function(sim.tbl) {
+  pdf("results/figures/supp_2_simulations.pdf", width = 18, height = 9)
+  layout(mat = matrix(c(1,3,5,7,9,11,
+                        2,4,6,8,10,12,
+                        13,13,13,13,13,13), nrow = 3, byrow = T),
+         heights = c(.425, .425, .15))
+
+  the.lengths <- sim.tbl$lengths
+  the.errs <- sim.tbl$error.rates
+
+  for (err in the.errs) {
+    # accuracy
+    sens <- sim.tbl[[paste0("err_",err)]]$sensitivity
+    # hack to put abismal up front
+    sens <- sens[, seq(ncol(sens), 1, -1)]
+
+    the.xlim <- c(min(the.lengths), max(the.lengths))
+    the.ylim <- c(min(sens, na.rm=T), max(sens, na.rm = T))
+    plot(1, type = 'n', xlim = the.xlim, ylim = the.ylim,
+         xlab = "read length", ylab = "correct reads / total reads",
+         main = paste0("sensitivity (error = ", err, "%)"),
+         cex.lab = 1.5, cex.main = 1.5, cex.axis = 1.5)
+    for (i in 1:ncol(sens))
+      points(the.lengths, sens[,i], type = 'o', pch = 22, cex = 2, bg = ncol(sens) - i + 1)
+
+    # specificity
+    spec <- sim.tbl[[paste0("err_",err)]]$specificity
+
+    # hack to put abismal up front
+    spec <- spec[, seq(ncol(spec), 1, -1)]
+
+    the.ylim <- c(min(spec, na.rm=T), max(spec, na.rm = T))
+    plot(1, type = 'n', xlim = the.xlim, ylim = the.ylim,
+         xlab = "read length", ylab = "correct reads / reported reads",
+         main = paste0("specificity (error = ", err, "%)"),
+         cex.lab = 1.5, cex.main = 1.5, cex.axis = 1.5)
+    for (i in 1:ncol(spec))
+      points(the.lengths, spec[,i], type = 'o', pch = 22, cex = 2, bg = ncol(spec) - i + 1)
+  }
+  ########### FINISHED PLOTTING FIGURE ###########
+  # common legend to all plots
+  num.mappers <- 5
+  cols <- seq(1, num.mappers)
+  plot(1, type = "n", axes=FALSE, xlab="", ylab="")
+  legend("top", legend = c("abismal", mappers), cex = 1.5, pt.cex = 3, pch = 22,
+         pt.bg = cols, col = rep("black", num.mappers + 1), horiz = T, bty = "n")
+
+
   dev.off()
 }
 
@@ -798,6 +878,14 @@ get.top.times <- function(times, top.n) {
   times[order(-unlist(times[,"total.reads"]))[1:top.n],]
 }
 
+replace.species.id.with.name <- function(x) {
+  x <- gsub("hg38", "H. sapiens", x)
+  x <- gsub("mm10", "M. musculus", x)
+  x <- gsub("danre11", "D. rerio", x)
+  x <- gsub("galgal6", "G. gallus", x)
+  x <- gsub("tair10", "A. thaliana", x)
+}
+
 make.resources.figure <- function(times, mems, minimap2) {
   times <- time.to.reads.per.sec(times)
   
@@ -816,9 +904,11 @@ make.resources.figure <- function(times, mems, minimap2) {
     for (j in 1:ncol(mems))
       mems[i,j] = min(mems[i,j], max.mem.to.report)
 
-  cn <- colnames(times)
-  cn <- gsub("_[^_]+$","",cn)
-  cn <- gsub("_", " ", cn)
+  cn <- colnames(times$times)
+  cn <- gsub("_", " (", cn)
+  cn <- gsub("-", " ", cn)
+  cn <- gsub("$", ")", cn)
+  cn <- replace.species.id.with.name(cn)
 
   palette(plot.good.colors)
   cols.paired <- seq(1, 1 + length(mappers))
@@ -834,6 +924,7 @@ make.resources.figure <- function(times, mems, minimap2) {
     cols.to.plot <- cols.paired
     if (i %in% single.datasets)
       cols.to.plot <- cols.single
+
     barplot(times$times[,i], beside = T, horiz = F,
             col = cols.to.plot, names.arg = NA,
             main = cn[i], ylab = "reads per hour (M)", cex.lab = 1.5,
@@ -849,8 +940,9 @@ make.resources.figure <- function(times, mems, minimap2) {
 
   # hack to make abismal appear on top
   mems.to.plot <- mems.to.plot[seq(nrow(mems.to.plot), 1, -1),]
+  colnames(mems.to.plot) <- replace.species.id.with.name(colnames(mems.to.plot))
 
-  dotchart(mems.to.plot, las = 2, xlab = "Memory (GB)", pch = 21, col = "black",
+  dotchart(mems.to.plot, las = 2, ylab = "Memory (GB)", pch = 21, col = "black",
            bg = rev(cols.single))
 
   fig_label("B", cex = 2)
@@ -865,13 +957,23 @@ make.minimap2 <- function(datasets) {
   ans <- NULL
   datasets <- datasets[datasets$protocol == "wgbs_single" & datasets$primary == "yes",]
   for (i in 1:nrow(datasets)) {
-    srr <- datasets[i,"srr"]
-    species <- datasets[i,"species"]
-    stats.path <- paste0(BENCHMARK_PATH, "/minimap2/",srr,"_",species,".samstats")
-    times.path <- paste0(BENCHMARK_PATH, "/minimap2/snakemake_time_",srr,"_",species, ".txt")
-    dat <- parse.samstats.minimap2(stats.path)
-    dat$time <- get.time.from.snakemake(times.path)
-    dat$mem <- get.mem.from.snakemake(times.path)
+    dat <- list()
+    dat$map.total <- NA
+    dat$map.unique <- NA
+    dat$time <- NA
+    dat$meim <- NA
+
+    tryCatch({
+      srr <- datasets[i,"srr"]
+      species <- datasets[i,"species"]
+      stats.path <- paste0(BENCHMARK_PATH, "/minimap2/",srr,"_",species,".samstats")
+      times.path <- paste0(BENCHMARK_PATH, "/minimap2/snakemake_time_",srr,"_",species, ".txt")
+      dat <- parse.samstats.minimap2(stats.path)
+      dat$time <- get.time.from.snakemake(times.path)
+      dat$mem <- get.mem.from.snakemake(times.path)
+    }, error = function(e) {
+      write(paste0("cannot open minimap2 file: ", stats.path), stderr())
+    })
 
     ans <- rbind(ans, dat)
   }
@@ -880,64 +982,157 @@ make.minimap2 <- function(datasets) {
   ans
 }
 
-################# MAIN ################
-# write benchmark table
-tbl <- make.table(datasets)
-minimap2 <- make.minimap2(datasets)
+make.sim.tbl <- function(read.lengths, num.reads = 2000000) {
+  cols <- c("abismal", mappers)
 
-# resources
-times <- make.times(tbl)
-mems <- make.mems(tbl)
+  errs <- seq(0, 5)
+
+  ans <- list()
+  ans$lengths <- read.lengths
+  ans$error.rates <- errs
+  for (err in errs) {
+    sens <- data.frame(NA, nrow = length(cols), ncol = length(read.lengths))
+    spec <- data.frame(NA, nrow = length(cols), ncol = length(read.lengths))
+    for (i in 1:length(cols)) {
+      for (j in 1:length(read.lengths)) {
+        tryCatch({
+          the.path <- paste0("simulation_analysis/accuracy-out/",
+                             cols[i], "-err-", 
+                             err, "-len-",
+                             read.lengths[j], ".txt")
+          the.data <- yaml::yaml.load_file(the.path)
+          sens[j, i] <- the.data$correct_reads / num.reads
+          spec[j, i] <- the.data$specificity
+        }, error = function(e) {
+          sens[j, i] <- NA
+          spec[j, i] <- NA
+       });
+      }
+    }
+    rownames(sens) <- rownames(spec) <- paste0("length_", read.lengths)
+    colnames(sens) <- colnames(spec) <- cols
+    ans[[paste0("err_",err)]]$sensitivity <- sens
+    ans[[paste0("err_",err)]]$specificity <- spec
+  }
+
+  return(ans)
+}
+
+################# MAIN ################
+do.sim <- T
+do.tbl <- T
+do.times <- T
+do.mems <- T
+plot <- T
+
+
+sim.tbl <- NULL
+tbl <- NULL
+times <- NULL
+mems <- NULL
+
+if (do.sim) {
+  write.log("reading simulation output...")
+  read.lengths <- seq(from = 50, to = 190, by = 10)
+  sim.tbl <- make.sim.tbl(read.lengths)
+} else {
+  write.log("SIMULATION OUTPUT SKIPPED")
+}
+
+if (do.tbl) {
+  write.log("reading master table: methpipe/samtools outputs...")
+  tbl <- make.table(datasets)
+  minimap2 <- make.minimap2(datasets)
+} else {
+  write.log("MASTER TABLE SKIPPED")
+}
+
+if (do.times) {
+  write.log("reading snakemake time outputs...")
+  times <- make.times(tbl)
+} else {
+  write.log("TIME DATA SKIPPED")
+}
+
+if (do.mems) {
+  write.log("reading snakemake memory outputs...")
+  mems <- make.mems(tbl)
+} else {
+  write.log("MEMORY DATA SKIPPED")
+}
 
 if (plot) {
-  # Supp table 1 is accuracy
-  conc.pairs <- round(100*get.data(tbl, "map.total"), 3)
-  sam.err.rate <- round(100*get.data(tbl, "sam.err.rate", F), 3)
-  bs.err.rate <- round(100*get.data(tbl, "bs.err.rate", F), 3)
-  supp.tab.1 <- cbind(conc.pairs, sam.err.rate, bs.err.rate)
+  if (do.tbl) {
+ 
+    # Supp table 1 is accuracy
+    conc.pairs <- round(100*get.data(tbl, "map.total"), 3)
+    sam.err.rate <- round(100*get.data(tbl, "sam.err.rate", F), 3)
+    bs.err.rate <- round(100*get.data(tbl, "bs.err.rate", F), 3)
+    supp.tab.1 <- cbind(conc.pairs, sam.err.rate, bs.err.rate)
 
-  wt(supp.tab.1,
-     "results/tables/supp_table_1_accuracy.tsv")
+    write.log("SUPP TABLE 1: ACCURACY...")
+    wt(supp.tab.1,
+       "results/tables/supp_table_1_accuracy.tsv")
 
-  # Supp table 2 is bsrate and coverage
-  c.cov <- round(100*get.data(tbl, "c.cov"), 3)
-  c.depth <- get.data(tbl, "c.depth")
-  c.meth.mean <- round(100*get.data(tbl, "c.meth.mean"), 3)
-  c.meth.weigh <- round(100*get.data(tbl, "c.meth.weigh"), 3)
-  c.meth.frac <- round(100*get.data(tbl, "c.meth.frac"), 3)
-  cpg.cov <- round(100*get.data(tbl, "cpg.cov"), 3)
-  cpg.depth <- get.data(tbl, "cpg.depth")
-  cpg.meth.mean <- round(100*get.data(tbl, "cpg.meth.mean"), 3)
-  cpg.meth.weigh <- round(100*get.data(tbl, "cpg.meth.weigh"), 3)
-  cpg.meth.frac <- round(100*get.data(tbl, "cpg.meth.frac"), 3)
-  supp.tab.2 <- cbind(c.cov, c.depth, c.meth.mean, c.meth.weigh, c.meth.frac,
-           cpg.cov, cpg.depth, cpg.meth.mean, cpg.meth.weigh, cpg.meth.frac)
-  wt(supp.tab.2,
-     "results/tables/supp_table_2_downstream.tsv")
+    # Supp table 2 is bsrate and coverage
+    c.cov <- round(100*get.data(tbl, "c.cov"), 3)
+    c.depth <- get.data(tbl, "c.depth")
+    c.meth.mean <- round(100*get.data(tbl, "c.meth.mean"), 3)
+    c.meth.weigh <- round(100*get.data(tbl, "c.meth.weigh"), 3)
+    c.meth.frac <- round(100*get.data(tbl, "c.meth.frac"), 3)
+    cpg.cov <- round(100*get.data(tbl, "cpg.cov"), 3)
+    cpg.depth <- get.data(tbl, "cpg.depth")
+    cpg.meth.mean <- round(100*get.data(tbl, "cpg.meth.mean"), 3)
+    cpg.meth.weigh <- round(100*get.data(tbl, "cpg.meth.weigh"), 3)
+    cpg.meth.frac <- round(100*get.data(tbl, "cpg.meth.frac"), 3)
+    supp.tab.2 <- cbind(c.cov, c.depth, c.meth.mean, c.meth.weigh, c.meth.frac,
+             cpg.cov, cpg.depth, cpg.meth.mean, cpg.meth.weigh, cpg.meth.frac)
 
-  # Supp table 3 are the times
-  mm <- c("abismal", mappers, "minimap2")
-  a <- times$times[,mm]
-  b <- mems[,mm]
-  colnames(a) <- paste0("time_", colnames(a))
-  colnames(b) <- paste0("mem_", colnames(b))
-  supp.tab.3 <- cbind(a, b)
-  wt(supp.tab.3, "results/tables/supp_table_3_resources.tsv")
+    write.log("SUPP TABLE 2: METH ACCURACY...")
+    wt(supp.tab.2, "results/tables/supp_table_2_downstream.tsv")
+  }
 
+  if (do.times & do.mems) {
+    # Supp table 3 are the times
+    mm <- c("abismal", mappers, "minimap2")
+    a <- times$times[,mm]
+    b <- mems[,mm]
+    colnames(a) <- paste0("time_", colnames(a))
+    colnames(b) <- paste0("mem_", colnames(b))
+    supp.tab.3 <- cbind(a, b)
+
+    write.log("SUPP TABLE 3: RESOURCES...")
+    wt(supp.tab.3, "results/tables/supp_table_3_resources.tsv")
+
+    index.times <- make.index.times(times$times)
+    wt(unlist(index.times), "results/tables/supp_table_4_index_times.tsv")
+  }
   ########### FIGURES ###########
-  primary <- unlist(datasets$primary) == "yes"
-  tbl <- tbl[primary,]
-  times$times <- times$times[primary,]
-  times$meta <- times$meta[primary,]
-  mems <- mems[primary,]
+  if (do.tbl) {
+    write.log("FIGURE S2: SIMULATION RESULTS...")
+    primary <- unlist(datasets$primary) == "yes"
+    tbl <- tbl[primary,]
 
-  # for the main figure we filter only the primary tests
-  datasets <- datasets[as.character(datasets$primary_test) == "yes",]
+    # accuracy
+    make.accuracy.figure(sim.tbl, tbl, minimap2)
+  }
+  if (do.sim) {
+    write.log("FIGURE 2: ACCURACY...")
+    primary <- unlist(datasets$primary) == "yes"
+    make.sim.comparison.figure(sim.tbl)
+  }
+  if (do.times) {
+    write.log("FIGURE 3: RESOURCES...")
+    times$times <- times$times[primary,]
+    times$meta <- times$meta[primary,]
+    mems <- mems[primary,]
 
-  # accuracy
-  make.accuracy.figure(tbl, minimap2)
+    # for the main figure we filter only the primary tests
+    datasets <- datasets[as.character(datasets$primary_test) == "yes",]
 
-  # resources
-  make.resources.figure(times, mems, minimap2)
+    # resources
+    make.resources.figure(times, mems, minimap2)
+  }
 }
+write.log("DONE!")
 

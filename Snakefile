@@ -67,21 +67,21 @@ ARABIDOPSIS_SAMPLES = []
 
 for x in open(input_dataset_tsv):
   y = x.strip().split()
-  if(y[7] == "yes"):
-    species = y[1]
-    if(species == "hg38"):
-      HUMAN_SAMPLES.append(y[0])
-    if(species == "mm10"):
-      MOUSE_SAMPLES.append(y[0])
-    if(species == "danre11"):
-      ZEBRAFISH_SAMPLES.append(y[0])
-    if(species == "galgal6"):
-      CHICKEN_SAMPLES.append(y[0])
-    if(species == "tair10"):
-      ARABIDOPSIS_SAMPLES.append(y[0])
+  species = y[1]
+  if(species == "hg38"):
+    HUMAN_SAMPLES.append(y[0])
+  if(species == "mm10"):
+    MOUSE_SAMPLES.append(y[0])
+  if(species == "danre11"):
+    ZEBRAFISH_SAMPLES.append(y[0])
+  if(species == "galgal6"):
+    CHICKEN_SAMPLES.append(y[0])
+  if(species == "tair10"):
+    ARABIDOPSIS_SAMPLES.append(y[0])
 
 # mappers used in benchmarking
-MAPPERS = ["abismal", "bismark", "bsmap", "walt"]
+#MAPPERS = ["abismal", "bismark", "bsmap", "walt"]
+MAPPERS = []
 
 # output files
 OUT_FILES = ["samstats", "bsrate", "levels"]
@@ -118,7 +118,9 @@ rule all:
            sample = ARABIDOPSIS_SAMPLES,
            outfile = OUT_FILES),
    DIR_OUTPUT_MAP + "/minimap2/SRR3498383_hg38.samstats",
+   DIR_OUTPUT_MAP + "/minimap2/SRR3537005_hg38.samstats",
    DIR_OUTPUT_MAP + "/minimap2/SRR2096734_mm10.samstats",
+   DIR_OUTPUT_MAP + "/minimap2/SRR12615661_mm10.samstats",
    DIR_OUTPUT_MAP + "/minimap2/SRR10606701_danre11.samstats",
    DIR_OUTPUT_MAP + "/minimap2/SRR5015166_galgal6.samstats",
    DIR_OUTPUT_MAP + "/minimap2/SRR12075121_tair10.samstats"
@@ -273,7 +275,7 @@ rule walt_map_pbat:
     DIR_OUTPUT_MAP + "/walt/snakemake_time_{sample}_{species}.txt"
   shell:
     """
-    walt -k 100 -b 50000 -P -m 15 -L 3000 -t 16 -i {input.index} -1 {input.r1} \
+    walt -k 100 -b 50000 -k 100 -P -m 15 -L 3000 -t 16 -i {input.index} -1 {input.r1} \
     -2 {input.r2} -o {output.mr}
     """
 
@@ -299,7 +301,7 @@ rule abismal_map_single:
     DIR_OUTPUT_MAP + "/abismal/snakemake_time_{sample}_{species}.txt"
   shell:
     """
-    abismal -v -t 16 -g {input.fa} -o {output.sam} -s {output.mapstats} {input.r}
+    /panfs/qcb-panasas/desenabr/abismal/bin/abismal -v -t 16 -g {input.fa} -o {output.sam} -s {output.mapstats} {input.r}
     """
 
 rule abismal_map_paired:
@@ -314,7 +316,7 @@ rule abismal_map_paired:
     DIR_OUTPUT_MAP + "/abismal/snakemake_time_{sample}_{species}.txt"
   shell:
     """
-    abismal -v -t 16 -g {input.fa} -o {output.sam} -s {output.mapstats} {input.r1} {input.r2}
+    /panfs/qcb-panasas/desenabr/abismal/bin/abismal -v -t 16 -g {input.fa} -o {output.sam} -s {output.mapstats} {input.r1} {input.r2}
     """
 
 rule abismal_map_pbat:
@@ -329,7 +331,7 @@ rule abismal_map_pbat:
     DIR_OUTPUT_MAP + "/abismal/snakemake_time_{sample}_{species}.txt"
   shell:
     """
-    abismal -v -t 16 -R -g {input.fa} -o {output.sam} -s {output.mapstats} {input.r1} {input.r2}
+    /panfs/qcb-panasas/desenabr/abismal/bin/abismal -v -t 16 -R -g {input.fa} -o {output.sam} -s {output.mapstats} {input.r1} {input.r2}
     """
 
 ############### BISMARK #################
@@ -414,49 +416,6 @@ rule bismark_to_sam_pe:
     fix-bismark-sam -o {output.sam} {output.sam}temp && \
     cp {input.rep} {output.rep} && \
     rm {output.sam}temp
-    """
-
-############## GROUND TRUTH COMPARISON ################
-rule sort_for_truth_comp:
-  input:
-    DIR_OUTPUT_MAP + "/{mapper}/{sample}_{species}.sam"
-  output:
-    DIR_DUMP + "/{mapper}/{sample}_{species}.samt"
-  shell:
-    """
-    source ~/.samsort && samsort {input} {output}
-    """
-
-rule sort_for_truth_comp_formatted:
-  input:
-    DIR_DUMP + "/{mapper}/{sample}_{species}.samf"
-  output:
-    DIR_DUMP + "/{mapper}/{sample}_{species}.samft"
-  shell:
-    """
-    source ~/.samsort && samsort {input} {output}
-    """
-
-rule compare_with_truth_single:
-  input:
-    truth = sam_truth_formatted,
-    inp = DIR_DUMP + "/{mapper}/{sample}_{species}.samft"
-  output:
-    DIR_OUTPUT_MAP + "/{mapper}/{sample}_{species}.single_stats"
-  shell:
-    """
-    compare-sam {input.truth} {input.inp} >{output}
-    """
-
-rule compare_with_truth_paired:
-  input:
-    truth = sam_truth,
-    inp = DIR_DUMP + "/{mapper}/{sample}_{species}.samt"
-  output:
-    DIR_OUTPUT_MAP + "/{mapper}/{sample}_{species}.paired_stats"
-  shell:
-    """
-    compare-sam-paired {input.truth} {input.inp} >{output}
     """
 
 ############## OUTPUT FORMATTING ################
