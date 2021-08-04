@@ -1,0 +1,8 @@
+total_reads: 163725478
+mapped:
+    unique: 138691362
+    percent_unique: 84.7097
+    ambiguous: 12578693
+unmapped: 12455423
+min_read_length: 38
+too_short: 27412

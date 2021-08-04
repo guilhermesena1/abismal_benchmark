@@ -1,420 +1,2088 @@
 
 BSMAP v2.90
-[bsmap] @Sun Nov 29 00:18:45 2020 	loading reference file: /panfs/qcb-panasas/desenabr/ref_genomes/hg38/genome.fa 	(format: FASTA)
-[bsmap] @Sun Nov 29 00:19:52 2020 	25 reference seqs loaded, total size 3088286401 bp. 67 secs passed
-[bsmap] @Sun Nov 29 00:21:41 2020 	create seed table. 176 secs passed
-	max number of mismatches: read_length * 10%  	max gap size: 0 	kmer cut-off ratio: 5e-07 	max multi-hits: 100
+[bsmap] @Tue Jul 27 16:11:39 2021 	loading reference file: /panfs/qcb-panasas/desenabr/ref_genomes/hg38/genome.fa 	(format: FASTA)
+[bsmap] @Tue Jul 27 16:12:37 2021 	25 reference seqs loaded, total size 3088286401 bp. 58 secs passed
+[bsmap] @Tue Jul 27 16:14:39 2021 	create seed table. 180 secs passed
+	max number of mismatches: read_length * 10%  	max gap size: 3 	kmer cut-off ratio: 5e-07 	max multi-hits: 100
 	quality cutoff: 0 	base quality char: '!' 	max Ns: 5
 	min fragment size: 32 	max fragemt size: 3000
 	wildcard alignment mode: T in reads => C in reference 	seed size: 16 	index interval: 4
 	alignment report: unique alignments only
 	mapping strand (read_1): ++,-+,+-,--	mapping strand (read_2): +-,--,++,-+
-[bsmap] @Sun Nov 29 00:21:41 2020 	Pair-end alignment(16 threads), 	start from read pair #1
-	Input read file #1: /scratch2/desenabr/rpbat/SRR7461526_hg38_1.fq 	(format: FASTQ)
-	Input read file #2: /scratch2/desenabr/rpbat/SRR7461526_hg38_2.fq 	(format: FASTQ)
+[bsmap] @Tue Jul 27 16:14:39 2021 	Pair-end alignment(16 threads), 	start from read pair #1
+	Input read file #1: /panfs/qcb-panasas/desenabr/ab/reads/rpbat/SRR7461526_hg38_1.fq 	(format: FASTQ)
+	Input read file #2: /panfs/qcb-panasas/desenabr/ab/reads/rpbat/SRR7461526_hg38_2.fq 	(format: FASTQ)
 	Output file: /panfs/qcb-panasas/desenabr/ab/results/benchmark-files/bsmap/SRR7461526_hg38.sam	 (format: SAM)
-[bsmap] @Sun Nov 29 00:32:05 2020 	500000 read pairs finished. 800 secs passed
-[bsmap] @Sun Nov 29 00:32:12 2020 	50000 read pairs finished. 807 secs passed
-[bsmap] @Sun Nov 29 00:32:28 2020 	100000 read pairs finished. 823 secs passed
-[bsmap] @Sun Nov 29 00:32:33 2020 	700000 read pairs finished. 828 secs passed
-[bsmap] @Sun Nov 29 00:32:35 2020 	450000 read pairs finished. 830 secs passed
-[bsmap] @Sun Nov 29 00:32:41 2020 	600000 read pairs finished. 836 secs passed
-[bsmap] @Sun Nov 29 00:32:44 2020 	650000 read pairs finished. 839 secs passed
-[bsmap] @Sun Nov 29 00:32:44 2020 	350000 read pairs finished. 839 secs passed
-[bsmap] @Sun Nov 29 00:33:53 2020 	550000 read pairs finished. 908 secs passed
-[bsmap] @Sun Nov 29 00:34:00 2020 	250000 read pairs finished. 915 secs passed
-[bsmap] @Sun Nov 29 00:34:16 2020 	150000 read pairs finished. 931 secs passed
-[bsmap] @Sun Nov 29 00:34:19 2020 	750000 read pairs finished. 934 secs passed
-[bsmap] @Sun Nov 29 00:34:21 2020 	200000 read pairs finished. 936 secs passed
-[bsmap] @Sun Nov 29 00:34:27 2020 	800000 read pairs finished. 942 secs passed
-[bsmap] @Sun Nov 29 00:34:34 2020 	400000 read pairs finished. 949 secs passed
-[bsmap] @Sun Nov 29 00:34:35 2020 	300000 read pairs finished. 950 secs passed
-[bsmap] @Sun Nov 29 00:42:42 2020 	900000 read pairs finished. 1437 secs passed
-[bsmap] @Sun Nov 29 00:43:56 2020 	1000000 read pairs finished. 1511 secs passed
-[bsmap] @Sun Nov 29 00:44:05 2020 	950000 read pairs finished. 1520 secs passed
-[bsmap] @Sun Nov 29 00:44:26 2020 	850000 read pairs finished. 1541 secs passed
-[bsmap] @Sun Nov 29 00:44:51 2020 	1150000 read pairs finished. 1566 secs passed
-[bsmap] @Sun Nov 29 00:45:06 2020 	1250000 read pairs finished. 1581 secs passed
-[bsmap] @Sun Nov 29 00:45:13 2020 	1100000 read pairs finished. 1588 secs passed
-[bsmap] @Sun Nov 29 00:45:13 2020 	1050000 read pairs finished. 1588 secs passed
-[bsmap] @Sun Nov 29 00:45:24 2020 	1350000 read pairs finished. 1599 secs passed
-[bsmap] @Sun Nov 29 00:45:29 2020 	1400000 read pairs finished. 1604 secs passed
-[bsmap] @Sun Nov 29 00:45:52 2020 	1200000 read pairs finished. 1627 secs passed
-[bsmap] @Sun Nov 29 00:45:56 2020 	1300000 read pairs finished. 1631 secs passed
-[bsmap] @Sun Nov 29 00:46:10 2020 	1500000 read pairs finished. 1645 secs passed
-[bsmap] @Sun Nov 29 00:46:37 2020 	1550000 read pairs finished. 1672 secs passed
-[bsmap] @Sun Nov 29 00:46:50 2020 	1450000 read pairs finished. 1685 secs passed
-[bsmap] @Sun Nov 29 00:47:58 2020 	1600000 read pairs finished. 1753 secs passed
-[bsmap] @Sun Nov 29 00:53:53 2020 	1650000 read pairs finished. 2108 secs passed
-[bsmap] @Sun Nov 29 00:54:35 2020 	1750000 read pairs finished. 2150 secs passed
-[bsmap] @Sun Nov 29 00:55:29 2020 	1700000 read pairs finished. 2204 secs passed
-[bsmap] @Sun Nov 29 00:56:08 2020 	1850000 read pairs finished. 2243 secs passed
-[bsmap] @Sun Nov 29 00:56:10 2020 	1900000 read pairs finished. 2245 secs passed
-[bsmap] @Sun Nov 29 00:56:54 2020 	2150000 read pairs finished. 2289 secs passed
-[bsmap] @Sun Nov 29 00:56:58 2020 	2200000 read pairs finished. 2293 secs passed
-[bsmap] @Sun Nov 29 00:57:00 2020 	1800000 read pairs finished. 2295 secs passed
-[bsmap] @Sun Nov 29 00:57:18 2020 	2300000 read pairs finished. 2313 secs passed
-[bsmap] @Sun Nov 29 00:57:37 2020 	1950000 read pairs finished. 2332 secs passed
-[bsmap] @Sun Nov 29 00:58:03 2020 	2250000 read pairs finished. 2358 secs passed
-[bsmap] @Sun Nov 29 00:58:11 2020 	2100000 read pairs finished. 2366 secs passed
-[bsmap] @Sun Nov 29 00:58:22 2020 	2000000 read pairs finished. 2377 secs passed
-[bsmap] @Sun Nov 29 00:58:39 2020 	2050000 read pairs finished. 2394 secs passed
-[bsmap] @Sun Nov 29 00:59:27 2020 	2350000 read pairs finished. 2442 secs passed
-[bsmap] @Sun Nov 29 01:00:52 2020 	2400000 read pairs finished. 2527 secs passed
-[bsmap] @Sun Nov 29 01:04:54 2020 	2450000 read pairs finished. 2769 secs passed
-[bsmap] @Sun Nov 29 01:05:45 2020 	2500000 read pairs finished. 2820 secs passed
-[bsmap] @Sun Nov 29 01:06:48 2020 	2600000 read pairs finished. 2883 secs passed
-[bsmap] @Sun Nov 29 01:06:55 2020 	2650000 read pairs finished. 2890 secs passed
-[bsmap] @Sun Nov 29 01:08:07 2020 	2550000 read pairs finished. 2962 secs passed
-[bsmap] @Sun Nov 29 01:08:25 2020 	2750000 read pairs finished. 2980 secs passed
-[bsmap] @Sun Nov 29 01:08:25 2020 	2850000 read pairs finished. 2980 secs passed
-[bsmap] @Sun Nov 29 01:09:27 2020 	2900000 read pairs finished. 3042 secs passed
-[bsmap] @Sun Nov 29 01:09:31 2020 	2700000 read pairs finished. 3046 secs passed
-[bsmap] @Sun Nov 29 01:09:42 2020 	3050000 read pairs finished. 3057 secs passed
-[bsmap] @Sun Nov 29 01:09:53 2020 	2800000 read pairs finished. 3068 secs passed
-[bsmap] @Sun Nov 29 01:10:24 2020 	3000000 read pairs finished. 3099 secs passed
-[bsmap] @Sun Nov 29 01:10:41 2020 	2950000 read pairs finished. 3116 secs passed
-[bsmap] @Sun Nov 29 01:11:36 2020 	3100000 read pairs finished. 3171 secs passed
-[bsmap] @Sun Nov 29 01:11:46 2020 	3150000 read pairs finished. 3181 secs passed
-[bsmap] @Sun Nov 29 01:14:35 2020 	3200000 read pairs finished. 3350 secs passed
-[bsmap] @Sun Nov 29 01:16:30 2020 	3250000 read pairs finished. 3465 secs passed
-[bsmap] @Sun Nov 29 01:17:21 2020 	3300000 read pairs finished. 3516 secs passed
-[bsmap] @Sun Nov 29 01:17:50 2020 	3350000 read pairs finished. 3545 secs passed
-[bsmap] @Sun Nov 29 01:19:01 2020 	3400000 read pairs finished. 3616 secs passed
-[bsmap] @Sun Nov 29 01:19:55 2020 	3500000 read pairs finished. 3670 secs passed
-[bsmap] @Sun Nov 29 01:20:44 2020 	3450000 read pairs finished. 3719 secs passed
-[bsmap] @Sun Nov 29 01:20:47 2020 	3550000 read pairs finished. 3722 secs passed
-[bsmap] @Sun Nov 29 01:20:50 2020 	3650000 read pairs finished. 3725 secs passed
-[bsmap] @Sun Nov 29 01:21:42 2020 	3850000 read pairs finished. 3777 secs passed
-[bsmap] @Sun Nov 29 01:21:55 2020 	3800000 read pairs finished. 3790 secs passed
-[bsmap] @Sun Nov 29 01:21:56 2020 	3600000 read pairs finished. 3791 secs passed
-[bsmap] @Sun Nov 29 01:22:10 2020 	3750000 read pairs finished. 3805 secs passed
-[bsmap] @Sun Nov 29 01:22:30 2020 	3700000 read pairs finished. 3825 secs passed
-[bsmap] @Sun Nov 29 01:23:02 2020 	3950000 read pairs finished. 3857 secs passed
-[bsmap] @Sun Nov 29 01:23:27 2020 	3900000 read pairs finished. 3882 secs passed
-[bsmap] @Sun Nov 29 01:27:04 2020 	4000000 read pairs finished. 4099 secs passed
-[bsmap] @Sun Nov 29 01:28:31 2020 	4100000 read pairs finished. 4186 secs passed
-[bsmap] @Sun Nov 29 01:28:59 2020 	4050000 read pairs finished. 4214 secs passed
-[bsmap] @Sun Nov 29 01:29:06 2020 	4150000 read pairs finished. 4221 secs passed
-[bsmap] @Sun Nov 29 01:31:32 2020 	4300000 read pairs finished. 4367 secs passed
-[bsmap] @Sun Nov 29 01:31:49 2020 	4200000 read pairs finished. 4384 secs passed
-[bsmap] @Sun Nov 29 01:32:00 2020 	4250000 read pairs finished. 4395 secs passed
-[bsmap] @Sun Nov 29 01:32:39 2020 	4350000 read pairs finished. 4434 secs passed
-[bsmap] @Sun Nov 29 01:33:13 2020 	4550000 read pairs finished. 4468 secs passed
-[bsmap] @Sun Nov 29 01:33:30 2020 	4450000 read pairs finished. 4485 secs passed
-[bsmap] @Sun Nov 29 01:33:53 2020 	4400000 read pairs finished. 4508 secs passed
-[bsmap] @Sun Nov 29 01:34:15 2020 	4700000 read pairs finished. 4530 secs passed
-[bsmap] @Sun Nov 29 01:34:19 2020 	4650000 read pairs finished. 4534 secs passed
-[bsmap] @Sun Nov 29 01:34:24 2020 	4600000 read pairs finished. 4539 secs passed
-[bsmap] @Sun Nov 29 01:34:33 2020 	4500000 read pairs finished. 4548 secs passed
-[bsmap] @Sun Nov 29 01:35:29 2020 	4750000 read pairs finished. 4604 secs passed
-[bsmap] @Sun Nov 29 01:39:44 2020 	4800000 read pairs finished. 4859 secs passed
-[bsmap] @Sun Nov 29 01:40:28 2020 	4950000 read pairs finished. 4903 secs passed
-[bsmap] @Sun Nov 29 01:40:41 2020 	4900000 read pairs finished. 4916 secs passed
-[bsmap] @Sun Nov 29 01:40:42 2020 	4850000 read pairs finished. 4917 secs passed
-[bsmap] @Sun Nov 29 01:44:00 2020 	5050000 read pairs finished. 5115 secs passed
-[bsmap] @Sun Nov 29 01:44:15 2020 	5200000 read pairs finished. 5130 secs passed
-[bsmap] @Sun Nov 29 01:44:20 2020 	5000000 read pairs finished. 5135 secs passed
-[bsmap] @Sun Nov 29 01:44:31 2020 	5100000 read pairs finished. 5146 secs passed
-[bsmap] @Sun Nov 29 01:44:56 2020 	5500000 read pairs finished. 5171 secs passed
-[bsmap] @Sun Nov 29 01:45:02 2020 	5150000 read pairs finished. 5177 secs passed
-[bsmap] @Sun Nov 29 01:45:37 2020 	5250000 read pairs finished. 5212 secs passed
-[bsmap] @Sun Nov 29 01:45:53 2020 	5400000 read pairs finished. 5228 secs passed
-[bsmap] @Sun Nov 29 01:46:24 2020 	5350000 read pairs finished. 5259 secs passed
-[bsmap] @Sun Nov 29 01:46:38 2020 	5300000 read pairs finished. 5273 secs passed
-[bsmap] @Sun Nov 29 01:46:48 2020 	5550000 read pairs finished. 5283 secs passed
-[bsmap] @Sun Nov 29 01:46:57 2020 	5450000 read pairs finished. 5292 secs passed
-[bsmap] @Sun Nov 29 01:51:24 2020 	5600000 read pairs finished. 5559 secs passed
-[bsmap] @Sun Nov 29 01:51:39 2020 	5750000 read pairs finished. 5574 secs passed
-[bsmap] @Sun Nov 29 01:51:52 2020 	5650000 read pairs finished. 5587 secs passed
-[bsmap] @Sun Nov 29 01:52:43 2020 	5700000 read pairs finished. 5638 secs passed
-[bsmap] @Sun Nov 29 01:55:24 2020 	5950000 read pairs finished. 5799 secs passed
-[bsmap] @Sun Nov 29 01:55:39 2020 	5850000 read pairs finished. 5814 secs passed
-[bsmap] @Sun Nov 29 01:56:41 2020 	5900000 read pairs finished. 5876 secs passed
-[bsmap] @Sun Nov 29 01:56:47 2020 	6050000 read pairs finished. 5882 secs passed
-[bsmap] @Sun Nov 29 01:56:57 2020 	6000000 read pairs finished. 5892 secs passed
-[bsmap] @Sun Nov 29 01:57:13 2020 	5800000 read pairs finished. 5908 secs passed
-[bsmap] @Sun Nov 29 01:57:39 2020 	6300000 read pairs finished. 5934 secs passed
-[bsmap] @Sun Nov 29 01:57:46 2020 	6150000 read pairs finished. 5941 secs passed
-[bsmap] @Sun Nov 29 01:57:56 2020 	6250000 read pairs finished. 5951 secs passed
-[bsmap] @Sun Nov 29 01:58:26 2020 	6100000 read pairs finished. 5981 secs passed
-[bsmap] @Sun Nov 29 01:58:59 2020 	6200000 read pairs finished. 6014 secs passed
-[bsmap] @Sun Nov 29 01:59:42 2020 	6350000 read pairs finished. 6057 secs passed
-[bsmap] @Sun Nov 29 02:02:51 2020 	6450000 read pairs finished. 6246 secs passed
-[bsmap] @Sun Nov 29 02:03:55 2020 	6400000 read pairs finished. 6310 secs passed
-[bsmap] @Sun Nov 29 02:04:21 2020 	6500000 read pairs finished. 6336 secs passed
-[bsmap] @Sun Nov 29 02:04:50 2020 	6550000 read pairs finished. 6365 secs passed
-[bsmap] @Sun Nov 29 02:07:36 2020 	6600000 read pairs finished. 6531 secs passed
-[bsmap] @Sun Nov 29 02:07:50 2020 	6650000 read pairs finished. 6545 secs passed
-[bsmap] @Sun Nov 29 02:07:51 2020 	6700000 read pairs finished. 6546 secs passed
-[bsmap] @Sun Nov 29 02:08:28 2020 	6800000 read pairs finished. 6583 secs passed
-[bsmap] @Sun Nov 29 02:08:31 2020 	6850000 read pairs finished. 6586 secs passed
-[bsmap] @Sun Nov 29 02:08:48 2020 	6750000 read pairs finished. 6603 secs passed
-[bsmap] @Sun Nov 29 02:10:07 2020 	6900000 read pairs finished. 6682 secs passed
-[bsmap] @Sun Nov 29 02:10:18 2020 	7100000 read pairs finished. 6693 secs passed
-[bsmap] @Sun Nov 29 02:10:21 2020 	7050000 read pairs finished. 6696 secs passed
-[bsmap] @Sun Nov 29 02:10:40 2020 	7000000 read pairs finished. 6715 secs passed
-[bsmap] @Sun Nov 29 02:10:46 2020 	6950000 read pairs finished. 6721 secs passed
-[bsmap] @Sun Nov 29 02:11:12 2020 	7150000 read pairs finished. 6747 secs passed
-[bsmap] @Sun Nov 29 02:13:27 2020 	7200000 read pairs finished. 6882 secs passed
-[bsmap] @Sun Nov 29 02:15:50 2020 	7300000 read pairs finished. 7025 secs passed
-[bsmap] @Sun Nov 29 02:16:13 2020 	7250000 read pairs finished. 7048 secs passed
-[bsmap] @Sun Nov 29 02:16:28 2020 	7350000 read pairs finished. 7063 secs passed
-[bsmap] @Sun Nov 29 02:19:18 2020 	7400000 read pairs finished. 7233 secs passed
-[bsmap] @Sun Nov 29 02:19:31 2020 	7500000 read pairs finished. 7246 secs passed
-[bsmap] @Sun Nov 29 02:19:56 2020 	7600000 read pairs finished. 7271 secs passed
-[bsmap] @Sun Nov 29 02:20:30 2020 	7450000 read pairs finished. 7305 secs passed
-[bsmap] @Sun Nov 29 02:20:46 2020 	7650000 read pairs finished. 7321 secs passed
-[bsmap] @Sun Nov 29 02:21:00 2020 	7550000 read pairs finished. 7335 secs passed
-[bsmap] @Sun Nov 29 02:21:25 2020 	7750000 read pairs finished. 7360 secs passed
-[bsmap] @Sun Nov 29 02:22:22 2020 	7800000 read pairs finished. 7417 secs passed
-[bsmap] @Sun Nov 29 02:22:40 2020 	7700000 read pairs finished. 7435 secs passed
-[bsmap] @Sun Nov 29 02:22:46 2020 	7850000 read pairs finished. 7441 secs passed
-[bsmap] @Sun Nov 29 02:22:47 2020 	7900000 read pairs finished. 7442 secs passed
-[bsmap] @Sun Nov 29 02:23:36 2020 	7950000 read pairs finished. 7491 secs passed
-[bsmap] @Sun Nov 29 02:24:40 2020 	8000000 read pairs finished. 7555 secs passed
-[bsmap] @Sun Nov 29 02:27:31 2020 	8050000 read pairs finished. 7726 secs passed
-[bsmap] @Sun Nov 29 02:28:03 2020 	8100000 read pairs finished. 7758 secs passed
-[bsmap] @Sun Nov 29 02:28:14 2020 	8150000 read pairs finished. 7769 secs passed
-[bsmap] @Sun Nov 29 02:31:24 2020 	8200000 read pairs finished. 7959 secs passed
-[bsmap] @Sun Nov 29 02:31:32 2020 	8300000 read pairs finished. 7967 secs passed
-[bsmap] @Sun Nov 29 02:32:31 2020 	8400000 read pairs finished. 8026 secs passed
-[bsmap] @Sun Nov 29 02:32:49 2020 	8250000 read pairs finished. 8044 secs passed
-[bsmap] @Sun Nov 29 02:33:16 2020 	8350000 read pairs finished. 8071 secs passed
-[bsmap] @Sun Nov 29 02:33:21 2020 	8500000 read pairs finished. 8076 secs passed
-[bsmap] @Sun Nov 29 02:33:24 2020 	8450000 read pairs finished. 8079 secs passed
-[bsmap] @Sun Nov 29 02:33:39 2020 	8600000 read pairs finished. 8094 secs passed
-[bsmap] @Sun Nov 29 02:34:02 2020 	8650000 read pairs finished. 8117 secs passed
-[bsmap] @Sun Nov 29 02:35:12 2020 	8700000 read pairs finished. 8187 secs passed
-[bsmap] @Sun Nov 29 02:35:19 2020 	8550000 read pairs finished. 8194 secs passed
-[bsmap] @Sun Nov 29 02:35:37 2020 	8800000 read pairs finished. 8212 secs passed
-[bsmap] @Sun Nov 29 02:36:26 2020 	8750000 read pairs finished. 8261 secs passed
-[bsmap] @Sun Nov 29 02:38:58 2020 	8850000 read pairs finished. 8413 secs passed
-[bsmap] @Sun Nov 29 02:39:01 2020 	8950000 read pairs finished. 8416 secs passed
-[bsmap] @Sun Nov 29 02:39:32 2020 	8900000 read pairs finished. 8447 secs passed
-[bsmap] @Sun Nov 29 02:42:53 2020 	9050000 read pairs finished. 8648 secs passed
-[bsmap] @Sun Nov 29 02:44:06 2020 	9000000 read pairs finished. 8721 secs passed
-[bsmap] @Sun Nov 29 02:44:22 2020 	9100000 read pairs finished. 8737 secs passed
-[bsmap] @Sun Nov 29 02:44:53 2020 	9350000 read pairs finished. 8768 secs passed
-[bsmap] @Sun Nov 29 02:44:56 2020 	9150000 read pairs finished. 8771 secs passed
-[bsmap] @Sun Nov 29 02:45:11 2020 	9300000 read pairs finished. 8786 secs passed
-[bsmap] @Sun Nov 29 02:45:17 2020 	9200000 read pairs finished. 8792 secs passed
-[bsmap] @Sun Nov 29 02:45:32 2020 	9250000 read pairs finished. 8807 secs passed
-[bsmap] @Sun Nov 29 02:46:35 2020 	9400000 read pairs finished. 8870 secs passed
-[bsmap] @Sun Nov 29 02:46:49 2020 	9550000 read pairs finished. 8884 secs passed
-[bsmap] @Sun Nov 29 02:47:28 2020 	9450000 read pairs finished. 8923 secs passed
-[bsmap] @Sun Nov 29 02:47:42 2020 	9600000 read pairs finished. 8937 secs passed
-[bsmap] @Sun Nov 29 02:48:17 2020 	9500000 read pairs finished. 8972 secs passed
-[bsmap] @Sun Nov 29 02:50:09 2020 	9700000 read pairs finished. 9084 secs passed
-[bsmap] @Sun Nov 29 02:51:00 2020 	9650000 read pairs finished. 9135 secs passed
-[bsmap] @Sun Nov 29 02:51:14 2020 	9750000 read pairs finished. 9149 secs passed
-[bsmap] @Sun Nov 29 02:54:50 2020 	9800000 read pairs finished. 9365 secs passed
-[bsmap] @Sun Nov 29 02:56:34 2020 	10050000 read pairs finished. 9469 secs passed
-[bsmap] @Sun Nov 29 02:56:37 2020 	9850000 read pairs finished. 9472 secs passed
-[bsmap] @Sun Nov 29 02:56:53 2020 	10000000 read pairs finished. 9488 secs passed
-[bsmap] @Sun Nov 29 02:56:58 2020 	10150000 read pairs finished. 9493 secs passed
-[bsmap] @Sun Nov 29 02:57:12 2020 	9900000 read pairs finished. 9507 secs passed
-[bsmap] @Sun Nov 29 02:57:14 2020 	10100000 read pairs finished. 9509 secs passed
-[bsmap] @Sun Nov 29 02:57:24 2020 	9950000 read pairs finished. 9519 secs passed
-[bsmap] @Sun Nov 29 02:58:42 2020 	10200000 read pairs finished. 9597 secs passed
-[bsmap] @Sun Nov 29 02:58:57 2020 	10250000 read pairs finished. 9612 secs passed
-[bsmap] @Sun Nov 29 02:59:31 2020 	10350000 read pairs finished. 9646 secs passed
-[bsmap] @Sun Nov 29 02:59:38 2020 	10300000 read pairs finished. 9653 secs passed
-[bsmap] @Sun Nov 29 03:01:01 2020 	10400000 read pairs finished. 9736 secs passed
-[bsmap] @Sun Nov 29 03:01:26 2020 	10500000 read pairs finished. 9761 secs passed
-[bsmap] @Sun Nov 29 03:01:32 2020 	10450000 read pairs finished. 9767 secs passed
-[bsmap] @Sun Nov 29 03:02:57 2020 	10550000 read pairs finished. 9852 secs passed
-[bsmap] @Sun Nov 29 03:05:36 2020 	10600000 read pairs finished. 10011 secs passed
-[bsmap] @Sun Nov 29 03:08:24 2020 	10650000 read pairs finished. 10179 secs passed
-[bsmap] @Sun Nov 29 03:08:28 2020 	10850000 read pairs finished. 10183 secs passed
-[bsmap] @Sun Nov 29 03:08:58 2020 	10700000 read pairs finished. 10213 secs passed
-[bsmap] @Sun Nov 29 03:09:02 2020 	10900000 read pairs finished. 10217 secs passed
-[bsmap] @Sun Nov 29 03:09:18 2020 	10750000 read pairs finished. 10233 secs passed
-[bsmap] @Sun Nov 29 03:09:47 2020 	10950000 read pairs finished. 10262 secs passed
-[bsmap] @Sun Nov 29 03:09:53 2020 	11000000 read pairs finished. 10268 secs passed
-[bsmap] @Sun Nov 29 03:09:59 2020 	10800000 read pairs finished. 10274 secs passed
-[bsmap] @Sun Nov 29 03:10:37 2020 	11150000 read pairs finished. 10312 secs passed
-[bsmap] @Sun Nov 29 03:11:03 2020 	11050000 read pairs finished. 10338 secs passed
-[bsmap] @Sun Nov 29 03:12:00 2020 	11100000 read pairs finished. 10395 secs passed
-[bsmap] @Sun Nov 29 03:12:37 2020 	11300000 read pairs finished. 10432 secs passed
-[bsmap] @Sun Nov 29 03:13:25 2020 	11250000 read pairs finished. 10480 secs passed
-[bsmap] @Sun Nov 29 03:13:59 2020 	11200000 read pairs finished. 10514 secs passed
-[bsmap] @Sun Nov 29 03:15:15 2020 	11350000 read pairs finished. 10590 secs passed
-[bsmap] @Sun Nov 29 03:17:34 2020 	11400000 read pairs finished. 10729 secs passed
-[bsmap] @Sun Nov 29 03:20:41 2020 	11800000 read pairs finished. 10916 secs passed
-[bsmap] @Sun Nov 29 03:20:41 2020 	11550000 read pairs finished. 10916 secs passed
-[bsmap] @Sun Nov 29 03:20:46 2020 	11450000 read pairs finished. 10921 secs passed
-[bsmap] @Sun Nov 29 03:21:00 2020 	11750000 read pairs finished. 10935 secs passed
-[bsmap] @Sun Nov 29 03:21:04 2020 	11500000 read pairs finished. 10939 secs passed
-[bsmap] @Sun Nov 29 03:21:06 2020 	11600000 read pairs finished. 10941 secs passed
-[bsmap] @Sun Nov 29 03:21:37 2020 	11700000 read pairs finished. 10972 secs passed
-[bsmap] @Sun Nov 29 03:22:14 2020 	11650000 read pairs finished. 11009 secs passed
-[bsmap] @Sun Nov 29 03:22:22 2020 	11850000 read pairs finished. 11017 secs passed
-[bsmap] @Sun Nov 29 03:23:24 2020 	11900000 read pairs finished. 11079 secs passed
-[bsmap] @Sun Nov 29 03:23:47 2020 	12000000 read pairs finished. 11102 secs passed
-[bsmap] @Sun Nov 29 03:24:44 2020 	11950000 read pairs finished. 11159 secs passed
-[bsmap] @Sun Nov 29 03:25:58 2020 	12100000 read pairs finished. 11233 secs passed
-[bsmap] @Sun Nov 29 03:26:05 2020 	12050000 read pairs finished. 11240 secs passed
-[bsmap] @Sun Nov 29 03:27:21 2020 	12150000 read pairs finished. 11316 secs passed
-[bsmap] @Sun Nov 29 03:28:25 2020 	12200000 read pairs finished. 11380 secs passed
-[bsmap] @Sun Nov 29 03:31:52 2020 	12300000 read pairs finished. 11587 secs passed
-[bsmap] @Sun Nov 29 03:32:10 2020 	12400000 read pairs finished. 11605 secs passed
-[bsmap] @Sun Nov 29 03:32:38 2020 	12450000 read pairs finished. 11633 secs passed
-[bsmap] @Sun Nov 29 03:32:57 2020 	12250000 read pairs finished. 11652 secs passed
-[bsmap] @Sun Nov 29 03:33:16 2020 	12600000 read pairs finished. 11671 secs passed
-[bsmap] @Sun Nov 29 03:33:37 2020 	12350000 read pairs finished. 11692 secs passed
-[bsmap] @Sun Nov 29 03:34:01 2020 	12650000 read pairs finished. 11716 secs passed
-[bsmap] @Sun Nov 29 03:34:07 2020 	12500000 read pairs finished. 11722 secs passed
-[bsmap] @Sun Nov 29 03:34:27 2020 	12700000 read pairs finished. 11742 secs passed
-[bsmap] @Sun Nov 29 03:34:38 2020 	12550000 read pairs finished. 11753 secs passed
-[bsmap] @Sun Nov 29 03:35:12 2020 	12750000 read pairs finished. 11787 secs passed
-[bsmap] @Sun Nov 29 03:37:30 2020 	12800000 read pairs finished. 11925 secs passed
-[bsmap] @Sun Nov 29 03:37:33 2020 	12900000 read pairs finished. 11928 secs passed
-[bsmap] @Sun Nov 29 03:38:27 2020 	12850000 read pairs finished. 11982 secs passed
-[bsmap] @Sun Nov 29 03:39:06 2020 	12950000 read pairs finished. 12021 secs passed
-[bsmap] @Sun Nov 29 03:40:04 2020 	13000000 read pairs finished. 12079 secs passed
-[bsmap] @Sun Nov 29 03:43:47 2020 	13050000 read pairs finished. 12302 secs passed
-[bsmap] @Sun Nov 29 03:43:55 2020 	13100000 read pairs finished. 12310 secs passed
-[bsmap] @Sun Nov 29 03:45:09 2020 	13450000 read pairs finished. 12384 secs passed
-[bsmap] @Sun Nov 29 03:45:11 2020 	13400000 read pairs finished. 12386 secs passed
-[bsmap] @Sun Nov 29 03:45:18 2020 	13200000 read pairs finished. 12393 secs passed
-[bsmap] @Sun Nov 29 03:45:26 2020 	13150000 read pairs finished. 12401 secs passed
-[bsmap] @Sun Nov 29 03:45:32 2020 	13250000 read pairs finished. 12407 secs passed
-[bsmap] @Sun Nov 29 03:46:11 2020 	13300000 read pairs finished. 12446 secs passed
-[bsmap] @Sun Nov 29 03:46:37 2020 	13550000 read pairs finished. 12472 secs passed
-[bsmap] @Sun Nov 29 03:46:44 2020 	13500000 read pairs finished. 12479 secs passed
-[bsmap] @Sun Nov 29 03:46:45 2020 	13350000 read pairs finished. 12480 secs passed
-[bsmap] @Sun Nov 29 03:49:08 2020 	13650000 read pairs finished. 12623 secs passed
-[bsmap] @Sun Nov 29 03:49:52 2020 	13700000 read pairs finished. 12667 secs passed
-[bsmap] @Sun Nov 29 03:50:24 2020 	13600000 read pairs finished. 12699 secs passed
-[bsmap] @Sun Nov 29 03:51:43 2020 	13800000 read pairs finished. 12778 secs passed
-[bsmap] @Sun Nov 29 03:52:06 2020 	13750000 read pairs finished. 12801 secs passed
-[bsmap] @Sun Nov 29 03:54:32 2020 	13900000 read pairs finished. 12947 secs passed
-[bsmap] @Sun Nov 29 03:55:09 2020 	13850000 read pairs finished. 12984 secs passed
-[bsmap] @Sun Nov 29 03:56:01 2020 	13950000 read pairs finished. 13036 secs passed
-[bsmap] @Sun Nov 29 03:56:23 2020 	14000000 read pairs finished. 13058 secs passed
-[bsmap] @Sun Nov 29 03:57:08 2020 	14250000 read pairs finished. 13103 secs passed
-[bsmap] @Sun Nov 29 03:57:15 2020 	14150000 read pairs finished. 13110 secs passed
-[bsmap] @Sun Nov 29 03:57:54 2020 	14100000 read pairs finished. 13149 secs passed
-[bsmap] @Sun Nov 29 03:58:15 2020 	14300000 read pairs finished. 13170 secs passed
-[bsmap] @Sun Nov 29 03:58:19 2020 	14050000 read pairs finished. 13174 secs passed
-[bsmap] @Sun Nov 29 03:58:43 2020 	14350000 read pairs finished. 13198 secs passed
-[bsmap] @Sun Nov 29 03:59:16 2020 	14200000 read pairs finished. 13231 secs passed
-[bsmap] @Sun Nov 29 04:00:15 2020 	14400000 read pairs finished. 13290 secs passed
-[bsmap] @Sun Nov 29 04:02:01 2020 	14450000 read pairs finished. 13396 secs passed
-[bsmap] @Sun Nov 29 04:03:29 2020 	14500000 read pairs finished. 13484 secs passed
-[bsmap] @Sun Nov 29 04:04:52 2020 	14550000 read pairs finished. 13567 secs passed
-[bsmap] @Sun Nov 29 04:05:30 2020 	14600000 read pairs finished. 13605 secs passed
-[bsmap] @Sun Nov 29 04:05:53 2020 	14650000 read pairs finished. 13628 secs passed
-[bsmap] @Sun Nov 29 04:06:38 2020 	14700000 read pairs finished. 13673 secs passed
-[bsmap] @Sun Nov 29 04:07:32 2020 	14750000 read pairs finished. 13727 secs passed
-[bsmap] @Sun Nov 29 04:08:32 2020 	14850000 read pairs finished. 13787 secs passed
-[bsmap] @Sun Nov 29 04:08:47 2020 	14800000 read pairs finished. 13802 secs passed
-[bsmap] @Sun Nov 29 04:09:26 2020 	15000000 read pairs finished. 13841 secs passed
-[bsmap] @Sun Nov 29 04:09:52 2020 	15050000 read pairs finished. 13867 secs passed
-[bsmap] @Sun Nov 29 04:10:22 2020 	14900000 read pairs finished. 13897 secs passed
-[bsmap] @Sun Nov 29 04:10:31 2020 	15100000 read pairs finished. 13906 secs passed
-[bsmap] @Sun Nov 29 04:10:58 2020 	15150000 read pairs finished. 13933 secs passed
-[bsmap] @Sun Nov 29 04:11:12 2020 	14950000 read pairs finished. 13947 secs passed
-[bsmap] @Sun Nov 29 04:12:04 2020 	15200000 read pairs finished. 13999 secs passed
-[bsmap] @Sun Nov 29 04:14:43 2020 	15250000 read pairs finished. 14158 secs passed
-[bsmap] @Sun Nov 29 04:15:01 2020 	15300000 read pairs finished. 14176 secs passed
-[bsmap] @Sun Nov 29 04:16:05 2020 	15350000 read pairs finished. 14240 secs passed
-[bsmap] @Sun Nov 29 04:17:43 2020 	15400000 read pairs finished. 14338 secs passed
-[bsmap] @Sun Nov 29 04:18:02 2020 	15450000 read pairs finished. 14357 secs passed
-[bsmap] @Sun Nov 29 04:18:33 2020 	15500000 read pairs finished. 14388 secs passed
-[bsmap] @Sun Nov 29 04:18:53 2020 	15550000 read pairs finished. 14408 secs passed
-[bsmap] @Sun Nov 29 04:19:40 2020 	15600000 read pairs finished. 14455 secs passed
-[bsmap] @Sun Nov 29 04:20:03 2020 	15650000 read pairs finished. 14478 secs passed
-[bsmap] @Sun Nov 29 04:21:00 2020 	15700000 read pairs finished. 14535 secs passed
-[bsmap] @Sun Nov 29 04:22:03 2020 	15950000 read pairs finished. 14598 secs passed
-[bsmap] @Sun Nov 29 04:22:28 2020 	15750000 read pairs finished. 14623 secs passed
-[bsmap] @Sun Nov 29 04:22:31 2020 	15800000 read pairs finished. 14626 secs passed
-[bsmap] @Sun Nov 29 04:22:34 2020 	15900000 read pairs finished. 14629 secs passed
-[bsmap] @Sun Nov 29 04:23:44 2020 	15850000 read pairs finished. 14699 secs passed
-[bsmap] @Sun Nov 29 04:23:58 2020 	16000000 read pairs finished. 14713 secs passed
-[bsmap] @Sun Nov 29 04:26:50 2020 	16050000 read pairs finished. 14885 secs passed
-[bsmap] @Sun Nov 29 04:27:17 2020 	16150000 read pairs finished. 14912 secs passed
-[bsmap] @Sun Nov 29 04:27:34 2020 	16100000 read pairs finished. 14929 secs passed
-[bsmap] @Sun Nov 29 04:29:18 2020 	16250000 read pairs finished. 15033 secs passed
-[bsmap] @Sun Nov 29 04:30:06 2020 	16350000 read pairs finished. 15081 secs passed
-[bsmap] @Sun Nov 29 04:30:10 2020 	16200000 read pairs finished. 15085 secs passed
-[bsmap] @Sun Nov 29 04:30:54 2020 	16400000 read pairs finished. 15129 secs passed
-[bsmap] @Sun Nov 29 04:31:04 2020 	16300000 read pairs finished. 15139 secs passed
-[bsmap] @Sun Nov 29 04:32:03 2020 	16450000 read pairs finished. 15198 secs passed
-[bsmap] @Sun Nov 29 04:34:02 2020 	16500000 read pairs finished. 15317 secs passed
-[bsmap] @Sun Nov 29 04:34:08 2020 	16550000 read pairs finished. 15323 secs passed
-[bsmap] @Sun Nov 29 04:34:20 2020 	16650000 read pairs finished. 15335 secs passed
-[bsmap] @Sun Nov 29 04:34:32 2020 	16750000 read pairs finished. 15347 secs passed
-[bsmap] @Sun Nov 29 04:35:18 2020 	16700000 read pairs finished. 15393 secs passed
-[bsmap] @Sun Nov 29 04:35:41 2020 	16600000 read pairs finished. 15416 secs passed
-[bsmap] @Sun Nov 29 04:35:45 2020 	16800000 read pairs finished. 15420 secs passed
-[bsmap] @Sun Nov 29 04:39:01 2020 	16850000 read pairs finished. 15616 secs passed
-[bsmap] @Sun Nov 29 04:39:21 2020 	16900000 read pairs finished. 15636 secs passed
-[bsmap] @Sun Nov 29 04:39:27 2020 	16950000 read pairs finished. 15642 secs passed
-[bsmap] @Sun Nov 29 04:40:56 2020 	17000000 read pairs finished. 15731 secs passed
-[bsmap] @Sun Nov 29 04:41:17 2020 	17150000 read pairs finished. 15752 secs passed
-[bsmap] @Sun Nov 29 04:42:31 2020 	17050000 read pairs finished. 15826 secs passed
-[bsmap] @Sun Nov 29 04:42:35 2020 	17200000 read pairs finished. 15830 secs passed
-[bsmap] @Sun Nov 29 04:43:23 2020 	17250000 read pairs finished. 15878 secs passed
-[bsmap] @Sun Nov 29 04:43:47 2020 	17100000 read pairs finished. 15902 secs passed
-[bsmap] @Sun Nov 29 04:45:03 2020 	17350000 read pairs finished. 15978 secs passed
-[bsmap] @Sun Nov 29 04:45:20 2020 	17400000 read pairs finished. 15995 secs passed
-[bsmap] @Sun Nov 29 04:46:27 2020 	17300000 read pairs finished. 16062 secs passed
-[bsmap] @Sun Nov 29 04:46:42 2020 	17450000 read pairs finished. 16077 secs passed
-[bsmap] @Sun Nov 29 04:47:35 2020 	17500000 read pairs finished. 16130 secs passed
-[bsmap] @Sun Nov 29 04:47:41 2020 	17550000 read pairs finished. 16136 secs passed
-[bsmap] @Sun Nov 29 04:48:16 2020 	17600000 read pairs finished. 16171 secs passed
-[bsmap] @Sun Nov 29 04:50:09 2020 	17650000 read pairs finished. 16284 secs passed
-[bsmap] @Sun Nov 29 04:50:38 2020 	17750000 read pairs finished. 16313 secs passed
-[bsmap] @Sun Nov 29 04:51:25 2020 	17700000 read pairs finished. 16360 secs passed
-[bsmap] @Sun Nov 29 04:52:22 2020 	17850000 read pairs finished. 16417 secs passed
-[bsmap] @Sun Nov 29 04:53:26 2020 	17800000 read pairs finished. 16481 secs passed
-[bsmap] @Sun Nov 29 04:54:16 2020 	17950000 read pairs finished. 16531 secs passed
-[bsmap] @Sun Nov 29 04:54:26 2020 	17900000 read pairs finished. 16541 secs passed
-[bsmap] @Sun Nov 29 04:54:51 2020 	18000000 read pairs finished. 16566 secs passed
-[bsmap] @Sun Nov 29 04:55:06 2020 	18050000 read pairs finished. 16581 secs passed
-[bsmap] @Sun Nov 29 04:57:59 2020 	18100000 read pairs finished. 16754 secs passed
-[bsmap] @Sun Nov 29 04:58:36 2020 	18150000 read pairs finished. 16791 secs passed
-[bsmap] @Sun Nov 29 04:58:37 2020 	18200000 read pairs finished. 16792 secs passed
-[bsmap] @Sun Nov 29 04:59:48 2020 	18250000 read pairs finished. 16863 secs passed
-[bsmap] @Sun Nov 29 04:59:51 2020 	18400000 read pairs finished. 16866 secs passed
-[bsmap] @Sun Nov 29 05:00:56 2020 	18300000 read pairs finished. 16931 secs passed
-[bsmap] @Sun Nov 29 05:00:59 2020 	18350000 read pairs finished. 16934 secs passed
-[bsmap] @Sun Nov 29 05:01:21 2020 	18500000 read pairs finished. 16956 secs passed
-[bsmap] @Sun Nov 29 05:01:52 2020 	18450000 read pairs finished. 16987 secs passed
-[bsmap] @Sun Nov 29 05:02:50 2020 	18550000 read pairs finished. 17045 secs passed
-[bsmap] @Sun Nov 29 05:03:32 2020 	18600000 read pairs finished. 17087 secs passed
-[bsmap] @Sun Nov 29 05:05:45 2020 	18850000 read pairs finished. 17220 secs passed
-[bsmap] @Sun Nov 29 05:06:00 2020 	18650000 read pairs finished. 17235 secs passed
-[bsmap] @Sun Nov 29 05:06:02 2020 	18750000 read pairs finished. 17237 secs passed
-[bsmap] @Sun Nov 29 05:06:50 2020 	18700000 read pairs finished. 17285 secs passed
-[bsmap] @Sun Nov 29 05:06:58 2020 	18800000 read pairs finished. 17293 secs passed
-[bsmap] @Sun Nov 29 05:09:43 2020 	18900000 read pairs finished. 17458 secs passed
-[bsmap] @Sun Nov 29 05:09:43 2020 	18950000 read pairs finished. 17458 secs passed
-[bsmap] @Sun Nov 29 05:11:07 2020 	19100000 read pairs finished. 17542 secs passed
-[bsmap] @Sun Nov 29 05:11:47 2020 	19000000 read pairs finished. 17582 secs passed
-[bsmap] @Sun Nov 29 05:11:54 2020 	19050000 read pairs finished. 17589 secs passed
-[bsmap] @Sun Nov 29 05:12:00 2020 	19250000 read pairs finished. 17595 secs passed
-[bsmap] @Sun Nov 29 05:12:28 2020 	19150000 read pairs finished. 17623 secs passed
-[bsmap] @Sun Nov 29 05:14:06 2020 	19200000 read pairs finished. 17721 secs passed
-[bsmap] @Sun Nov 29 05:14:08 2020 	19300000 read pairs finished. 17723 secs passed
-[bsmap] @Sun Nov 29 05:14:59 2020 	19400000 read pairs finished. 17774 secs passed
-[bsmap] @Sun Nov 29 05:15:24 2020 	19350000 read pairs finished. 17799 secs passed
-[bsmap] @Sun Nov 29 05:17:19 2020 	19550000 read pairs finished. 17914 secs passed
-[bsmap] @Sun Nov 29 05:17:19 2020 	19450000 read pairs finished. 17914 secs passed
-[bsmap] @Sun Nov 29 05:17:41 2020 	19500000 read pairs finished. 17936 secs passed
-[bsmap] @Sun Nov 29 05:18:11 2020 	19600000 read pairs finished. 17966 secs passed
-[bsmap] @Sun Nov 29 05:18:15 2020 	20016329 read pairs finished. 17970 secs passed
-[bsmap] @Sun Nov 29 05:18:33 2020 	19650000 read pairs finished. 17988 secs passed
-[bsmap] @Sun Nov 29 05:21:33 2020 	19700000 read pairs finished. 18168 secs passed
-[bsmap] @Sun Nov 29 05:22:04 2020 	19750000 read pairs finished. 18199 secs passed
-[bsmap] @Sun Nov 29 05:22:11 2020 	19800000 read pairs finished. 18206 secs passed
-[bsmap] @Sun Nov 29 05:23:21 2020 	19850000 read pairs finished. 18276 secs passed
-[bsmap] @Sun Nov 29 05:23:28 2020 	20000000 read pairs finished. 18283 secs passed
-[bsmap] @Sun Nov 29 05:23:43 2020 	19950000 read pairs finished. 18298 secs passed
-[bsmap] @Sun Nov 29 05:24:06 2020 	19900000 read pairs finished. 18321 secs passed
-[bsmap] @Sun Nov 29 05:24:06 2020 	total read pairs: 20016329 	total time consumed:  18321 secs
-	aligned pairs: 6000751 (30.0%), unique pairs: 6000751 (30.0%), suppressed non-unique pairs: 430772 (2.2%)
-	unpaired read #1: 4212111 (21.0%), unique reads: 4212111 (21.0%), suppressed non-unique reads: 1323306 (6.6%)
-	unpaired read #2: 3264616 (16.3%), unique reads: 3264616 (16.3%), suppressed non-unique reads: 1158728 (5.8%)
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 17:26:38 2021 	100000 read pairs finished. 4499 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 17:26:52 2021 	550000 read pairs finished. 4513 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 17:27:03 2021 	50000 read pairs finished. 4524 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 17:27:06 2021 	500000 read pairs finished. 4527 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 17:27:31 2021 	700000 read pairs finished. 4552 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 17:27:34 2021 	150000 read pairs finished. 4555 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 17:27:39 2021 	250000 read pairs finished. 4560 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 17:28:19 2021 	750000 read pairs finished. 4600 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 17:28:38 2021 	650000 read pairs finished. 4619 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 17:28:48 2021 	450000 read pairs finished. 4629 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 17:28:49 2021 	600000 read pairs finished. 4630 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 17:29:05 2021 	300000 read pairs finished. 4646 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 17:29:23 2021 	200000 read pairs finished. 4664 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 17:29:57 2021 	800000 read pairs finished. 4698 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 17:30:23 2021 	350000 read pairs finished. 4724 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 17:31:04 2021 	400000 read pairs finished. 4765 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 18:38:36 2021 	900000 read pairs finished. 8817 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 18:39:14 2021 	950000 read pairs finished. 8855 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 18:41:13 2021 	1000000 read pairs finished. 8974 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 18:41:18 2021 	1300000 read pairs finished. 8979 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 18:41:42 2021 	1050000 read pairs finished. 9003 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 18:42:14 2021 	1350000 read pairs finished. 9035 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 18:42:34 2021 	1100000 read pairs finished. 9055 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 18:42:36 2021 	1150000 read pairs finished. 9057 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 18:43:06 2021 	850000 read pairs finished. 9087 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 18:44:07 2021 	1250000 read pairs finished. 9148 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 18:44:17 2021 	1400000 read pairs finished. 9158 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 18:44:18 2021 	1450000 read pairs finished. 9159 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 18:44:24 2021 	1200000 read pairs finished. 9165 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 18:46:57 2021 	1500000 read pairs finished. 9318 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 18:47:45 2021 	1600000 read pairs finished. 9366 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 18:48:00 2021 	1550000 read pairs finished. 9381 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 19:52:52 2021 	1750000 read pairs finished. 13273 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 19:53:20 2021 	1700000 read pairs finished. 13301 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 19:53:34 2021 	1650000 read pairs finished. 13315 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 19:54:29 2021 	1800000 read pairs finished. 13370 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 19:55:21 2021 	1850000 read pairs finished. 13422 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 19:55:49 2021 	2150000 read pairs finished. 13450 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 19:56:07 2021 	1900000 read pairs finished. 13468 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 19:57:30 2021 	1950000 read pairs finished. 13551 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 19:57:41 2021 	2250000 read pairs finished. 13562 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 19:57:58 2021 	2200000 read pairs finished. 13579 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 19:58:12 2021 	2000000 read pairs finished. 13593 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 19:59:20 2021 	2300000 read pairs finished. 13661 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 20:00:32 2021 	2050000 read pairs finished. 13733 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 20:01:38 2021 	2400000 read pairs finished. 13799 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 20:01:44 2021 	2100000 read pairs finished. 13805 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 20:02:12 2021 	2350000 read pairs finished. 13833 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 21:06:48 2021 	2600000 read pairs finished. 17709 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 21:08:09 2021 	2650000 read pairs finished. 17790 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 21:08:14 2021 	2550000 read pairs finished. 17795 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 21:08:34 2021 	2450000 read pairs finished. 17815 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 21:09:12 2021 	2500000 read pairs finished. 17853 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 21:10:17 2021 	2700000 read pairs finished. 17918 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 21:10:48 2021 	2750000 read pairs finished. 17949 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 21:11:56 2021 	2850000 read pairs finished. 18017 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 21:11:56 2021 	2800000 read pairs finished. 18017 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 21:12:59 2021 	2950000 read pairs finished. 18080 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 21:14:10 2021 	2900000 read pairs finished. 18151 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 21:14:33 2021 	3000000 read pairs finished. 18174 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 21:14:41 2021 	3050000 read pairs finished. 18182 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 21:16:34 2021 	3150000 read pairs finished. 18295 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 21:17:06 2021 	3100000 read pairs finished. 18327 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 21:20:25 2021 	3200000 read pairs finished. 18526 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 22:19:32 2021 	3400000 read pairs finished. 22073 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 22:21:24 2021 	3450000 read pairs finished. 22185 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 22:22:20 2021 	3350000 read pairs finished. 22241 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 22:22:51 2021 	3300000 read pairs finished. 22272 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 22:23:39 2021 	3500000 read pairs finished. 22320 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 22:23:59 2021 	3250000 read pairs finished. 22340 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 22:25:30 2021 	3550000 read pairs finished. 22431 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 22:25:54 2021 	3850000 read pairs finished. 22455 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 22:26:02 2021 	3650000 read pairs finished. 22463 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 22:26:45 2021 	3800000 read pairs finished. 22506 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 22:26:58 2021 	3600000 read pairs finished. 22519 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 22:29:20 2021 	3700000 read pairs finished. 22661 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 22:29:51 2021 	3900000 read pairs finished. 22692 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 22:31:05 2021 	3950000 read pairs finished. 22766 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 22:31:22 2021 	3750000 read pairs finished. 22783 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 22:35:35 2021 	4000000 read pairs finished. 23036 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 23:34:36 2021 	4050000 read pairs finished. 26577 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 23:35:11 2021 	4100000 read pairs finished. 26612 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 23:35:39 2021 	4300000 read pairs finished. 26640 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 23:35:55 2021 	4250000 read pairs finished. 26656 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 23:36:52 2021 	4150000 read pairs finished. 26713 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 23:38:28 2021 	4200000 read pairs finished. 26809 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 23:40:22 2021 	4350000 read pairs finished. 26923 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 23:40:50 2021 	4500000 read pairs finished. 26951 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 23:41:00 2021 	4450000 read pairs finished. 26961 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 23:41:04 2021 	4400000 read pairs finished. 26965 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 23:42:08 2021 	4550000 read pairs finished. 27029 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 23:43:24 2021 	4650000 read pairs finished. 27105 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 23:44:15 2021 	4600000 read pairs finished. 27156 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 23:45:01 2021 	4700000 read pairs finished. 27202 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 23:46:45 2021 	4750000 read pairs finished. 27306 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Tue Jul 27 23:51:10 2021 	4800000 read pairs finished. 27571 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 00:48:21 2021 	5050000 read pairs finished. 31002 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 00:50:31 2021 	4950000 read pairs finished. 31132 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 00:51:34 2021 	5100000 read pairs finished. 31195 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 00:51:56 2021 	4850000 read pairs finished. 31217 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 00:52:00 2021 	5000000 read pairs finished. 31221 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 00:52:38 2021 	4900000 read pairs finished. 31259 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 00:53:35 2021 	5200000 read pairs finished. 31316 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 00:54:19 2021 	5150000 read pairs finished. 31360 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 00:54:59 2021 	5250000 read pairs finished. 31400 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 00:55:48 2021 	5300000 read pairs finished. 31449 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 00:56:59 2021 	5500000 read pairs finished. 31520 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 00:58:00 2021 	5550000 read pairs finished. 31581 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 00:58:23 2021 	5350000 read pairs finished. 31604 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 00:59:09 2021 	5400000 read pairs finished. 31650 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 01:00:15 2021 	5450000 read pairs finished. 31716 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 01:03:00 2021 	5600000 read pairs finished. 31881 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 02:04:25 2021 	5650000 read pairs finished. 35566 secs passed
+started loading reads
+[bsmap] @Wed Jul 28 02:04:25 2021 	5700000 read pairs finished. 35566 secs passed
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 02:04:47 2021 	5900000 read pairs finished. 35588 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 02:05:35 2021 	5750000 read pairs finished. 35636 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 02:06:51 2021 	5950000 read pairs finished. 35712 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 02:07:44 2021 	5800000 read pairs finished. 35765 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 02:09:13 2021 	6000000 read pairs finished. 35854 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 02:09:22 2021 	5850000 read pairs finished. 35863 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 02:09:35 2021 	6050000 read pairs finished. 35876 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 02:10:53 2021 	6100000 read pairs finished. 35954 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 02:12:08 2021 	6200000 read pairs finished. 36029 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 02:12:11 2021 	6150000 read pairs finished. 36032 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 02:12:44 2021 	6300000 read pairs finished. 36065 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 02:13:49 2021 	6350000 read pairs finished. 36130 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 02:14:35 2021 	6250000 read pairs finished. 36176 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 02:19:31 2021 	6400000 read pairs finished. 36472 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 03:18:59 2021 	6450000 read pairs finished. 40040 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 03:19:19 2021 	6750000 read pairs finished. 40060 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 03:20:24 2021 	6500000 read pairs finished. 40125 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 03:21:32 2021 	6700000 read pairs finished. 40193 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 03:21:41 2021 	6600000 read pairs finished. 40202 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 03:21:58 2021 	6800000 read pairs finished. 40219 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 03:22:04 2021 	6550000 read pairs finished. 40225 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 03:22:28 2021 	6850000 read pairs finished. 40249 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 03:23:14 2021 	6650000 read pairs finished. 40295 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 03:25:47 2021 	7150000 read pairs finished. 40448 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 03:26:44 2021 	6950000 read pairs finished. 40505 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 03:26:53 2021 	6900000 read pairs finished. 40514 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 03:27:13 2021 	7000000 read pairs finished. 40534 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 03:29:26 2021 	7050000 read pairs finished. 40667 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 03:30:49 2021 	7100000 read pairs finished. 40750 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 03:31:51 2021 	7200000 read pairs finished. 40812 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 04:31:23 2021 	7300000 read pairs finished. 44384 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 04:32:29 2021 	7250000 read pairs finished. 44450 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 04:34:11 2021 	7350000 read pairs finished. 44552 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 04:34:55 2021 	7600000 read pairs finished. 44596 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 04:36:18 2021 	7450000 read pairs finished. 44679 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 04:36:36 2021 	7550000 read pairs finished. 44697 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 04:36:39 2021 	7650000 read pairs finished. 44700 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 04:36:49 2021 	7400000 read pairs finished. 44710 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 04:38:26 2021 	7500000 read pairs finished. 44807 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 04:40:19 2021 	7700000 read pairs finished. 44920 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 04:41:10 2021 	7750000 read pairs finished. 44971 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 04:41:57 2021 	7800000 read pairs finished. 45018 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 04:41:58 2021 	7850000 read pairs finished. 45019 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 04:45:14 2021 	7950000 read pairs finished. 45215 secs passed
+started loading reads
+[bsmap] @Wed Jul 28 04:45:15 2021 	7900000 read pairs finished. 45216 secs passed
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 04:45:32 2021 	8000000 read pairs finished. 45233 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 05:44:58 2021 	8050000 read pairs finished. 48799 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 05:48:21 2021 	8100000 read pairs finished. 49002 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 05:48:34 2021 	8400000 read pairs finished. 49015 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 05:49:05 2021 	8150000 read pairs finished. 49046 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 05:49:36 2021 	8450000 read pairs finished. 49077 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 05:50:38 2021 	8350000 read pairs finished. 49139 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 05:51:39 2021 	8300000 read pairs finished. 49200 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 05:52:39 2021 	8200000 read pairs finished. 49260 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 05:54:00 2021 	8500000 read pairs finished. 49341 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 05:54:02 2021 	8250000 read pairs finished. 49343 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 05:55:06 2021 	8550000 read pairs finished. 49407 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 05:56:33 2021 	8600000 read pairs finished. 49494 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 05:57:21 2021 	8650000 read pairs finished. 49542 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 05:59:50 2021 	8800000 read pairs finished. 49691 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 06:00:18 2021 	8700000 read pairs finished. 49719 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 06:02:25 2021 	8750000 read pairs finished. 49846 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 06:58:16 2021 	8850000 read pairs finished. 53197 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 07:00:45 2021 	8900000 read pairs finished. 53346 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 07:00:55 2021 	8950000 read pairs finished. 53356 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 07:03:42 2021 	9000000 read pairs finished. 53523 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 07:04:21 2021 	9050000 read pairs finished. 53562 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 07:05:55 2021 	9100000 read pairs finished. 53656 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 07:06:30 2021 	9300000 read pairs finished. 53691 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 07:06:52 2021 	9250000 read pairs finished. 53713 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 07:08:23 2021 	9150000 read pairs finished. 53804 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 07:08:41 2021 	9350000 read pairs finished. 53822 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 07:09:16 2021 	9200000 read pairs finished. 53857 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 07:11:07 2021 	9400000 read pairs finished. 53968 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 07:12:25 2021 	9450000 read pairs finished. 54046 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 07:13:36 2021 	9500000 read pairs finished. 54117 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 07:16:18 2021 	9550000 read pairs finished. 54279 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 07:16:46 2021 	9600000 read pairs finished. 54307 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 08:09:55 2021 	9650000 read pairs finished. 57496 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 08:15:00 2021 	9750000 read pairs finished. 57801 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 08:15:27 2021 	9700000 read pairs finished. 57828 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 08:18:51 2021 	9800000 read pairs finished. 58032 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 08:19:56 2021 	10050000 read pairs finished. 58097 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 08:21:09 2021 	10000000 read pairs finished. 58170 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 08:21:20 2021 	9850000 read pairs finished. 58181 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 08:21:59 2021 	10100000 read pairs finished. 58220 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 08:22:39 2021 	9950000 read pairs finished. 58260 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 08:22:52 2021 	10150000 read pairs finished. 58273 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 08:23:57 2021 	9900000 read pairs finished. 58338 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 08:24:47 2021 	10200000 read pairs finished. 58388 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 08:26:47 2021 	10250000 read pairs finished. 58508 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 08:29:01 2021 	10300000 read pairs finished. 58642 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 08:30:57 2021 	10350000 read pairs finished. 58758 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 08:33:26 2021 	10400000 read pairs finished. 58907 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 09:25:50 2021 	10500000 read pairs finished. 62051 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 09:25:55 2021 	10450000 read pairs finished. 62056 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 09:27:35 2021 	10550000 read pairs finished. 62156 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 09:31:16 2021 	10600000 read pairs finished. 62377 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 09:34:00 2021 	10700000 read pairs finished. 62541 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 09:34:38 2021 	10650000 read pairs finished. 62579 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 09:35:39 2021 	10750000 read pairs finished. 62640 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 09:35:42 2021 	10900000 read pairs finished. 62643 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 09:36:24 2021 	10950000 read pairs finished. 62685 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 09:36:27 2021 	10800000 read pairs finished. 62688 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 09:37:43 2021 	10850000 read pairs finished. 62764 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 09:38:47 2021 	11000000 read pairs finished. 62828 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 09:42:25 2021 	11050000 read pairs finished. 63046 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 09:42:57 2021 	11100000 read pairs finished. 63078 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 09:46:11 2021 	11150000 read pairs finished. 63272 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 09:48:07 2021 	11200000 read pairs finished. 63388 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 10:39:28 2021 	11300000 read pairs finished. 66469 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 10:41:38 2021 	11350000 read pairs finished. 66599 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 10:42:33 2021 	11250000 read pairs finished. 66654 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 10:44:56 2021 	11400000 read pairs finished. 66797 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 10:48:18 2021 	11450000 read pairs finished. 66999 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 10:49:39 2021 	11750000 read pairs finished. 67080 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 10:50:19 2021 	11800000 read pairs finished. 67120 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 10:50:31 2021 	11500000 read pairs finished. 67132 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 10:50:56 2021 	11700000 read pairs finished. 67157 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 10:52:12 2021 	11650000 read pairs finished. 67233 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 10:53:10 2021 	11550000 read pairs finished. 67291 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 10:53:15 2021 	11600000 read pairs finished. 67296 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 10:56:35 2021 	11850000 read pairs finished. 67496 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 10:59:15 2021 	11900000 read pairs finished. 67656 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 11:00:22 2021 	11950000 read pairs finished. 67723 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 11:03:13 2021 	12000000 read pairs finished. 67894 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 11:53:06 2021 	12150000 read pairs finished. 70887 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 11:55:13 2021 	12050000 read pairs finished. 71014 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 11:56:02 2021 	12200000 read pairs finished. 71063 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 11:58:44 2021 	12100000 read pairs finished. 71225 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 11:59:51 2021 	12250000 read pairs finished. 71292 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 12:02:40 2021 	12300000 read pairs finished. 71461 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 12:03:38 2021 	12350000 read pairs finished. 71519 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 12:04:55 2021 	12400000 read pairs finished. 71596 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 12:05:18 2021 	12600000 read pairs finished. 71619 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 12:06:40 2021 	12450000 read pairs finished. 71701 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 12:07:23 2021 	12500000 read pairs finished. 71744 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 12:08:44 2021 	12550000 read pairs finished. 71825 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 12:09:31 2021 	12650000 read pairs finished. 71872 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 12:13:26 2021 	12700000 read pairs finished. 72107 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 12:14:19 2021 	12750000 read pairs finished. 72160 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 12:16:04 2021 	12800000 read pairs finished. 72265 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 13:07:40 2021 	12850000 read pairs finished. 75361 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 13:10:54 2021 	12900000 read pairs finished. 75555 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 13:11:38 2021 	13000000 read pairs finished. 75599 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 13:12:03 2021 	12950000 read pairs finished. 75624 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 13:13:56 2021 	13050000 read pairs finished. 75737 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 13:17:22 2021 	13100000 read pairs finished. 75943 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 13:19:28 2021 	13150000 read pairs finished. 76069 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 13:19:48 2021 	13400000 read pairs finished. 76089 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 13:22:17 2021 	13300000 read pairs finished. 76238 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 13:22:19 2021 	13200000 read pairs finished. 76240 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 13:22:21 2021 	13450000 read pairs finished. 76242 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 13:22:27 2021 	13350000 read pairs finished. 76248 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 13:24:33 2021 	13250000 read pairs finished. 76374 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 13:25:26 2021 	13500000 read pairs finished. 76427 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 13:28:30 2021 	13550000 read pairs finished. 76611 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 13:31:27 2021 	13600000 read pairs finished. 76788 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 14:23:12 2021 	13650000 read pairs finished. 79893 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 14:25:33 2021 	13850000 read pairs finished. 80034 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 14:26:30 2021 	13800000 read pairs finished. 80091 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 14:27:00 2021 	13700000 read pairs finished. 80121 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 14:29:01 2021 	13750000 read pairs finished. 80242 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 14:29:17 2021 	13900000 read pairs finished. 80258 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 14:32:13 2021 	13950000 read pairs finished. 80434 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 14:34:10 2021 	14000000 read pairs finished. 80551 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 14:37:04 2021 	14150000 read pairs finished. 80725 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 14:37:12 2021 	14050000 read pairs finished. 80733 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 14:37:19 2021 	14100000 read pairs finished. 80740 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 14:37:25 2021 	14300000 read pairs finished. 80746 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 14:37:26 2021 	14250000 read pairs finished. 80747 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 14:38:25 2021 	14200000 read pairs finished. 80806 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 14:42:40 2021 	14350000 read pairs finished. 81061 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 14:46:46 2021 	14400000 read pairs finished. 81307 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 15:38:09 2021 	14450000 read pairs finished. 84390 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 15:39:32 2021 	14500000 read pairs finished. 84473 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 15:41:34 2021 	14550000 read pairs finished. 84595 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 15:41:52 2021 	14650000 read pairs finished. 84613 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 15:43:02 2021 	14600000 read pairs finished. 84683 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 15:44:30 2021 	14700000 read pairs finished. 84771 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 15:47:07 2021 	14750000 read pairs finished. 84928 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 15:48:31 2021 	14800000 read pairs finished. 85012 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 15:48:55 2021 	15050000 read pairs finished. 85036 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 15:50:05 2021 	15100000 read pairs finished. 85106 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 15:52:32 2021 	15000000 read pairs finished. 85253 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 15:53:26 2021 	14850000 read pairs finished. 85307 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 15:54:34 2021 	14950000 read pairs finished. 85375 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 15:54:50 2021 	14900000 read pairs finished. 85391 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 15:55:05 2021 	15150000 read pairs finished. 85406 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 15:59:58 2021 	15200000 read pairs finished. 85699 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 16:53:33 2021 	15250000 read pairs finished. 88914 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 16:54:22 2021 	15300000 read pairs finished. 88963 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 16:55:25 2021 	15500000 read pairs finished. 89026 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 16:56:43 2021 	15350000 read pairs finished. 89104 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 16:58:00 2021 	15400000 read pairs finished. 89181 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 16:59:14 2021 	15550000 read pairs finished. 89255 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 17:00:21 2021 	15450000 read pairs finished. 89322 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 17:01:10 2021 	15600000 read pairs finished. 89371 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 17:02:54 2021 	15650000 read pairs finished. 89475 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 17:04:16 2021 	15700000 read pairs finished. 89557 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 17:06:49 2021 	15750000 read pairs finished. 89710 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 17:06:55 2021 	15950000 read pairs finished. 89716 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 17:09:05 2021 	15800000 read pairs finished. 89846 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 17:09:40 2021 	15900000 read pairs finished. 89881 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 17:10:37 2021 	15850000 read pairs finished. 89938 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 17:13:56 2021 	16000000 read pairs finished. 90137 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 18:08:00 2021 	16050000 read pairs finished. 93381 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 18:08:45 2021 	16100000 read pairs finished. 93426 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 18:10:03 2021 	16150000 read pairs finished. 93504 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 18:11:24 2021 	16200000 read pairs finished. 93585 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 18:12:46 2021 	16300000 read pairs finished. 93667 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 18:13:55 2021 	16350000 read pairs finished. 93736 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 18:14:18 2021 	16250000 read pairs finished. 93759 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 18:16:07 2021 	16400000 read pairs finished. 93868 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 18:19:32 2021 	16450000 read pairs finished. 94073 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 18:20:22 2021 	16500000 read pairs finished. 94123 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 18:22:30 2021 	16700000 read pairs finished. 94251 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 18:22:38 2021 	16750000 read pairs finished. 94259 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 18:23:52 2021 	16600000 read pairs finished. 94333 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 18:24:12 2021 	16650000 read pairs finished. 94353 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 18:24:58 2021 	16550000 read pairs finished. 94399 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 18:25:11 2021 	16800000 read pairs finished. 94412 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 19:22:42 2021 	16850000 read pairs finished. 97863 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 19:23:46 2021 	16900000 read pairs finished. 97927 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 19:24:51 2021 	16950000 read pairs finished. 97992 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 19:25:30 2021 	17150000 read pairs finished. 98031 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 19:27:02 2021 	17000000 read pairs finished. 98123 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 19:27:45 2021 	17200000 read pairs finished. 98166 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 19:29:26 2021 	17050000 read pairs finished. 98267 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 19:32:01 2021 	17100000 read pairs finished. 98422 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 19:32:26 2021 	17250000 read pairs finished. 98447 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 19:33:44 2021 	17300000 read pairs finished. 98525 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 19:35:43 2021 	17400000 read pairs finished. 98644 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 19:36:23 2021 	17350000 read pairs finished. 98684 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 19:36:49 2021 	17600000 read pairs finished. 98710 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 19:38:47 2021 	17450000 read pairs finished. 98828 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 19:40:13 2021 	17500000 read pairs finished. 98914 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 19:40:40 2021 	17550000 read pairs finished. 98941 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 20:35:48 2021 	17650000 read pairs finished. 102249 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 20:37:48 2021 	17700000 read pairs finished. 102369 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 20:39:31 2021 	17800000 read pairs finished. 102472 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 20:40:33 2021 	17750000 read pairs finished. 102534 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 20:42:29 2021 	17900000 read pairs finished. 102650 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 20:42:39 2021 	17850000 read pairs finished. 102660 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 20:45:02 2021 	18050000 read pairs finished. 102803 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 20:45:37 2021 	18000000 read pairs finished. 102838 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 20:46:42 2021 	17950000 read pairs finished. 102903 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 20:49:41 2021 	18100000 read pairs finished. 103082 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 20:51:47 2021 	18200000 read pairs finished. 103208 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 20:51:47 2021 	18150000 read pairs finished. 103208 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 20:53:50 2021 	18400000 read pairs finished. 103331 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 20:54:50 2021 	18300000 read pairs finished. 103391 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 20:56:05 2021 	18350000 read pairs finished. 103466 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 20:56:45 2021 	18250000 read pairs finished. 103506 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 21:47:44 2021 	18450000 read pairs finished. 106565 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 21:50:51 2021 	18500000 read pairs finished. 106752 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 21:54:17 2021 	18550000 read pairs finished. 106958 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 21:55:08 2021 	18600000 read pairs finished. 107009 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 21:57:21 2021 	18650000 read pairs finished. 107142 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 21:57:45 2021 	18850000 read pairs finished. 107166 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 21:57:48 2021 	18700000 read pairs finished. 107169 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 22:00:42 2021 	18800000 read pairs finished. 107343 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 22:00:59 2021 	18900000 read pairs finished. 107360 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 22:01:20 2021 	18750000 read pairs finished. 107381 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 22:04:16 2021 	18950000 read pairs finished. 107557 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 22:06:51 2021 	19050000 read pairs finished. 107712 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 22:06:52 2021 	19000000 read pairs finished. 107713 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 22:09:30 2021 	19100000 read pairs finished. 107871 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 22:12:07 2021 	19150000 read pairs finished. 108028 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 22:13:45 2021 	19200000 read pairs finished. 108126 secs passed
+started loading reads
+done loading 50000 reads
+started loading reads
+done loading 50000 reads
+[bsmap] @Wed Jul 28 23:00:34 2021 	19250000 read pairs finished. 110935 secs passed
+started loading reads
+done loading 16329 reads
+started loading reads
+done loading 16329 reads
+[bsmap] @Wed Jul 28 23:02:57 2021 	19300000 read pairs finished. 111078 secs passed
+started loading reads
+done loading 0 reads
+started loading reads
+done loading 0 reads
+[bsmap] @Wed Jul 28 23:08:08 2021 	19350000 read pairs finished. 111389 secs passed
+started loading reads
+done loading 0 reads
+started loading reads
+done loading 0 reads
+[bsmap] @Wed Jul 28 23:09:08 2021 	19400000 read pairs finished. 111449 secs passed
+started loading reads
+done loading 0 reads
+started loading reads
+done loading 0 reads
+[bsmap] @Wed Jul 28 23:12:09 2021 	19450000 read pairs finished. 111630 secs passed
+started loading reads
+done loading 0 reads
+started loading reads
+done loading 0 reads
+[bsmap] @Wed Jul 28 23:12:54 2021 	19550000 read pairs finished. 111675 secs passed
+started loading reads
+done loading 0 reads
+started loading reads
+done loading 0 reads
+[bsmap] @Wed Jul 28 23:13:15 2021 	19500000 read pairs finished. 111696 secs passed
+started loading reads
+done loading 0 reads
+started loading reads
+done loading 0 reads
+[bsmap] @Wed Jul 28 23:14:34 2021 	19650000 read pairs finished. 111775 secs passed
+started loading reads
+done loading 0 reads
+started loading reads
+done loading 0 reads
+[bsmap] @Wed Jul 28 23:15:38 2021 	19700000 read pairs finished. 111839 secs passed
+started loading reads
+done loading 0 reads
+started loading reads
+done loading 0 reads
+[bsmap] @Wed Jul 28 23:15:47 2021 	19600000 read pairs finished. 111848 secs passed
+started loading reads
+done loading 0 reads
+started loading reads
+done loading 0 reads
+[bsmap] @Wed Jul 28 23:20:27 2021 	19750000 read pairs finished. 112128 secs passed
+started loading reads
+done loading 0 reads
+started loading reads
+done loading 0 reads
+[bsmap] @Wed Jul 28 23:21:19 2021 	19800000 read pairs finished. 112180 secs passed
+started loading reads
+done loading 0 reads
+started loading reads
+done loading 0 reads
+[bsmap] @Wed Jul 28 23:23:21 2021 	19850000 read pairs finished. 112302 secs passed
+started loading reads
+done loading 0 reads
+started loading reads
+done loading 0 reads
+[bsmap] @Wed Jul 28 23:26:15 2021 	20016329 read pairs finished. 112476 secs passed
+started loading reads
+done loading 0 reads
+started loading reads
+done loading 0 reads
+[bsmap] @Wed Jul 28 23:28:05 2021 	20000000 read pairs finished. 112586 secs passed
+started loading reads
+done loading 0 reads
+started loading reads
+done loading 0 reads
+[bsmap] @Wed Jul 28 23:28:34 2021 	19900000 read pairs finished. 112615 secs passed
+started loading reads
+done loading 0 reads
+started loading reads
+done loading 0 reads
+[bsmap] @Wed Jul 28 23:28:59 2021 	19950000 read pairs finished. 112640 secs passed
+started loading reads
+done loading 0 reads
+started loading reads
+done loading 0 reads
+[bsmap] @Wed Jul 28 23:29:00 2021 	total read pairs: 20016329 	total time consumed:  112641 secs
+	aligned pairs: 6815584 (34.1%), unique pairs: 6815584 (34.1%), suppressed non-unique pairs: 785134 (3.9%)
+	unpaired read #1: 4095036 (20.5%), unique reads: 4095036 (20.5%), suppressed non-unique reads: 1721770 (8.6%)
+	unpaired read #2: 3167502 (15.8%), unique reads: 3167502 (15.8%), suppressed non-unique reads: 1361119 (6.8%)

@@ -1,0 +1,16 @@
+srr	species	protocol	id	read_length	num_reads	sequencer	primary_test
+1	SRR3498383	hg38	wgbs_single	Brocks	100	163725478	Illumina_HiSeq_2000	yes
+3	SRR2096734	mm10	wgbs_single	Manakov	100	308662065	Illumina_HiSeq_2500	yes
+5	SRR10606701	danre11	wgbs_single	Mendoza	 96	168367763	Illumina_HiSeq_1500	yes
+6	SRR5015166	galgal6	wgbs_single	Zhang	125	139994176	Illumina_HiSeq_4000	yes
+7	SRR12075121	tair10	wgbs_single	Shahryary	151	 76256688	Illumina_NextSeq_500	yes
+9	SRR10165530	hg38	wgbs_paired	Tycko	144	 52607981	Illumina_NovaSeq_6000	yes
+14	SRR3897178	mm10	wgbs_paired	Decato	 90	124995278	Illumina_HiSeq_2000	yes
+16	SRR5756263	danre11	wgbs_paired	Kamstra	150	121650843	Illumina_HiSeq_4000	yes
+18	SRR5644125	galgal6	wgbs_paired	Lee	125	 59768935	Illumina_HiSeq_2500	yes
+19	SRR2296821	tair10	wgbs_paired	Yong	 90	 21543631	Illumina_HiSeq_2000	yes
+20	DRR019425	hg38	wgbs_rpbat	Miura-1	100	 69919315	Illumina_HiSeq_2500	yes
+21	SRR7461526	hg38	wgbs_rpbat	Bian	150	 19986722	Illumina_HiSeq_X_Ten	yes
+22	SRR7757863	hg38	wgbs_rpbat	Miura-2	151	 99575506	Illumina_HiSeq_X_Ten	yes
+23	SRR9646129	hg38	wgbs_rpbat	Leng	126	 71902273	Illumina_HiSeq_X_Ten	yes
+24	SRR2013804	hg38	wgbs_rpbat	Guo	125	 91262329	Illumina_HiSeq_2500	yes

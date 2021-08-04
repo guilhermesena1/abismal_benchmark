@@ -28,8 +28,8 @@ SN	bases mapped:	10002359118	# ignores clipping
 SN	bases mapped (cigar):	9998193355	# more accurate
 SN	bases trimmed:	0
 SN	bases duplicated:	0
-SN	mismatches:	222404423	# from NM fields
-SN	error rate:	2.224446e-02	# mismatches / bases mapped (cigar)
+SN	mismatches:	69106565	# from NM fields
+SN	error rate:	6.911905e-03	# mismatches / bases mapped (cigar)
 SN	average length:	150
 SN	average first fragment length:	150
 SN	average last fragment length:	0

@@ -1,29 +1,44 @@
 pairs:
     total_read_pairs: 99938944
     mapped:
-        num_mapped: 65127437
-        percent_mapped: 65.1672
-        num_unique: 62369033
-        percent_unique: 62.4071
-        ambiguous: 2758404
-    unmapped: 62369033
+        num_mapped: 62107982
+        percent_mapped: 62.1459
+        num_unique: 58804724
+        percent_unique: 58.8406
+        ambiguous: 3303258
+    unique_error:
+        edits: 212338318
+        total_bases: 17632498510
+        error_rate: 1.20424
+    unmapped: 41134220
+    percent_unmapped: 41.1594
+    discordant: 1234064
+    percent_discordant: 1.23482
 mate1:
-    total_reads: 37569911
+    total_reads: 41134220
     mapped: 
-        num_mapped: 24504896
-        percent_mapped: 65.2248
-        num_unique: 19946855
-        percent_unique: 53.0926
-        ambiguous: 4558041
-    unmapped: 13065015
-    skipped: 2651
+        num_mapped: 22104947
+        percent_mapped: 53.7386
+        num_unique: 17333342
+        percent_unique: 42.1385
+        ambiguous: 4771605
+        unique_error:
+            edits: 42988658
+            total_bases: 2607136531
+            error_rate: 1.64888
+    unmapped: 19029273
+    skipped: 8946
 mate2:
-    total_reads: 37569911
+    total_reads: 41134220
     mapped: 
-        num_mapped: 21130325
-        percent_mapped: 56.2427
-        num_unique: 16783428
-        percent_unique: 44.6725
-        ambiguous: 4346897
-    unmapped: 16439586
-    skipped: 12302
+        num_mapped: 16999353
+        percent_mapped: 41.3265
+        num_unique: 12511228
+        percent_unique: 30.4156
+        ambiguous: 4488125
+        unique_error:
+            edits: 36001052
+            total_bases: 1873590138
+            error_rate: 1.9215
+    unmapped: 24134867
+    skipped: 10540

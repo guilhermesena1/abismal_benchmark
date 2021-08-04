@@ -1,42 +1,42 @@
-Bismark report for: /scratch2/desenabr/paired_q0/SRR5644125_galgal6_1.fq and /scratch2/desenabr/paired_q0/SRR5644125_galgal6_2.fq (version: v0.22.3)
-Bismark was run with Bowtie 2 against the bisulfite genome of /panfs/qcb-panasas/desenabr/ref_genomes/galgal6/index/ with the specified options: -q --score-min L,0,-0.2 --ignore-quals --no-mixed --dovetail --minins 32 --maxins 3000
+Bismark report for: /panfs/qcb-panasas/desenabr/ab/reads/paired/SRR5644125_galgal6_1.fq and /panfs/qcb-panasas/desenabr/ab/reads/paired/SRR5644125_galgal6_2.fq (version: v0.22.3)
+Bismark was run with Bowtie 2 against the bisulfite genome of /panfs/qcb-panasas/desenabr/ref_genomes/galgal6/index/ with the specified options: -q --local --ignore-quals --no-mixed --no-discordant --dovetail --minins 32 --maxins 3000 --ma 2 --mp 2 --rdg 2,2 --rfg 2,2 --score-min L,0,1.6
 Option '--directional' specified (default mode): alignments to complementary strands (CTOT, CTOB) were ignored (i.e. not performed)
 
 Final Alignment report
 ======================
 Sequence pairs analysed in total:	60222349
-Number of paired-end alignments with a unique best hit:	44535188
-Mapping efficiency:	74.0% 
-Sequence pairs with no alignments under any condition:	13887123
-Sequence pairs did not map uniquely:	1800038
-Sequence pairs which were discarded because genomic sequence could not be extracted:	45
+Number of paired-end alignments with a unique best hit:	49910006
+Mapping efficiency:	82.9% 
+Sequence pairs with no alignments under any condition:	8193542
+Sequence pairs did not map uniquely:	2118801
+Sequence pairs which were discarded because genomic sequence could not be extracted:	460
 
 Number of sequence pairs with unique best (first) alignment came from the bowtie output:
-CT/GA/CT:	22239357	((converted) top strand)
+CT/GA/CT:	24928525	((converted) top strand)
 GA/CT/CT:	0	(complementary to (converted) top strand)
 GA/CT/GA:	0	(complementary to (converted) bottom strand)
-CT/GA/GA:	22295786	((converted) bottom strand)
+CT/GA/GA:	24981021	((converted) bottom strand)
 
 Number of alignments to (merely theoretical) complementary strands being rejected in total:	0
 
 Final Cytosine Methylation Report
 =================================
-Total number of C's analysed:	1994153523
+Total number of C's analysed:	2237352905
 
-Total methylated C's in CpG context:	54564784
-Total methylated C's in CHG context:	1614003
-Total methylated C's in CHH context:	5098116
-Total methylated C's in Unknown context:	18225
+Total methylated C's in CpG context:	63263182
+Total methylated C's in CHG context:	1912612
+Total methylated C's in CHH context:	6246737
+Total methylated C's in Unknown context:	130573
 
-Total unmethylated C's in CpG context:	43354811
-Total unmethylated C's in CHG context:	496848133
-Total unmethylated C's in CHH context:	1392673676
-Total unmethylated C's in Unknown context:	749464
+Total unmethylated C's in CpG context:	50363968
+Total unmethylated C's in CHG context:	548789374
+Total unmethylated C's in CHH context:	1566777032
+Total unmethylated C's in Unknown context:	2498113
 
 C methylated in CpG context:	55.7%
 C methylated in CHG context:	0.3%
 C methylated in CHH context:	0.4%
-C methylated in unknown context (CN or CHN):	2.4%
+C methylated in unknown context (CN or CHN):	5.0%
 
 
-Bismark completed in 0d 3h 24m 38s
+Bismark completed in 0d 3h 56m 24s

@@ -1,102 +1,102 @@
 cytosines:
   total_sites: 612826082
-  sites_covered: 448260377
-  total_c: 304076053
-  total_t: 2564589847
-  max_depth: 14664
-  mutations: 7198635
-  called_meth: 39158037
-  called_unmeth: 407179616
-  mean_agg: 3.75322e+07
-  coverage: 2868665900
-  sites_covered_fraction: 0.731464
-  mean_depth: 4.68104
-  mean_depth_covered: 6.39955
-  mean_meth: 0.083729
+  sites_covered: 448269656
+  total_c: 304077874
+  total_t: 2564595968
+  max_depth: 14667
+  mutations: 7197234
+  called_meth: 39159926
+  called_unmeth: 407186925
+  mean_agg: 3.75339e+07
+  coverage: 2868673842
+  sites_covered_fraction: 0.731479
+  mean_depth: 4.68106
+  mean_depth_covered: 6.39944
+  mean_meth: 0.083731
   mean_meth_weighted: 0.105999
-  fractional_meth: 0.087732
+  fractional_meth: 0.087734
 cpg:
   total_sites: 59432374
-  sites_covered: 43017764
-  total_c: 195690410
-  total_t: 54238331
-  max_depth: 11435
-  mutations: 920060
-  called_meth: 36329682
-  called_unmeth: 4777601
-  mean_agg: 3.4363e+07
-  coverage: 249928741
-  sites_covered_fraction: 0.72381
-  mean_depth: 4.20526
-  mean_depth_covered: 5.8099
-  mean_meth: 0.798809
+  sites_covered: 43019240
+  total_c: 195692353
+  total_t: 54238686
+  max_depth: 11428
+  mutations: 919952
+  called_meth: 36331283
+  called_unmeth: 4777531
+  mean_agg: 3.43646e+07
+  coverage: 249931039
+  sites_covered_fraction: 0.723835
+  mean_depth: 4.2053
+  mean_depth_covered: 5.80975
+  mean_meth: 0.798820
   mean_meth_weighted: 0.782985
-  fractional_meth: 0.883777
+  fractional_meth: 0.883783
 cpg_symmetric:
   total_sites: 29716187
-  sites_covered: 22723633
-  total_c: 194678226
-  total_t: 51291303
-  max_depth: 14664
-  mutations: 904947
-  called_meth: 20323527
-  called_unmeth: 1905245
-  mean_agg: 1.83907e+07
-  coverage: 245969529
-  sites_covered_fraction: 0.764689
-  mean_depth: 8.27729
-  mean_depth_covered: 10.8244
-  mean_meth: 0.809322
-  mean_meth_weighted: 0.791473
-  fractional_meth: 0.914289
+  sites_covered: 22725370
+  total_c: 194680242
+  total_t: 51292327
+  max_depth: 14667
+  mutations: 904859
+  called_meth: 20325444
+  called_unmeth: 1905159
+  mean_agg: 1.83924e+07
+  coverage: 245972569
+  sites_covered_fraction: 0.764747
+  mean_depth: 8.27739
+  mean_depth_covered: 10.8237
+  mean_meth: 0.809335
+  mean_meth_weighted: 0.791471
+  fractional_meth: 0.914300
 chh:
   total_sites: 426623219
-  sites_covered: 310363973
-  total_c: 8728520
-  total_t: 1908996264
-  max_depth: 11477
-  mutations: 4551247
-  called_meth: 494874
-  called_unmeth: 309497278
-  mean_agg: 1.45827e+06
-  coverage: 1917724784
-  sites_covered_fraction: 0.72749
-  mean_depth: 4.49513
-  mean_depth_covered: 6.17895
-  mean_meth: 0.004699
-  mean_meth_weighted: 0.004551
+  sites_covered: 310369357
+  total_c: 8729054
+  total_t: 1909001922
+  max_depth: 11479
+  mutations: 4550292
+  called_meth: 494641
+  called_unmeth: 309502728
+  mean_agg: 1.45813e+06
+  coverage: 1917730976
+  sites_covered_fraction: 0.727502
+  mean_depth: 4.49514
+  mean_depth_covered: 6.17887
+  mean_meth: 0.004698
+  mean_meth_weighted: 0.004552
   fractional_meth: 0.001596
 ccg:
   total_sites: 12739427
-  sites_covered: 9111886
-  total_c: 277799
-  total_t: 48523764
-  max_depth: 10528
-  mutations: 118160
-  called_meth: 15685
-  called_unmeth: 9079937
-  mean_agg: 54730.1
-  coverage: 48801563
-  sites_covered_fraction: 0.715251
-  mean_depth: 3.83075
-  mean_depth_covered: 5.35581
-  mean_meth: 0.006006
-  mean_meth_weighted: 0.005692
-  fractional_meth: 0.001724
+  sites_covered: 9112381
+  total_c: 277857
+  total_t: 48524236
+  max_depth: 10522
+  mutations: 118175
+  called_meth: 15717
+  called_unmeth: 9080404
+  mean_agg: 54773.3
+  coverage: 48802093
+  sites_covered_fraction: 0.71529
+  mean_depth: 3.83079
+  mean_depth_covered: 5.35558
+  mean_meth: 0.006011
+  mean_meth_weighted: 0.005694
+  fractional_meth: 0.001728
 cxg:
   total_sites: 114031062
-  sites_covered: 84582410
-  total_c: 2533115
-  total_t: 529673211
-  max_depth: 11281
-  mutations: 1130025
-  called_meth: 135030
-  called_unmeth: 84343617
-  mean_agg: 415021
-  coverage: 532206326
-  sites_covered_fraction: 0.741749
-  mean_depth: 4.6672
-  mean_depth_covered: 6.29216
+  sites_covered: 84584200
+  total_c: 2532883
+  total_t: 529672096
+  max_depth: 11287
+  mutations: 1129757
+  called_meth: 135029
+  called_unmeth: 84345336
+  mean_agg: 415022
+  coverage: 532204979
+  sites_covered_fraction: 0.741765
+  mean_depth: 4.66719
+  mean_depth_covered: 6.29201
   mean_meth: 0.004907
-  mean_meth_weighted: 0.004760
+  mean_meth_weighted: 0.004759
   fractional_meth: 0.001598
