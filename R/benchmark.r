@@ -99,7 +99,11 @@ parse.abismal <- function(path) {
   # paired ended
   if (!is.null(data$pairs))  {
     data <- data$pairs
-    ans$total.reads <- data$total_read_pairs
+    ans$total.reads <- NULL
+    if (!is.null(data$total_read_pairs))
+      ans$total.reads <- data$total_read_pairs
+    else if (!is.null(data$total_pairs))
+      ans$total.reads <- data$total_pairs
   }
 
   # single end
@@ -108,8 +112,17 @@ parse.abismal <- function(path) {
   }
 
   ans$mapped.unique <- data$mapped$num_unique
-  ans$unmapped <- data$unmapped
-  ans$mapped.total <- ans$mapped.unique + data$mapped$ambiguous
+  ans$unmapped <- NULL
+
+  if (!is.null(data$num_unmapped))
+    ans$unmapped <- data$num_unmapped
+  else if (!is.null(data$unmapped))
+    ans$unmapped <- data$unmapped
+
+  if (!is.null(data$mapped$ambiguous))
+    ans$mapped.total <- ans$mapped.unique + data$mapped$ambiguous
+  else if (!is.null(data$mapped$num_ambiguous))
+    ans$mapped.total <- ans$mapped.unique + data$mapped$num_ambiguous
 
   ans <- get.pct(ans)
   ans
@@ -474,19 +487,6 @@ get.row <- function(srr, species, protocol) {
 
   if ("bwa" %in% mappers) {
     bw.data <- get.row.for.mapper(srr, "bwa", ".samstats", parse.samstats.custom, species, protocol)
-    if (!is.null(bw.data$total.reads.bwa)) {
-      if (protocol == "wgbs_paired" | protocol == "wgbs_rpbat")
-        bw.data$total.reads.bwa <- bw.data$total.reads.bwa/2
-
-      if (is.na(tot.reads))
-        tot.reads <- bw.data$total.reads.bwa
-
-      if (!is.na(tot.reads) & !is.na(bw.data$total.reads.bwa))
-        if(bw.data$total.reads.bwa != tot.reads) {
-          stop(paste0("inconsistent # of reads between bwa-meth and abismal: ",
-                    srr))
-        }
-    }
     bw.data$total.reads.bwa <- NULL
   }
 
@@ -634,7 +634,7 @@ make.times <- function(tbl) {
 
 
 make.mems <- function(tbl) {
-  tbl <- tbl[tbl$protocol =="wgbs_single",]
+  #tbl <- tbl[tbl$protocol =="wgbs_single",]
   ans <- NULL
   srrs <- tbl$srr
   ids <- tbl$id
@@ -729,7 +729,7 @@ plot.mems <- function(mems) {
 }
 
 
-get.data <- function(tbl, what, erase.prefix = F) {
+get.data <- function(tbl, what, erase.prefix = F, do.round = F) {
 	a <- tbl[, grepl(what, colnames(tbl))]
 
   if (erase.prefix)
@@ -743,14 +743,18 @@ get.data <- function(tbl, what, erase.prefix = F) {
   a <- matrix(a, nrow = nr, ncol = nc)
   rownames(a) <- rn
   colnames(a) <- cn
-  data.frame(a)
+
+  a <- data.frame(a)
+  if (do.round)
+    a <- round(100*a, 3)
+  a
 }
 
 ##################################
 # MAKE FIGURES
 ##################################
 make.accuracy.figure <- function(sim.tbl, tbl) {
-  pdf("results/figures/accuracy.pdf", width = 15, height = 6)
+  pdf("results/figures/accuracy.pdf", width = 12, height = 6)
   layout(mat = matrix(c(8,8,8,1,2,3,4,5,6,
                         9,9,9,1,2,3,4,5,6,
                         7,7,7,7,7,7,7,7,7), nrow = 3, byrow = T),
@@ -783,6 +787,8 @@ make.accuracy.figure <- function(sim.tbl, tbl) {
 
   # accuracy
   sens <- sim.tbl$pe$avg$sensitivity
+  sens <- sens[, colnames(sens) != "walt"]
+
   # hack to put abismal up front
   sens <- sens[, seq(ncol(sens), 1, -1)]
 
@@ -800,6 +806,7 @@ make.accuracy.figure <- function(sim.tbl, tbl) {
 
   # hack to put abismal up front
   spec <- spec[, seq(ncol(spec), 1, -1)]
+  spec <- spec[, colnames(spec) != "walt"]
 
   the.ylim <- c(min(spec, na.rm=T), max(spec, na.rm = T))
   plot(1, type = 'n', xlim = the.xlim, ylim = the.ylim,
@@ -813,12 +820,14 @@ make.accuracy.figure <- function(sim.tbl, tbl) {
 }
 
 make.sim.comparison.figure <- function(sim.tbl, outfile) {
-  pdf(outfile, width = 20, height = 15)
+  pdf(outfile, width = 16, height = 10)
+  par(family = "Times")
   layout(mat = matrix(c(1,4,7,10,13,16,
                         2,5,8,11,14,17,
                         3,6,9,12,15,18,
                         19,19,19,19,19,19), nrow = 4, byrow = T),
          heights = c(.3, .3, .3, .1))
+  par(mar = c(1,1,1,1))
   palette(plot.good.colors)
 
   the.lengths <- sim.tbl$lengths
@@ -869,7 +878,7 @@ make.sim.comparison.figure <- function(sim.tbl, outfile) {
          main = paste0("time (error = ", err, "%)"),
          cex.lab = 1.5, cex.main = 1.5, cex.axis = 1.5)
     for (i in 1:ncol(spec))
-      points(the.lengths, time[,i], type = 'o', pch = 21, cex = 2, bg = ncol(time) - i + 1)
+      points(the.lengths, time[,i], type = 'o', pch = 22, cex = 2, bg = ncol(time) - i + 1)
 
 
   }
@@ -977,7 +986,7 @@ make.resources.figure <- function(times, mems) {
   mems.to.plot <- mems.to.plot[seq(nrow(mems.to.plot), 1, -1),]
   colnames(mems.to.plot) <- replace.species.id.with.name(colnames(mems.to.plot))
 
-  dotchart(mems.to.plot, las = 2, ylab = "Memory (GB)", pch = 21, col = "black",
+  dotchart(mems.to.plot, las = 2, ylab = "Memory (GB)", pch = 22, col = "black",
            bg = rev(cols.single))
 
   fig_label("B", cex = 2)
@@ -1002,10 +1011,12 @@ make.sim.tbl <- function(read.lengths, num.reads = 2000000) {
   for (err in errs) {
     sens <- data.frame(NA, ncol = length(cols), nrow = length(read.lengths))
     spec <- data.frame(NA, ncol = length(cols), nrow = length(read.lengths))
+    f1   <- data.frame(NA, ncol = length(cols), nrow = length(read.lengths))
     time <- data.frame(NA, ncol = length(cols), nrow = length(read.lengths))
 
     sens.r <- data.frame(NA, ncol = length(cols.r), nrow = length(read.lengths))
     spec.r <- data.frame(NA, ncol = length(cols.r), nrow = length(read.lengths))
+    f1.r   <- data.frame(NA, ncol = length(cols.r), nrow = length(read.lengths))
     time.r <- data.frame(NA, ncol = length(cols.r), nrow = length(read.lengths))
  
     for (i in 1:length(cols)) {
@@ -1024,77 +1035,75 @@ make.sim.tbl <- function(read.lengths, num.reads = 2000000) {
             the.time.r <- paste0("simulation_analysis/times-rpbat/",
                                cols[i], "-err-",  err, "-len-", read.lengths[j], ".txt")
           }
-          
-          if (cols[i] == "bsmap") {
-            tryCatch({
-              index.time <- as.integer(readLines(paste0(
-                "simulation_analysis/times-pe/index-bsmap-err-",
-                err,"-len-",read.lengths[j],".txt")))
-            }, error = function(e) {})
-            if (cols[i] != "walt")
-              tryCatch({
-                index.time.r <- as.integer(readLines(paste0(
-                 "simulation_analysis/times-rpbat/index-bsmap-err-",
-                  err,"-len-",read.lengths[j],".txt")))
-              }, error = function(e){})
-          }
-
           the.data <- yaml::yaml.load_file(the.path)
           the.data.r <- yaml::yaml.load_file(the.path.r)
 
           sens[j, i] <- the.data$correct_reads / num.reads
           spec[j, i] <- the.data$specificity
+          f1[j, i] <- the.data$F1
           time[j, i] <- get.time.from.snakemake(the.time) - index.time
 
           if (cols[i] %in% mappers.rpbat) {
             sens.r[j, i] <- the.data.r$correct_reads / num.reads
             spec.r[j, i] <- the.data.r$specificity
+            f1.r[j, i] <- the.data.r$F1
             time.r[j, i] <- get.time.from.snakemake(the.time.r) - index.time.r
           }
 
 
         }, error = function(e) {
-          sens[j, i] <- spec[j, i] <- time[j, i] <- spec.r[j, i] <- sens.r[j, i] <- time.r[j, i] <- NA
+          sens[j, i]   <- spec[j, i]   <- f1[j,i]   <- time[j, i] <- 
+          sens.r[j, i] <- spec.r[j, i] <- f1.r[j,i] <- time.r[j, i] <- NA
        });
       }
     }
-    rownames(sens) <- rownames(spec) <- rownames(time) <-
-      rownames(sens.r) <- rownames(spec.r) <- rownames(time.r) <- paste0("length_", read.lengths)
-    colnames(sens) <- colnames(spec) <- colnames(time) <- cols
-    colnames(sens.r) <- colnames(spec.r) <- colnames(time.r) <- cols.r
+    rownames(sens) <- rownames(spec) <- rownames(f1) <- rownames(time) <-
+      rownames(sens.r) <- rownames(spec.r) <- rownames(f1.r) <- rownames(time.r) <- paste0("length_", read.lengths)
+    colnames(sens) <- colnames(spec) <- colnames(f1) <- colnames(time) <- cols
+    colnames(sens.r) <- colnames(spec.r) <- colnames(f1.r) <- colnames(time.r) <- cols.r
 
     ans$pe[[paste0("err_",err)]]$sensitivity <- sens
     ans$pe[[paste0("err_",err)]]$specificity <- spec
+    ans$pe[[paste0("err_",err)]]$f1 <- f1
     ans$pe[[paste0("err_",err)]]$time <- time
 
     ans$rpbat[[paste0("err_",err)]]$sensitivity <- sens.r
     ans$rpbat[[paste0("err_",err)]]$specificity <- spec.r
+    ans$rpbat[[paste0("err_",err)]]$f1 <- f1.r
     ans$rpbat[[paste0("err_",err)]]$time <- time.r
   }
 
   sens.pe <- ans$pe$err_0$sensitivity
   spec.pe <- ans$pe$err_0$specificity
+  f1.pe <- ans$pe$err_0$f1
   
   sens.rpbat <- ans$rpbat$err_0$sensitivity
   spec.rpbat <- ans$rpbat$err_0$specificity
+  f1.rpbat <- ans$rpbat$err_0$f1
 
   for (err in errs)
     if (err != 0) {
       sens.pe <- sens.pe + ans$pe[[paste0("err_",err)]]$sensitivity
       spec.pe <- spec.pe + ans$pe[[paste0("err_",err)]]$specificity
+      f1.pe <- f1.pe + ans$pe[[paste0("err_",err)]]$f1
 
       sens.rpbat <- sens.rpbat + ans$rpbat[[paste0("err_",err)]]$sensitivity
       spec.rpbat <- spec.rpbat + ans$rpbat[[paste0("err_",err)]]$specificity
+      f1.rpbat <- f1.rpbat + ans$rpbat[[paste0("err_",err)]]$f1
     }
   sens.pe <- sens.pe/length(errs)
   spec.pe <- spec.pe/length(errs)
+  f1.pe <- f1.pe/length(errs)
   sens.rpbat <- sens.rpbat/length(errs)
   spec.rpbat <- spec.rpbat/length(errs)
+  f1.rpbat <- f1.rpbat/length(errs)
 
   ans$pe$avg$sensitivity <- sens.pe
   ans$pe$avg$specificity <- spec.pe
+  ans$pe$avg$f1 <- f1.pe
   ans$rpbat$avg$sensitivity <- sens.rpbat
   ans$rpbat$avg$specificity <- spec.rpbat
+  ans$rpbat$avg$f1 <- f1.rpbat
 
   return(ans)
 }
@@ -1115,46 +1124,66 @@ mems <- NULL
 primary <- unlist(datasets$primary) == "yes"
 
 if (do.sim) {
-  write.log("reading simulation output...")
-  read.lengths <- seq(from = 50, to = 150, by = 10)
-  sim.tbl <- make.sim.tbl(read.lengths)
+  tryCatch({
+    write.log("reading simulation output...")
+    read.lengths <- seq(from = 50, to = 150, by = 10)
+    sim.tbl <- make.sim.tbl(read.lengths)
+  }, error = function(e) {
+    write.log("failure reading simulation")
+  })
 } else {
   write.log("SIMULATION OUTPUT SKIPPED")
+  do.sim <- F
 }
 
 if (do.tbl) {
-  write.log("reading master table: methpipe/samtools outputs...")
-  tbl <- make.table(datasets)
-  tbl.primary <- tbl[primary,]
+  tryCatch({
+    write.log("reading master table: methpipe/samtools outputs...")
+    tbl <- make.table(datasets)
+    tbl.primary <- tbl[primary,]
+  }, error = function(e) {
+    print(e)
+    write.log("failure reading master table")
+    do.tbl <- F
+  })
 } else {
   write.log("MASTER TABLE SKIPPED")
 }
 
 if (do.times) {
-  write.log("reading snakemake time outputs...")
-  times <- make.times(tbl)
+  tryCatch({
+    write.log("reading snakemake time outputs...")
+    times <- make.times(tbl)
+  }, error = function(e) {
+    write.log("failure reading time outputs")
+    do.times <- F
+  })
 } else {
   write.log("TIME DATA SKIPPED")
 }
 
 if (do.mems) {
-  write.log("reading snakemake memory outputs...")
-  mems <- make.mems(tbl)
+  tryCatch({
+    write.log("reading snakemake memory outputs...")
+    mems <- make.mems(tbl)
+  }, error = function(e) {
+    write.log("failure reading memory outputs")
+    do.mems <- F
+  })
 } else {
   write.log("MEMORY DATA SKIPPED")
 }
 
 if (plot) {
   if (do.tbl) {
- 
+
+    write.log("SUPP TABLE 1: DATASETS")
+    wt(datasets[datasets$primary == "yes",], "results/tables/supp_table_1_datasets.tsv")
+
     # Supp table 1 is accuracy
     conc.pairs <- round(100*get.data(tbl, "map.total"), 3)
     sam.err.rate <- round(100*get.data(tbl, "sam.err.rate", F), 3)
     supp.tab.1 <- cbind(conc.pairs, sam.err.rate)
-
-    write.log("SUPP TABLE 1: ACCURACY...")
-    wt(supp.tab.1,
-       "results/tables/supp_table_1_accuracy.tsv")
 
     # Supp table 2 is bsrate and coverage
     bs.conv <- round(100*get.data(tbl, "bs.conv.tot"), 3)
@@ -1168,10 +1197,10 @@ if (plot) {
     cpg.meth.mean <- round(100*get.data(tbl, "cpg.meth.mean"), 3)
     cpg.meth.weigh <- round(100*get.data(tbl, "cpg.meth.weigh"), 3)
     cpg.meth.frac <- round(100*get.data(tbl, "cpg.meth.frac"), 3)
-    supp.tab.2 <- cbind(bs.conv, c.cov, c.depth, c.meth.mean, c.meth.weigh, c.meth.frac,
+    supp.tab.2 <- cbind(conc.pairs, sam.err.rate, bs.conv, c.cov, c.depth, c.meth.mean, c.meth.weigh, c.meth.frac,
              cpg.cov, cpg.depth, cpg.meth.mean, cpg.meth.weigh, cpg.meth.frac)
 
-    write.log("SUPP TABLE 2: METH ACCURACY...")
+    write.log("SUPP TABLE 2: ACCURACY...")
     wt(supp.tab.2, "results/tables/supp_table_2_downstream.tsv")
   }
   
@@ -1227,4 +1256,6 @@ if (plot) {
     make.resources.figure(times.primary, mems.primary)
   }
 }
+if (file.exists("Rplots.pdf"))
+  file.remove("Rplots.pdf")
 write.log("DONE!")

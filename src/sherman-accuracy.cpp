@@ -162,9 +162,11 @@ int main(int argc, const char **argv) {
   }
 
   const size_t missed_reads = total_reads - correct_reads;
+  const double sensitivity = correct_reads/static_cast<double>(correct_reads + missed_reads);
+  const double specificity = correct_reads/static_cast<double>(correct_reads + incorrect_reads);
   cout << "correct_reads: " << correct_reads << "\n";
   cout << "incorrect_reads: " << incorrect_reads << "\n";
-  cout << "sensitivity: " << correct_reads/static_cast<double>(correct_reads + missed_reads) << endl;
-  cout << "specificity: " << correct_reads/static_cast<double>(correct_reads + incorrect_reads) << endl;
-  cout << "F1: " << correct_reads/static_cast<double>(correct_reads + (incorrect_reads + missed_reads)/2.0) << endl;
+  cout << "sensitivity: " << sensitivity << endl;
+  cout << "specificity: " << specificity << endl;
+  cout << "F1: " << 2.0/(1.0/sensitivity + 1.0/specificity) << endl;
 }

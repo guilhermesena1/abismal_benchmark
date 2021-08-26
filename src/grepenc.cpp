@@ -72,7 +72,8 @@ encode_genome(const string &genome, string &encoded_genome,
 }
 
 void
-find_all_occurrences(const string &pattern,
+find_all_occurrences(
+                     const string &pattern,
                      const string &encoded_genome,
                      const string &genome,
                      const char strand) {
@@ -89,12 +90,15 @@ int
 main(int argc, const char **argv) {
   size_t alphabet_size = 4;
   bool verbose = false;
+  bool skip_revcomp = false;
   OptionParser opt_parse(strip_path(argv[0]),
                         "find sequences with given encoding",
                         "<pattern> <genome-file>");
   vector<string> leftover_args;
 
   opt_parse.add_opt("verbose", 'v', "print more run info",false, verbose);
+  opt_parse.add_opt("skip-revcomp", 's', "do not count in reverse complement",
+                    false, skip_revcomp);
   opt_parse.add_opt("alphabet", 'a', "alphabet encoding (2 3 or 4)",
                     false, alphabet_size);
 
@@ -103,10 +107,12 @@ main(int argc, const char **argv) {
     cerr << "invalid alphabet size: " << alphabet_size
          << ". Must be 2, 3 or 4\n";
     cerr << opt_parse.help_message() << endl;
+    return EXIT_SUCCESS;
   }
   if (leftover_args.size() != 2) {
     cerr << "Need two arguments: <pattern> <genome file>\n";
     cerr << opt_parse.help_message() << endl;
+    return EXIT_SUCCESS;
   }
   const string genome_file = leftover_args[1],
                pattern = leftover_args[0];
@@ -124,14 +130,15 @@ main(int argc, const char **argv) {
   if (verbose) cerr << "[finding pattern in + strand]\n";
   find_all_occurrences(pattern, encoded_genome, genome, '+');
 
-  if (verbose) cerr << "[revcomping genome]\n";
-  revcomp_inplace(genome);
+  if (!skip_revcomp) {
+    if (verbose) cerr << "[revcomping genome]\n";
+    revcomp_inplace(genome);
 
-  if (verbose) cerr << "[encoding revcomped genome]\n";
-  encode_genome(genome, encoded_genome, alphabet_size);
+    if (verbose) cerr << "[encoding revcomped genome]\n";
+    encode_genome(genome, encoded_genome, alphabet_size);
 
-  if (verbose) cerr << "[finding pattern in - strand]\n";
-  find_all_occurrences(pattern, encoded_genome, genome, '-');
-
+    if (verbose) cerr << "[finding pattern in - strand]\n";
+    find_all_occurrences(pattern, encoded_genome, genome, '-');
+  }
   return EXIT_SUCCESS;
 }

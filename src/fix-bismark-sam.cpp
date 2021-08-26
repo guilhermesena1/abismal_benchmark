@@ -54,7 +54,7 @@ fix_aln(sam_rec &aln) {
   const string meth_call = the_xm_tag->substr(5);
   const string xr = *the_xr_tag;
   const int unmeth_c = std::count_if(begin(meth_call), end(meth_call),
-       [](const char c) { return (c == 'h' || c == 'x'); });
+       [](const char c) { return (c == 'x' || c == 'h' || c == 'z' || c == 'u'); });
 
   if (unmeth_c > edit_distance) {
     cerr << "this read has edit_distance " << edit_distance
@@ -89,7 +89,7 @@ are_mates(const sam_rec &one, const sam_rec &two) {
 
 static bool
 valid_edit_distance(const int edit_distance, const size_t read_size) {
-  static double MAX_EDIT_DISTANCE_FRAC = 0.1;
+  static double MAX_EDIT_DISTANCE_FRAC = 1.0;
   return (static_cast<double>(edit_distance) <= 
           MAX_EDIT_DISTANCE_FRAC * static_cast<double>(read_size));
 }
@@ -132,9 +132,25 @@ convert_to_se_aln(sam_rec &aln) {
   aln.tlen = 0;
 }
 
+static void
+flip_xr_tag(sam_rec &aln) {
+  auto xr_tag_itr = find_if(begin(aln.tags), end(aln.tags),
+                               [](const string &t) {
+                                 return t.compare (0, 3, "XR:") == 0;
+                               });
+  const bool a_rich = (xr_tag_itr->back() == 'A');
+  xr_tag_itr->pop_back();
+  xr_tag_itr->pop_back();
+
+  *xr_tag_itr += (a_rich) ? "CT" : "GA";
+
+}
+
+
 int
 main(int argc, const char **argv) {
   bool verbose = false;
+  bool pbat = false;
   bool single_end = false;
   string outfile = "";
   OptionParser opt_parse(strip_path(argv[0]),
@@ -143,6 +159,7 @@ main(int argc, const char **argv) {
   vector<string> leftover_args;
 
   opt_parse.add_opt("verbose", 'v', "print more run info", false, verbose);
+  opt_parse.add_opt("pbat", 'p', "data is PBAT", false, pbat);
   opt_parse.add_opt("single-end", 's', "filter reads in SE mode", false, single_end);
   opt_parse.add_opt("output", 'o', "output file", false, outfile);
   opt_parse.parse(argc, argv, leftover_args);
@@ -194,8 +211,11 @@ main(int argc, const char **argv) {
   } else {
     while (in >> aln) {
       const int d_aln = fix_aln(aln);
-      if (report_se_read(aln, d_aln))
+      if (report_se_read(aln, d_aln)) {
+        if (pbat)
+          flip_xr_tag(aln);
         out << aln << '\n';
+      }
     }
   }
 

@@ -38,35 +38,12 @@ get_tag_value(const sam_rec &aln, const string value) {
   return stoi(the_nm_tag->substr(5));
 }
 
-bool
-is_ambig(const sam_rec &aln) {
-  const size_t as_val = get_tag_value(aln, "AS");
-  const size_t xs_val = get_tag_value(aln, "XS");
-
-  if (as_val == std::numeric_limits<size_t>::max()) {
-    cerr << "entry below is not valid bwa-meth (no AS tag):\n";
-    cerr << aln << "\n";
-    throw runtime_error("bad BWA file");
-  }
-
-  return (as_val == xs_val);
-}
-
-bool
-is_valid(const sam_rec &aln) {
-  const size_t sz = cigar_qseq_ops(aln.cigar);
-  const size_t edit_distance = get_tag_value(aln, "NM");
-  const double FRAC = 0.1;
-
-  return edit_distance <= static_cast<size_t>(FRAC*sz);
-}
-
 int
 main(int argc, const char **argv) {
   bool verbose = false;
   string outfile = "";
   OptionParser opt_parse(strip_path(argv[0]),
-                         "removes malformatted lines from BWA",
+                         "removes malformatted SAM entries",
                         "<sam-input>");
   vector<string> leftover_args;
 
@@ -85,17 +62,8 @@ main(int argc, const char **argv) {
 
   out << in.get_header();
   while (in >> aln) {
-    if (aln.pos > 0) {
-      const bool ambig = is_ambig(aln);
-      const bool valid = is_valid(aln);
-      if (ambig)
-        set_flag(aln, samflags::pcr_duplicate);
-      if (ambig || !valid) {
-        aln.rname = "*";
-        aln.pos = 0;
-      }
+    if (!aln.empty())
       out << aln << '\n'; 
-    }
   }
   return EXIT_SUCCESS;
 }
