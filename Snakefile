@@ -73,13 +73,9 @@ for x in open(input_dataset_tsv):
     SAMPLES[species][protocol].append(y[0])
 
 # mappers used in benchmarking
-MAPPERS_SINGLE = ["abismal", "bismark", "bsmap", "walt", "bwa", "hisat_3n", "minimap2"]
-
-MAPPERS_PAIRED = ["abismal", "bismark", "bsmap", "walt", "bwa", "hisat_3n"]
-MAPPERS_PAIRED = ["abismal", "bismark", "walt", "hisat_3n"]
-
-MAPPERS_RPBAT = ["abismal", "bismark", "bsmap"]
-MAPPERS_RPBAT = []
+MAPPERS_SINGLE = ["abismal", "bismark", "bsmap", "walt", "bwa", "hisat_3n"]
+MAPPERS_PAIRED = ["abismal", "bismark",  "bsmap", "walt", "bwa", "hisat_3n"]
+MAPPERS_RPBAT = ["abismal", "bismark",  "bsmap"]
 
 # output files
 OUT_FILES = ["samstats", "bsrate", "levels"]
@@ -402,7 +398,7 @@ rule hisat_map_single:
     """
     hisat-3n --summary-file {output.stats} --index {input.index} \
     -p 16 -I 32 -X 3000 -t -q -U {input.r} -S {output.sam} --unique-only \
-    --ignore-quals --mp 1,1 --sp 1,1 --np 1 --rdg 1,1 --rfg 1,1 --score-min L,0.0,-0.1 \
+    --ignore-quals --mp 1,1 --sp 1,1 --np 1 --rdg 0,1 --rfg 0,1 --score-min L,0.0,-0.1 \
     --base-change C,T --no-spliced-alignment
     """
 
@@ -420,7 +416,7 @@ rule hisat_map_paired:
     """
     hisat-3n --summary-file {output.stats} --index {input.index} \
     -p 16 -I 32 -X 3000 -t -q -1 {input.r1} -2 {input.r2} -S {output.sam} --unique-only \
-    --ignore-quals --mp 1,1 --sp 1,1 --np 1 --rdg 1,1 --rfg 1,1 --score-min L,0.0,-0.1 \
+    --ignore-quals --mp 1,1 --sp 1,1 --np 1 --rdg 0,1 --rfg 0,1 --score-min L,0.0,-0.1 \
     --base-change C,T --no-spliced-alignment
     """
 

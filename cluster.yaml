@@ -4,27 +4,38 @@ __default__:
   threads: 1
   name: "{rule}.{wildcards}"
 
-bismark_map_paired:
+format_sam:
+  mem: 32GB
+
+minimap2_map_single:
   mem: 64GB
+  threads: 16
+
+abismal_map_single:
+  mem: 8GB
+  threads: 16
+
+abismal_map_paired:
+  mem: 8GB
+  threads: 16
+
+abismal_map_rpbat:
+  mem: 8GB
   threads: 16
 
 bismark_map_single:
   mem: 64GB
   threads: 16
-
-bismark_map_pbat:
+ 
+bismark_map_paired:
   mem: 64GB
   threads: 16
 
-abismal_map_paired:
-  mem: 16GB
+bismark_map_rpbat:
+  mem: 90GB
   threads: 16
 
-abismal_map_single:
-  mem: 16GB
-  threads: 16
-
-abismal_map_pbat:
+bsmap_map_single:
   mem: 16GB
   threads: 16
 
@@ -32,21 +43,9 @@ bsmap_map_paired:
   mem: 16GB
   threads: 16
 
-bsmap_map_single:
+bsmap_map_rpbat:
   mem: 16GB
   threads: 16
-
-bsmap_map_pbat:
-  mem: 16GB
-  threads: 16
-
-bsmap_map_truth:
-  mem: 32GB
-  threads: 16
-
-bsmap_mapstats:
-  mem: 16GB
-  threads: 1
 
 walt_map_paired:
   mem: 48GB
@@ -56,50 +55,18 @@ walt_map_single:
   mem: 48GB
   threads: 16
 
-walt_map_pbat:
-  mem: 48GB
+bwa_map_single:
+  mem: 64GB
   threads: 16
 
-walt_map_truth:
-  mem: 48GB
+bwa_map_paired:
+  mem: 64GB
   threads: 16
 
-sort_mr:
-  mem: 32GB
-  threads: 1
-
-truth_map_paired:
+hisat_map_paired:
   mem: 16GB
   threads: 16
 
-truth_map_single:
+hisat_map_single:
   mem: 16GB
   threads: 16
-
-truth_map_pbat:
-  mem: 16GB
-  threads: 16
-
-get_repeat_cpg_bases:
-  mem: 8GB
-  threads: 1
-
-get_repeat_cpg_overlap:
-  mem: 8GB
-  threads: 1
-
-get_repeat_c_overlap:
-  mem: 8GB
-  threads: 1
-
-get_repeat_c_bases:
-  mem: 8GB
-  threads: 1
-
-sort_for_truth_comp:
-  mem: 32GB
-  threads: 8
-
-sort_for_truth_comp_formatted:
-  mem: 32GB
-  threads: 8
