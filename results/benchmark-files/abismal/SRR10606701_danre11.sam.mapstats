@@ -1,13 +1,16 @@
 total_reads: 168367763
 mapped: 
-    num_mapped: 155994941
-    percent_mapped: 92.6513
-    num_unique: 113415289
-    percent_unique: 67.3616
-    ambiguous: 42579652
+    num_mapped: 155483062
+    num_unique: 113003816
+    num_ambiguous: 42479246
+    percent_mapped: 92.3473
+    percent_unique: 67.1173
+    percent_ambiguous: 25.23
     unique_error:
-        edits: 165498343
-        total_bases: 10797117633
-        error_rate: 1.5328
-unmapped: 12372822
-skipped: 139
+        edits: 164617696
+        total_bases: 10757919241
+        error_rate: 1.5302
+num_unmapped: 12884701
+num_skipped: 139
+percent_unmapped: 7.65271
+percent_skipped: 8.25574e-05

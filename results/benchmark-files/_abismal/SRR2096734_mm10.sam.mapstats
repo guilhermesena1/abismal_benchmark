@@ -1,0 +1,13 @@
+total_reads: 308662065
+mapped: 
+    num_mapped: 262454794
+    percent_mapped: 85.0298
+    num_unique: 220847821
+    percent_unique: 71.55
+    ambiguous: 41606973
+    unique_error:
+        edits: 247211573
+        total_bases: 21412886338
+        error_rate: 1.1545
+unmapped: 46207271
+skipped: 4097

@@ -1,44 +1,51 @@
 pairs:
-    total_read_pairs: 175401079
+    total_pairs: 175401079
     mapped:
-        num_mapped: 130484072
-        percent_mapped: 74.3918
-        num_unique: 110597775
-        percent_unique: 63.0542
-        ambiguous: 19886297
-    unique_error:
-        edits: 502657362
-        total_bases: 27756397238
-        error_rate: 1.81096
-    unmapped: 64803304
-    percent_unmapped: 36.9458
-    discordant: 2374380
-    percent_discordant: 1.35369
+        num_mapped: 131129840
+        num_unique: 110772748
+        num_ambiguous: 20357092
+        percent_mapped: 74.76
+        percent_unique: 63.154
+        percent_ambiguous: 11.606
+        unique_error:
+            edits: 511808610
+            total_bases: 27800296912
+            error_rate: 1.84102
+    num_unmapped: 44271239
+    num_discordant: 1617264
+    percent_unmapped: 25.24
+    percent_discordant: 0.922038
 mate1:
-    total_reads: 64803304
+    total_reads: 64628331
     mapped: 
-        num_mapped: 43280440
-        percent_mapped: 66.7874
-        num_unique: 24443220
-        percent_unique: 37.7191
-        ambiguous: 18837220
+        num_mapped: 42620370
+        num_unique: 24189620
+        num_ambiguous: 18430750
+        percent_mapped: 65.9469
+        percent_unique: 37.4288
+        percent_ambiguous: 28.5181
         unique_error:
-            edits: 73983251
-            total_bases: 3066392787
-            error_rate: 2.41271
-    unmapped: 21522864
-    skipped: 644
+            edits: 74058139
+            total_bases: 3034546915
+            error_rate: 2.4405
+    num_unmapped: 22007961
+    num_skipped: 644
+    percent_unmapped: 34.0531
+    percent_skipped: 0.000996467
 mate2:
-    total_reads: 64803304
+    total_reads: 64628331
     mapped: 
-        num_mapped: 25809300
-        percent_mapped: 39.8271
-        num_unique: 9124738
-        percent_unique: 14.0807
-        ambiguous: 16684562
+        num_mapped: 25389903
+        num_unique: 9077833
+        num_ambiguous: 16312070
+        percent_mapped: 39.286
+        percent_unique: 14.0462
+        percent_ambiguous: 25.2398
         unique_error:
-            edits: 27032025
-            total_bases: 1145102567
-            error_rate: 2.36066
-    unmapped: 38994004
-    skipped: 263791
+            edits: 27027593
+            total_bases: 1139204635
+            error_rate: 2.3725
+    num_unmapped: 39238428
+    num_skipped: 263791
+    percent_unmapped: 60.714
+    percent_skipped: 0.408166

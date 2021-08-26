@@ -1,42 +1,42 @@
 Bismark report for: /panfs/qcb-panasas/desenabr/ab/reads/paired/SRR8307571_danre11_1.fq and /panfs/qcb-panasas/desenabr/ab/reads/paired/SRR8307571_danre11_2.fq (version: v0.22.3)
-Bismark was run with Bowtie 2 against the bisulfite genome of /panfs/qcb-panasas/desenabr/ref_genomes/danre11/index/ with the specified options: -q --local --ignore-quals --no-mixed --no-discordant --dovetail --minins 32 --maxins 3000 --ma 2 --mp 2 --rdg 2,2 --rfg 2,2 --score-min L,0,1.6
+Bismark was run with Bowtie 2 against the bisulfite genome of /panfs/qcb-panasas/desenabr/ref_genomes/danre11/index/ with the specified options: -q --local --ignore-quals --no-mixed --no-discordant --dovetail --minins 32 --maxins 3000 --ma 2 --mp 2 --rdg 0,2 --rfg 0,2 --score-min L,0,1.6
 Option '--directional' specified (default mode): alignments to complementary strands (CTOT, CTOB) were ignored (i.e. not performed)
 
 Final Alignment report
 ======================
 Sequence pairs analysed in total:	148470520
-Number of paired-end alignments with a unique best hit:	102625322
-Mapping efficiency:	69.1% 
-Sequence pairs with no alignments under any condition:	23298944
-Sequence pairs did not map uniquely:	22546254
-Sequence pairs which were discarded because genomic sequence could not be extracted:	2260
+Number of paired-end alignments with a unique best hit:	104326353
+Mapping efficiency:	70.3% 
+Sequence pairs with no alignments under any condition:	21383831
+Sequence pairs did not map uniquely:	22760336
+Sequence pairs which were discarded because genomic sequence could not be extracted:	3227
 
 Number of sequence pairs with unique best (first) alignment came from the bowtie output:
-CT/GA/CT:	51469976	((converted) top strand)
+CT/GA/CT:	52326011	((converted) top strand)
 GA/CT/CT:	0	(complementary to (converted) top strand)
 GA/CT/GA:	0	(complementary to (converted) bottom strand)
-CT/GA/GA:	51153086	((converted) bottom strand)
+CT/GA/GA:	51997115	((converted) bottom strand)
 
 Number of alignments to (merely theoretical) complementary strands being rejected in total:	0
 
 Final Cytosine Methylation Report
 =================================
-Total number of C's analysed:	4071045800
+Total number of C's analysed:	4124279037
 
-Total methylated C's in CpG context:	309327645
-Total methylated C's in CHG context:	7199496
-Total methylated C's in CHH context:	22038955
-Total methylated C's in Unknown context:	295257
+Total methylated C's in CpG context:	312825391
+Total methylated C's in CHG context:	7262651
+Total methylated C's in CHH context:	22449900
+Total methylated C's in Unknown context:	603314
 
-Total unmethylated C's in CpG context:	85274725
-Total unmethylated C's in CHG context:	868300606
-Total unmethylated C's in CHH context:	2778904373
-Total unmethylated C's in Unknown context:	6103288
+Total unmethylated C's in CpG context:	87549328
+Total unmethylated C's in CHG context:	879127224
+Total unmethylated C's in CHH context:	2815064543
+Total unmethylated C's in Unknown context:	10255093
 
-C methylated in CpG context:	78.4%
+C methylated in CpG context:	78.1%
 C methylated in CHG context:	0.8%
 C methylated in CHH context:	0.8%
-C methylated in unknown context (CN or CHN):	4.6%
+C methylated in unknown context (CN or CHN):	5.6%
 
 
-Bismark completed in 0d 19h 24m 10s
+Bismark completed in 1d 5h 30m 25s

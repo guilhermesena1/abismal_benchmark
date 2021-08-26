@@ -1,19 +1,19 @@
 Bismark report for: /panfs/qcb-panasas/desenabr/ab/reads/single/SRR12615661_mm10.fq (version: v0.22.3)
 Option '--directional' specified (default mode): alignments to complementary strands (CTOT, CTOB) were ignored (i.e. not performed)
-Bismark was run with Bowtie 2 against the bisulfite genome of /panfs/qcb-panasas/desenabr/ref_genomes/mm10/index/ with the specified options: -q --local --ignore-quals --ma 2 --mp 2 --rdg 2,2 --rfg 2,2 --score-min L,0,1.6
+Bismark was run with Bowtie 2 against the bisulfite genome of /panfs/qcb-panasas/desenabr/ref_genomes/mm10/index/ with the specified options: -q --local --ignore-quals --ma 2 --mp 2 --rdg 0,2 --rfg 0,2 --score-min L,0,1.6
 
 Final Alignment report
 ======================
 Sequences analysed in total:	38838190
-Number of alignments with a unique best hit from the different alignments:	31199583
-Mapping efficiency:	80.3%
-Sequences with no alignments under any condition:	1498483
-Sequences did not map uniquely:	6140124
+Number of alignments with a unique best hit from the different alignments:	31333172
+Mapping efficiency:	80.7%
+Sequences with no alignments under any condition:	1361154
+Sequences did not map uniquely:	6143864
 Sequences which were discarded because genomic sequence could not be extracted:	4
 
 Number of sequences with unique best (first) alignment came from the bowtie output:
-CT/CT:	3012538	((converted) top strand)
-CT/GA:	28187041	((converted) bottom strand)
+CT/CT:	3055924	((converted) top strand)
+CT/GA:	28277244	((converted) bottom strand)
 GA/CT:	0	(complementary to (converted) top strand)
 GA/GA:	0	(complementary to (converted) bottom strand)
 
@@ -21,22 +21,22 @@ Number of alignments to (merely theoretical) complementary strands being rejecte
 
 Final Cytosine Methylation Report
 =================================
-Total number of C's analysed:	869006325
+Total number of C's analysed:	873483735
 
-Total methylated C's in CpG context:	21375077
-Total methylated C's in CHG context:	3090709
-Total methylated C's in CHH context:	8538527
-Total methylated C's in Unknown context:	69314
+Total methylated C's in CpG context:	21451819
+Total methylated C's in CHG context:	3122267
+Total methylated C's in CHH context:	8694622
+Total methylated C's in Unknown context:	122783
 
-Total unmethylated C's in CpG context:	39115768
-Total unmethylated C's in CHG context:	195984077
-Total unmethylated C's in CHH context:	600902167
-Total unmethylated C's in Unknown context:	1592464
+Total unmethylated C's in CpG context:	39285836
+Total unmethylated C's in CHG context:	196516446
+Total unmethylated C's in CHH context:	604412745
+Total unmethylated C's in Unknown context:	1992445
 
 C methylated in CpG context:	35.3%
 C methylated in CHG context:	1.6%
 C methylated in CHH context:	1.4%
-C methylated in Unknown context (CN or CHN):	4.2%
+C methylated in Unknown context (CN or CHN):	5.8%
 
 
-Bismark completed in 0d 2h 1m 46s
+Bismark completed in 0d 2h 2m 34s

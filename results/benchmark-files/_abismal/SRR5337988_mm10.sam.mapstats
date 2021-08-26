@@ -1,0 +1,44 @@
+pairs:
+    total_read_pairs: 175401079
+    mapped:
+        num_mapped: 130484072
+        percent_mapped: 74.3918
+        num_unique: 110597775
+        percent_unique: 63.0542
+        ambiguous: 19886297
+    unique_error:
+        edits: 502657362
+        total_bases: 27756397238
+        error_rate: 1.81096
+    unmapped: 64803304
+    percent_unmapped: 36.9458
+    discordant: 2374380
+    percent_discordant: 1.35369
+mate1:
+    total_reads: 64803304
+    mapped: 
+        num_mapped: 43280440
+        percent_mapped: 66.7874
+        num_unique: 24443220
+        percent_unique: 37.7191
+        ambiguous: 18837220
+        unique_error:
+            edits: 73983251
+            total_bases: 3066392787
+            error_rate: 2.41271
+    unmapped: 21522864
+    skipped: 644
+mate2:
+    total_reads: 64803304
+    mapped: 
+        num_mapped: 25809300
+        percent_mapped: 39.8271
+        num_unique: 9124738
+        percent_unique: 14.0807
+        ambiguous: 16684562
+        unique_error:
+            edits: 27032025
+            total_bases: 1145102567
+            error_rate: 2.36066
+    unmapped: 38994004
+    skipped: 263791
