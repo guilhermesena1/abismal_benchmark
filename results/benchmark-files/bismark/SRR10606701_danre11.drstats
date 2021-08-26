@@ -1,8 +1,8 @@
-total_reads: 112826249
-total_bases: 10740948875
-unique_reads: 107992830
-unique_read_bases: 10279408122
-non_duplicate_fraction: 0.925889
-duplicate_reads: 3528210
-reads_removed: 4833419
-duplication_rate: 2.36994
+total_reads: 114165412
+total_bases: 10868585761
+unique_reads: 109282857
+unique_read_bases: 10402354429
+non_duplicate_fraction: 0.926179
+duplicate_reads: 3545306
+reads_removed: 4882555
+duplication_rate: 2.37719
