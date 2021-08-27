@@ -1,0 +1,5 @@
+correct_reads: 1892526
+incorrect_reads: 16742
+sensitivity: 0.946263
+specificity: 0.991231
+F1: 0.968225

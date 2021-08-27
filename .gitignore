@@ -1,3 +1,6 @@
 *.error
 *.output
+*.sam
+*.bam
+*.sam.bz2
 src/[^\.]*
