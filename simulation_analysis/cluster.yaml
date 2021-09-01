@@ -1,0 +1,43 @@
+__default__:
+  time: 1:00:00
+  mem: 4GB
+  threads: 1
+  name: "{rule}.{wildcards}"
+
+abismal_pe:
+  mem: 8GB
+  threads: 16
+
+abismal_rpbat:
+  mem: 8GB
+  threads: 16
+
+bismark_pe:
+  mem: 64GB
+  threads: 16
+
+bismark_rpbat:
+  mem: 120GB
+  threads: 16
+
+bsmap_pe:
+  mem: 16GB
+  threads: 16
+
+bsmap_rpbat:
+  mem: 16GB
+  threads: 16
+
+walt:
+  mem: 32GB
+  threads: 16
+
+bwa:
+  mem: 64GB
+  threads: 16
+
+hisat:
+  mem: 16GB
+  threads: 16
+
+

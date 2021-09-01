@@ -1,0 +1,188 @@
+min_len = 50
+max_len = 160
+len_by = 10
+LENS = list(range(min_len, max_len, len_by))
+ERRS = list(range(0, 6, 1))
+
+genome_dir = "/panfs/qcb-panasas/desenabr/ref_genomes/hg38"
+genome_fa = genome_dir + "/genome.fa"
+genome_chrom = genome_dir + "/meta/chrom"
+genome_abismal = "/home1/desenabr/refs/hg38/index/abismal_min.idx"
+genome_bismark = genome_dir + "/index"
+genome_walt = genome_dir + "/index/walt.dbindex"
+genome_hisat = genome_dir + "/index/hisat"
+
+MAPPERS_PE = ["abismal", "bismark", "bsmap", "walt", "bwa", "hisat_3n"]
+MAPPERS_RPBAT = ["abismal", "bismark", "bsmap"]
+rule all:
+  input:
+    expand("accuracy-out-pe/{mapper}-err-{err}-len-{len}.txt", mapper = MAPPERS_PE, err = ERRS, len = LENS),
+    expand("times-pe/{mapper}-err-{err}-len-{len}.txt", mapper = MAPPERS_PE, err = ERRS, len = LENS),
+    expand("accuracy-out-rpbat/{mapper}-err-{err}-len-{len}.txt", mapper = MAPPERS_RPBAT, err = ERRS, len = LENS),
+    expand("times-rpbat/{mapper}-err-{err}-len-{len}.txt", mapper = MAPPERS_RPBAT, err = ERRS, len = LENS)
+
+the_dir = "reads-pe/err_{wildcards.err}_len_{wildcards.len}"
+fa_r1 = "reads-pe/err_{err}_len_{len}/simulated_1.fastq"
+fa_r2 = "reads-pe/err_{err}_len_{len}/simulated_2.fastq"
+
+the_dir_r = "reads-rpbat/err_{wildcards.err}_len_{wildcards.len}"
+fa_r1_r = "reads-rpbat/err_{err}_len_{len}/simulated_1.fastq"
+fa_r2_r = "reads-rpbat/err_{err}_len_{len}/simulated_2.fastq"
+
+
+rule sherman:
+  input:
+    "sam-{case}/{mapper}-err-{err}-len-{len}.sam"
+  output:
+    "accuracy-out-{case}/{mapper}-err-{err}-len-{len}.txt"
+  shell:
+    """
+    sherman-accuracy -n 2000000 {input} >{output}
+    """
+
+rule abismal_pe:
+  input:
+    r1 = fa_r1,
+    r2 = fa_r2,
+    index = genome_abismal
+  output:
+    sam = "sam-pe/abismal-err-{err}-len-{len}.sam",
+    stats = "sam-pe/abismal-err-{err}-len-{len}.sam.mapstats"
+  benchmark:
+    "times-pe/abismal-err-{err}-len-{len}.txt"
+  shell:
+    """
+    abismal -v -t 16 -s {output.stats} -i {input.index} -o {output.sam} {input.r1} {input.r2}
+    """
+
+rule abismal_rpbat:
+  input:
+    r1 = fa_r1_r,
+    r2 = fa_r2_r,
+    index = genome_abismal
+  output:
+    sam = "sam-rpbat/abismal-err-{err}-len-{len}.sam",
+    stats = "sam-rpbat/abismal-err-{err}-len-{len}.sam.mapstats"
+  benchmark:
+    "times-rpbat/abismal-err-{err}-len-{len}.txt"
+  shell:
+    """
+    abismal -R -v -t 16 -s {output.stats} -i {input.index} -o {output.sam} {input.r1} {input.r2}
+    """
+
+rule bismark_pe:
+  input:
+    r1 = fa_r1,
+    r2 = fa_r2
+  output:
+    sam = "sam-pe/bismark-err-{err}-len-{len}.sam"
+  benchmark:
+    "times-pe/bismark-err-{err}-len-{len}.txt"
+  shell:
+    """
+     cd %s && bismark --temp_dir . --parallel 8 -o .  --local --bowtie2 --icpc -I 32 -X 3000 \
+     -1 simulated_1.fastq -2 simulated_2.fastq %s && samtools view -h -o temp.sam simulated_1_bismark_bt2_pe.bam && \
+     fix-bismark-sam -o ../../{output.sam} temp.sam && rm temp.sam
+    """ %(the_dir, genome_bismark)
+
+rule bismark_rpbat:
+  input:
+    r1 = fa_r1_r,
+    r2 = fa_r2_r
+  output:
+    sam = "sam-rpbat/bismark-err-{err}-len-{len}.sam"
+  benchmark:
+    "times-rpbat/bismark-err-{err}-len-{len}.txt"
+  shell:
+    """
+     cd %s && bismark --non_directional --temp_dir . --parallel 8 -o .  --local --bowtie2 --icpc -I 32 -X 3000 \
+     -1 simulated_1.fastq -2 simulated_2.fastq %s && samtools view -h -o temp.sam simulated_1_bismark_bt2_pe.bam && \
+     fix-bismark-sam -o ../../{output.sam} temp.sam && rm temp.sam
+    """ %(the_dir, genome_bismark)
+
+rule bsmap_pe:
+  input:
+    r1 = fa_r1,
+    r2 = fa_r2,
+    fa = genome_fa
+  output:
+    sam = "sam-pe/bsmap-err-{err}-len-{len}.sam",
+  benchmark:
+    "times-pe/bsmap-err-{err}-len-{len}.txt"
+  shell:
+    """
+    bsmap -g 3 -v 0.1 -m 32 -x 3000 -r 0 -p 16 -V 2 -a {input.r1} -b {input.r2} -o {output.sam} -d {input.fa}
+    """
+
+rule bsmap_rpbat:
+  input:
+    r1 = fa_r1_r,
+    r2 = fa_r2_r,
+    fa = genome_fa
+  output:
+    sam = "sam-rpbat/bsmap-err-{err}-len-{len}.sam",
+  benchmark:
+    "times-rpbat/bsmap-err-{err}-len-{len}.txt"
+  shell:
+    """
+    bsmap -g 3 -v 0.1  -n 1 -m 32 -x 3000 -r 0 -p 16 -V 2 -a {input.r1} -b {input.r2} -o {output.sam} -d {input.fa}
+    """
+
+rule walt:
+  input:
+    r1 = fa_r1,
+    r2 = fa_r2,
+    index = genome_walt
+  output:
+    sam = "sam-pe/walt-err-{err}-len-{len}.sam",
+  benchmark:
+    "times-pe/walt-err-{err}-len-{len}.txt"
+  shell:
+    """
+    walt -N 1000000 -sam -b 200000 -k 100 -m 15 -L 3000 -t 16 -i {input.index} -1 {input.r1} -2 {input.r2} -o {output.sam}
+    """
+
+rule bwa:
+  input:
+    r1 = fa_r1,
+    r2 = fa_r2,
+    ref = genome_fa
+  output:
+    sam = "sam-pe/bwa-err-{err}-len-{len}.samtemp",
+  benchmark:
+    "times-pe/bwa-err-{err}-len-{len}.txt"
+  shell:
+    """
+    python /panfs/qcb-panasas/desenabr/software/bwa-meth/bwameth.py --threads 16 --reference \
+    {input.ref} {input.r1} {input.r2} >{output.sam}
+    """
+
+rule bwa_fix:
+  input:
+    "sam-pe/bwa-err-{err}-len-{len}.samtemp",
+  output:
+    "sam-pe/bwa-err-{err}-len-{len}.sam",
+  shell:
+    """
+    fix-bwa-sam -o {output} {input}
+    """
+
+rule hisat:
+  input:
+    r1 = fa_r1,
+    r2 = fa_r2,
+    index = genome_hisat
+  output:
+    sam = "sam-pe/hisat_3n-err-{err}-len-{len}.sam",
+    stats  = "sam-pe/hisat_3n-err-{err}-len-{len}.stats"
+  benchmark:
+    "times-pe/hisat_3n-err-{err}-len-{len}.txt"
+  shell:
+    """
+    hisat-3n --summary-file {output.stats} --index {input.index} \
+    -p 16 -I 32 -X 3000 -t -q -1 {input.r1} -2 {input.r2} -S {output.sam} --unique-only \
+    --ignore-quals --mp 1,1 --sp 1,1 --np 1 --rdg 0,1 --rfg 0,1 --score-min L,0.0,-0.1 \
+    --base-change C,T --no-spliced-alignment
+    """
+
+

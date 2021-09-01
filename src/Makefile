@@ -22,10 +22,8 @@ $(error src/smithlab_cpp does not have a Makefile. \
 	      Did you use --recursive when running git clone?)
 endif
 
-#PROGS = fix-bismark-sam fix-bwa-sam \
-#				sim-accuracy sherman-accuracy sam-intersect \
-#				mr-to-sam grepenc
-PROGS = fix-sam
+PROGS = fix-bismark-sam fix-bwa-sam fix-sam hash_counter \
+				sim-accuracy sherman-accuracy mr-to-sam
 SRC_ROOT=$(PWD)
 
 CXX = g++
