@@ -43,6 +43,14 @@ This script will create the following objects in an R environment:
 
 # Auxiliary C++ scripts
 
+The scripts below were used to parse or edit some of the mapper
+outputs. They can be compiled using the following commands:
+
+```
+make HAVE_HTSLIB=1 all
+make HAVE_HTSLIB=1 install
+```
+
 ### hash_counter
 
 This program was used to generate Figure 1B.
