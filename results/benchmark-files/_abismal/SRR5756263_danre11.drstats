@@ -1,8 +1,0 @@
-total_reads: 81694203
-total_bases: 17516028759
-unique_reads: 70804324
-unique_read_bases: 15204863163
-non_duplicate_fraction: 0.751021
-duplicate_reads: 9450250
-reads_removed: 10889879
-duplication_rate: 2.15234
