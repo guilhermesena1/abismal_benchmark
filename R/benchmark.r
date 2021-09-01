@@ -25,6 +25,17 @@ datasets <- read.table("metadata/tests.txt", header = 1,row.names = NULL,strings
 mappers <- sort(c("abismal", "bismark", "bsmap", "bwa", "hisat_3n", "walt"))
 mappers.rpbat <- sort(c("abismal", "bismark", "bsmap"))
 
+# colors used for plots
+plot.good.colors <- c('#FFFFFF', '#377eb8', '#ff7f00', '#4daf4a',
+                      '#ffe119', '#a65628', '#984ea3',
+                      '#999999', '#e41a1c', '#2a5e8c',
+                      '#008000', '#e6194b', '#ffbea3',
+                      '#911eb4', '#46f0f0', '#f032e6',
+                      '#d2f53c', '#008080', '#e6beff',
+                      '#aa6e28', '#800000', '#aaffc3',
+                      '#808000', '#ffd8b1', '#000080',
+                      '#808080', '#fabebe', '#a3f4ff')
+
 ##########################
 # Aux functions
 ##########################
@@ -1274,3 +1285,4 @@ if (plot) {
 if (file.exists("Rplots.pdf"))
   file.remove("Rplots.pdf")
 write.log("DONE!")
+
