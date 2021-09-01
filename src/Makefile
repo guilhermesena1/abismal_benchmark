@@ -23,7 +23,7 @@ $(error src/smithlab_cpp does not have a Makefile. \
 endif
 
 PROGS = fix-bismark-sam fix-bwa-sam fix-sam hash_counter \
-				sim-accuracy sherman-accuracy mr-to-sam
+				sherman-accuracy mr-to-sam
 SRC_ROOT=$(PWD)
 
 CXX = g++
