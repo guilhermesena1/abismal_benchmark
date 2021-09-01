@@ -1,5 +1,9 @@
 # abismal benchmark
 
+
+[![DOI](https://zenodo.org/badge/311887623.svg)](https://zenodo.org/badge/latestdoi/311887623)
+
+
 This repository contains a set of programs used to compare mapping
 results of abismal and multiple WGBS mappers. Here we list what the
 programs do and why they are needed
