@@ -4,3 +4,10 @@
 *.bam
 *.sam.bz2
 src/[^\.]*
+check_status.sh
+reads
+simulation_analysis/.snakemae
+.snakemake
+simulation_analysis/reads*
+simulation_analysis/sam-*
+bin
