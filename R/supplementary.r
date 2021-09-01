@@ -1,5 +1,5 @@
 make.hit.ratio.figure <- function(outfile) {
-  HASH_PATH <- "~/abtest/results/hash_comparison/"
+  HASH_PATH <- "./results/hash_comparison/"
 
   species <- c("hg38", "pantro6", "mm10", "danre11", "galgal6", "tair10")
   species.names <- c("H. sapiens", "P. troglodytes",
